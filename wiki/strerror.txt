@@ -1,0 +1,91 @@
+1. strerror.
+Es una función de la biblioteca estándar que se utiliza para traducir códigos de error numéricos
+(como los almacenados en la variable global errno) a cadenas de texto legibles para el ser humano.
+Es útil para proporcionar mensajes claros y descriptivos sobre errores en programas que dependen
+de funciones del sistema operativo o de la biblioteca estándar.
+Está definida en <string.h> o, en algunos sistemas, en <cstring> si se usa C++.
+
+2. Sintaxis.
+
+char *strerror(int errnum);
+
+.- Parámetros.
+	.- errnum: Es el número del código de error que se desea traducir. Este número generalmente
+	proviene de la variable global errno, que es establecida por llamadas al sistema o
+	funciones de la biblioteca estándar.
+
+3. Valor de Retorno.
+.- Cadena de caracteres: Devuelve un puntero a una cadena que contiene un mensaje de error asociado
+con el número de error especificado en errnum.
+Esta cadena es administrada internamente por el sistema y no debe ser modificada ni liberada por el
+usuario.
+
+4. Errores Comunes en strerror.
+Aunque strerror es confiable, hay escenarios donde se debe tener cuidado:
+.- Número de error desconocido: Si errnum no se corresponde con un código de error válido, el
+mensaje devuelto puede ser algo genérico como "Unknown error" (depende del sistema operativo).
+.- Reentrancia: strerror no es segura para ser usada en programas multihilo porque la cadena
+devuelta puede ser sobrescrita por otras llamadas a strerror. En estos casos, se recomienda usar
+la función strerror_r para un uso seguro en entornos concurrentes.
+
+5. Ejemplo Básico.
+Este ejemplo muestra cómo usar strerror para mostrar el mensaje de error correspondiente a un
+código almacenado en errno:
+
+#include <stdio.h>
+#include <errno.h>
+#include <string.h>
+
+int main()
+{
+	FILE *f = fopen("archivo_inexistente.txt", "r"); // Intentar abrir un archivo inexistente
+	if (f == NULL)
+	{
+		// Imprimir el número de error y su mensaje asociado
+		printf("Error %d: %s\n", errno, strerror(errno));
+	}
+	return 0;
+}
+.- Salida esperada: Si el archivo no existe, la salida será algo similar a:
+	Error 2: No such file or directory.
+
+6. Usos Comunes.
+.- Diagnóstico de Errores: Proporcionar descripciones claras de errores en programas que
+interactúan con el sistema operativo o manejan errores de archivo, memoria, sockets, etc.
+.- Depuración: Ayuda a los desarrolladores a identificar rápidamente problemas mediante mensajes
+de error descriptivos.
+.- Experiencia del Usuario: Mejorar la experiencia al mostrar mensajes de error comprensibles en
+lugar de códigos numéricos crípticos.
+
+7. Alternativa: strerror_r
+.- En entornos multihilo, se recomienda usar strerror_r (una variante segura de strerror). Esta
+función copia el mensaje de error en un búfer proporcionado por el usuario para evitar problemas
+de sobrescritura en cadenas compartidas.
+.- Ejemplo de Uso de strerror_r:
+
+#include <stdio.h>
+#include <string.h>
+#include <errno.h>
+
+int main()
+{
+	int err = ENOENT; // Código de error (archivo no encontrado)
+	char buf[256];
+	if (strerror_r(err, buf, sizeof(buf)) == 0)
+	{
+		printf("Error %d: %s\n", err, buf);
+	}
+	else
+	{
+		perror("Error al obtener el mensaje de error");
+	}
+	return 0;
+}
+
+8. Consideraciones Importantes.
+.- No Modificar la Cadena Devuelta: La cadena devuelta por strerror está gestionada por el sistema,
+por lo que no debe ser modificada ni liberada.
+.- Compatibilidad Multiplataforma: Aunque es estándar en C, los mensajes específicos devueltos por
+strerror pueden variar según el sistema operativo.
+.- Errores Definidos por el Usuario: strerror no puede manejar códigos de error definidos por el
+usuario fuera del estándar del sistema.

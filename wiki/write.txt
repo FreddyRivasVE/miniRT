@@ -1,0 +1,84 @@
+1. write.
+Es una función del sistema (system call) que permite realizar operaciones de escritura en archivos
+o dispositivos. Es parte de las funciones de bajo nivel de entrada/salida provistas por la
+biblioteca estándar en sistemas Unix y Unix-like (como Linux). Esta función se encuentra definida
+en <unistd.h>.
+
+
+2. Sintaxis.
+
+ssize_t	write(int fd, const void *buf, size_t count);
+
+.- fd: El descriptor de archivo (file descriptor) que indica dónde se quiere escribir.
+	Por ejemplo:
+	1 para stdout (salida estándar).
+	2 para stderr (salida de error estándar).
+.- buf: Un puntero al búfer que contiene los datos a escribir.
+.- count: El número de bytes que se desea escribir desde el búfer.
+
+3. Retorno.
+Devuelve el número de bytes que realmente se escribieron.
+Si ocurre un error, devuelve -1 y configura errno para indicar el error específico.
+
+4. Funcionamiento.
+write interactúa directamente con el sistema operativo, escribiendo los datos especificados en el
+lugar señalado por el descriptor de archivo. A diferencia de funciones de más alto nivel como
+fprintf, write no realiza buffering, lo que significa que los datos se escriben directamente en el
+archivo o dispositivo.
+
+5. Ejemplo: Escritura en salida estándar.
+
+#include <unistd.h>
+#include <string.h>
+
+int main()
+{
+	const char *mensaje = "Hola, mundo\n";
+	size_t longitud = strlen(mensaje);
+	// Escribir el mensaje en stdout
+	ssize_t bytes_escritos = write(1, mensaje, longitud);
+	if (bytes_escritos == -1)
+	{
+		// Manejo de errores
+		write(2, "Error al escribir\n", 18);
+	}
+	return 0;
+}
+
+6. Detalles importantes.
+.- Descriptores de archivo (fd):
+	0: entrada estándar (stdin).
+	1: salida estándar (stdout).
+	2: salida de error estándar (stderr).
+	Otros valores (>= 3) corresponden a archivos abiertos mediante llamadas como open.
+
+7. Errores comunes:
+.- Si fd no es válido, write devuelve -1 y se configura errno (por ejemplo, EBADF para un
+descriptor inválido).
+.- Si no se pueden escribir todos los bytes solicitados, es posible que write devuelva un número
+menor a count.
+
+8. Uso con archivos:
+Al escribir en un archivo, normalmente primero se abre con open para obtener el descriptor.
+Por ejemplo:
+
+#include <fcntl.h>
+#include <unistd.h>
+
+int main()
+{
+	int fd = open("archivo.txt", O_WRONLY | O_CREAT, 0644);
+	if (fd == -1)
+	{
+		write(2, "Error al abrir archivo\n", 24);
+		return 1;
+	}
+	const char *data = "Escribiendo en un archivo\n";
+	write(fd, data, strlen(data));
+	close(fd); // Cerrar el archivo después de usarlo
+	return 0;
+}
+9. Diferencia con funciones de alto nivel.
+Mientras que funciones como fprintf o fwrite son más cómodas de usar (debido a funcionalidades
+como formateo o buffering), write es útil en situaciones donde se necesita mayor control sobre las
+operaciones de entrada/salida y rendimiento.

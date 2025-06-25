@@ -1,0 +1,66 @@
+🔬 Fundamento físico y matemático
+El Ray Tracing se basa en la óptica geométrica, modelando cómo los rayos de luz interactúan con los objetos. En lugar de simular todos los fotones que emite una fuente de luz (lo cual sería computacionalmente inviable), se lanza un rayo por cada píxel desde la cámara hacia la escena. A partir de ahí:
+
+Intersección: Se calcula la primera superficie que el rayo encuentra usando algoritmos como el de intersección rayo-triángulo (por ejemplo, el algoritmo de Möller–Trumbore).
+
+Sombreado: Se evalúa el color del punto de intersección considerando:
+
+Reflexión especular (rayos reflejados).
+
+Refracción (rayos transmitidos, según la ley de Snell).
+
+Sombra (rayos lanzados hacia las fuentes de luz para verificar oclusión).
+
+Recursividad: Los rayos reflejados y refractados generan nuevos rayos, lo que permite simular múltiples rebotes de luz.
+
+🧠 Componentes clave
+Modelo de iluminación: Se suelen usar modelos como Phong, Blinn-Phong o Cook-Torrance para calcular la interacción luz-material.
+
+Materiales: Cada superficie tiene propiedades ópticas (índice de refracción, rugosidad, reflectividad) que afectan el comportamiento de los rayos.
+
+Aceleración: Para evitar comprobar intersecciones con todos los objetos, se usan estructuras como:
+
+BVH (Bounding Volume Hierarchy)
+
+KD-Trees
+
+Grillas uniformes
+
+Estas estructuras reducen drásticamente el número de pruebas de colisión necesarias.
+
+⚙️ Algoritmos relacionados
+Path Tracing: Variante que lanza múltiples rayos aleatorios por píxel para simular iluminación global (GI), incluyendo luz indirecta y caústicas.
+
+Bidirectional Path Tracing: Combina rayos desde la cámara y desde la luz para mejorar la convergencia.
+
+Metropolis Light Transport: Técnica basada en Monte Carlo que explora caminos de luz más eficientes.
+
+🧮 Cálculo de color
+
+El color final de un píxel se obtiene integrando la ecuación del renderizado:
+
+Lo(x, wo) = Le(x, wo) + ∫Ω fr(x, wi, wo) * Li(x, wi) * (wi • n) dwi
+
+Donde:
+
+Lo: luz saliente
+Le: luz emitida
+fr: función de distribución bidireccional de reflectancia (BRDF)
+Li: luz entrante
+wi, wo: direcciones entrante y saliente
+n: normal de la superficie
+
+
+🧠 Requisitos computacionales
+El Ray Tracing es intensivo en cómputo, por lo que se apoya en:
+
+GPUs modernas con núcleos dedicados (como los RT Cores de NVIDIA).
+
+Técnicas de denoising para reducir el ruido en renderizados con pocos samples.
+
+Paralelización masiva para lanzar millones de rayos simultáneamente.
+
+Mas informacion en:
+https://www.jakobmaier.at/posts/raytracing/
+https://drakeor.com/2021/06/14/simple-software-based-raytracer-in-c/
+https://www.youtube.com/watch?v=2BLRLuczykM

@@ -1,0 +1,110 @@
+1. malloc en C.
+La función malloc (memory allocation) en C se usa para reservar memoria en el heap de manera
+dinámica. Forma parte de la biblioteca estándar y se declara en <stdlib.h>.
+
+2. Prototipo de malloc.
+
+void *malloc(size_t size);
+
+.- Parámetros.
+	.- size: Cantidad de bytes de memoria a asignar.
+.- Valor de retorno.
+Devuelve un puntero genérico (void *) que apunta a la primera dirección de la memoria reservada.
+Si la asignación falla (por falta de memoria), devuelve NULL.
+
+3. Ejemplo básico.
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+	int *ptr = (int *)malloc(sizeof(int)); // Reserva memoria para un entero
+
+	if (ptr == NULL)
+	{
+		printf("Error: No se pudo asignar memoria\n");
+		return 1;
+	}
+	*ptr = 42; // Almacena un valor en la memoria asignada
+	printf("Valor almacenado: %d\n", *ptr);
+	free(ptr); // Liberamos la memoria
+	return 0;
+}
+.- Explicación.
+	.- malloc(sizeof(int)): Reserva memoria suficiente para almacenar un entero.
+	.- if (ptr == NULL): Verifica si la asignación falló.
+	.- *ptr = 42: Se guarda un valor en la memoria asignada.
+	.- free(ptr): Se libera la memoria reservada para evitar fugas de memoria.
+	.- Reserva de memoria para arreglos.
+
+.- Cuando queremos reservar memoria para varios elementos, usamos:
+
+int *array = (int *)malloc(5 * sizeof(int));
+
+Esto asigna espacio para 5 enteros consecutivos.
+
+.- Ejemplo completo:
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+	int n = 5;
+	int *arr = (int *)malloc(n * sizeof(int)); // Reserva memoria para un array de 5 enteros
+
+	if (arr == NULL)
+	{
+		printf("Error: No se pudo asignar memoria\n");
+		return 1;
+	}
+	// Llenar el array
+	for (int i = 0; i < n; i++)
+	{
+		arr[i] = i * 10;
+	}
+	// Imprimir los valores almacenados
+	for (int i = 0; i < n; i++)
+	{
+		printf("arr[%d] = %d\n", i, arr[i]);
+	}
+	free(arr); // Liberar la memoria
+	return 0;
+}
+
+4. Errores comunes al usar malloc.
+.- No verificar si malloc devolvió NULL:
+Si el sistema no tiene suficiente memoria, malloc fallará y devolverá NULL. Es importante siempre
+verificarlo:
+
+int *ptr = (int *)malloc(10 * sizeof(int));
+if (ptr == NULL) {
+printf("Error: No se pudo asignar memoria\n");
+return 1;
+}
+.- No liberar la memoria (free)
+Si no llamamos a free(), la memoria quedará ocupada hasta que termine el programa, lo que causa
+fugas de memoria.
+
+free(ptr);
+
+.- Usar memoria después de liberarla (dangling pointer)
+
+int *ptr = (int *)malloc(sizeof(int));
+free(ptr);
+*ptr = 42; // ERROR: acceso a memoria liberada
+Solución: Después de free(ptr), es buena práctica asignar ptr = NULL; para evitar accesos inválidos.
+
+.- Acceso fuera de los límites de memoria asignada.
+
+int *arr = (int *)malloc(5 * sizeof(int));
+arr[5] = 10; // ERROR: fuera del rango permitido (índices válidos: 0 a 4)
+Solución: Asegurar que los índices estén dentro del rango permitido.
+
+5. Resumen.
+.- malloc(size) reserva size bytes en el heap.
+.- Devuelve un puntero (void *) que debe convertirse al tipo de datos adecuado.
+.- Si falla, devuelve NULL, por lo que es necesario verificarlo.
+.- Se debe liberar la memoria con free(ptr) para evitar fugas de memoria.
+.- Acceder a memoria fuera del rango asignado o después de free() causa comportamiento indefinido.

@@ -1,0 +1,114 @@
+1. Funcionamiento de printf.
+La función printf se define en <stdio.h> y su prototipo es:
+
+int printf(const char *format, ...);
+
+2. Parámetros.
+.- format: Es una cadena de caracteres (string) que contiene el texto a imprimir y especificadores
+de formato (como %d, %s, %f, etc.), que indican cómo deben interpretarse los argumentos adicionales
+.- ... (argumentos variables): Son los valores que se insertarán en la cadena de formato según los
+especificadores.
+
+3. Valor de retorno.
+printf devuelve un entero que indica el número de caracteres impresos, o un valor negativo si
+ocurre un error.
+
+4. Especificadores de formato.
+Estos indican el tipo de dato que se debe imprimir:
+.- Especificador Tipo de dato.
+	.- %d o %i Entero con signo (int)
+	.- %u Entero sin signo (unsigned int)
+	.- %f Número de punto flotante (float/double)
+	.- %c Carácter (char)
+	.- %s Cadena de caracteres (char *)
+	.- %p Dirección de memoria (puntero)
+	.- %x o %X Entero en hexadecimal (minúsculas o mayúsculas)
+	.- %o Entero en octal
+	.- %% Imprime el símbolo %
+
+5. Ejemplo de uso.
+
+#include <stdio.h>
+
+int main()
+{
+	int edad = 25;
+	float altura = 1.75;
+	char nombre[] = "Freddy";
+
+	printf("Nombre: %s\n", nombre);
+	printf("Edad: %d años\n", edad);
+	printf("Altura: %.2f metros\n", altura);
+	return 0;
+}
+Salida:
+	Nombre: Freddy
+	Edad: 25 años
+	Altura: 1.75 metros
+Explicación:
+%s se sustituye por la cadena "Freddy".
+%d se sustituye por 25.
+%.2f imprime el número flotante con 2 decimales (1.75).
+
+6.Cómo funciona internamente.
+La implementación de printf implica varios pasos:
+
+Parseo de la cadena de formato:
+printf recorre la cadena buscando % y determina el tipo de dato correspondiente.
+Acceso a los argumentos variables (va_list):
+Como printf tiene un número variable de argumentos, usa stdarg.h y las macros va_list, va_start,
+va_arg y va_end para procesarlos.
+Conversión de datos:
+Convierte los valores a texto según su tipo.
+Escritura en stdout:
+Los caracteres se imprimen en la salida estándar usando write() en sistemas Unix.
+
+7. Ejemplo de implementación simplificada.
+Aquí tienes una versión básica de cómo podría implementarse una función similar a printf:
+
+#include <stdarg.h>
+#include <unistd.h>
+
+void my_printf(const char *format, ...)
+{
+	va_list args;
+	va_start(args, format);
+
+	while (*format)
+	{
+		if (*format == '%' && *(format + 1))
+		{
+			format++;
+			if (*format == 'd')
+			{
+				int num = va_arg(args, int);
+				char buffer[20];
+				int len = sprintf(buffer, "%d", num);
+				write(1, buffer, len);
+			}
+			else if (*format == 's')
+			{
+				char *str = va_arg(args, char *);
+				while (*str)
+					write(1, str++, 1);
+			}
+		}
+		else
+		{
+			write(1, format, 1);
+		}
+		format++;
+	}
+	va_end(args);
+}
+
+int main()
+{
+	my_printf("Hola, tengo %d años y mi nombre es %s\n", 25, "Freddy");
+	return 0;
+}
+.- Resumen.
+printf formatea y muestra datos en la salida estándar.
+Utiliza una cadena de formato con especificadores como %d, %s, %f, etc.
+Usa argumentos variables para aceptar múltiples valores.
+Internamente, analiza la cadena, convierte los valores a texto y los imprime en stdout.

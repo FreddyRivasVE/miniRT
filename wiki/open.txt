@@ -1,0 +1,82 @@
+1. open.
+Es una función de bajo nivel para trabajar con archivos. Es parte de las llamadas al sistema
+(system calls) en sistemas Unix y Unix-like (como Linux) y está definida en la biblioteca
+<fcntl.h>. Se utiliza para abrir un archivo para lectura, escritura o ambas, y devuelve un
+descriptor de archivo que se utiliza para interactuar con el archivo.
+
+2. Sintaxis.
+
+int open(const char *pathname, int flags, ...);
+
+.- Parámetros:
+	.- pathname: Una cadena de caracteres que representa la ruta al archivo que se desea abrir.
+	.- flags: Especifica cómo se debe abrir el archivo y qué operaciones están permitidas.
+	Este parámetro es obligatorio.
+	.- mode (opcional): Especifica los permisos del archivo cuando se crea uno nuevo.
+	Este parámetro solo es relevante si el archivo se está creando (por ejemplo, con la
+	bandera O_CREAT).
+.- Flags principales (modo de apertura).
+El parámetro flags define cómo se abrirá el archivo. Se pueden combinar usando el operador OR (|):
+	.- O_RDONLY: Abrir solo para lectura.
+	.- O_WRONLY: Abrir solo para escritura.
+	.- O_RDWR: Abrir para lectura y escritura.
+	.- O_CREAT: Crear el archivo si no existe (requiere el parámetro mode).
+	.- O_TRUNC: Truncar el archivo a longitud 0 si ya existe y se abre para escritura.
+	.- O_APPEND: Escribir al final del archivo (modo de añadir).
+	.- O_EXCL: Genera un error si el archivo ya existe (se usa junto con O_CREAT).
+.- Ejemplo de combinación de flags:
+O_WRONLY | O_CREAT | O_TRUNC
+Este ejemplo abre un archivo en modo de escritura, lo crea si no existe y lo vacía si ya existe.
+
+3. Valor de retorno.
+.- Devuelve un descriptor de archivo (entero mayor o igual a 0) si la operación es exitosa.
+Este descriptor se utiliza para operaciones posteriores (como read, write o close).
+.- Devuelve -1 si ocurre un error, y establece la variable global errno con el código del error.
+
+4. Ejemplo básico.
+
+#include <fcntl.h>
+#include <unistd.h>
+#include <stdio.h>
+
+int main()
+{
+	// Abrir o crear un archivo para escritura
+	int fd = open("mi_archivo.txt", O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (fd == -1)
+	{
+		perror("Error al abrir el archivo");
+		return 1;
+	}
+	// Escribir algo en el archivo
+	const char *texto = "¡Hola, mundo!\n";
+	if (write(fd, texto, 14) == -1)
+	{
+		perror("Error al escribir en el archivo");
+		close(fd);
+		return 1;
+	}
+	// Cerrar el archivo
+	close(fd);
+	return 0;
+}
+
+5. Permisos con mode.
+.- Cuando se usa O_CREAT, es necesario proporcionar el parámetro mode, que define los permisos del
+archivo utilizando máscaras de bits como en chmod. Ejemplo:
+	.- 0644: Permisos estándar (lectura/escritura para el propietario, lectura para otros).
+	.- 0666: Lectura/escritura para todos.
+	.- 0755: Permisos ejecutables (lectura/escritura/ejecución para el propietario,
+	lectura/ejecución para otros).
+
+6. Consideraciones importantes.
+.- Cerrar el descriptor de archivo: Después de abrir un archivo con open, siempre debe cerrarse
+utilizando close para liberar recursos.
+.- Seguridad en permisos: Los permisos especificados en mode son afectados por la máscara del
+proceso (umask), que puede restringir los permisos reales.
+.- Eficiencia: A diferencia de las funciones de alto nivel como fopen, open no realiza buffering,
+lo que significa que es más eficiente pero requiere más control por parte del programador.
+
+7. Errores comunes:
+.- Intentar abrir un archivo inexistente sin usar O_CREAT.
+.- No cerrar un descriptor abierto, causando fugas de recursos.

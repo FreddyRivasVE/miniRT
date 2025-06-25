@@ -1,0 +1,71 @@
+1. close.
+Es una función de bajo nivel utilizada para cerrar un archivo o descriptor de archivo previamente 
+abierto con funciones como open, creat, o incluso los descriptores estándar (stdin, stdout,
+stderr). Está definida en la biblioteca <unistd.h> y es fundamental para liberar recursos del
+sistema asociados a un archivo o dispositivo.
+
+2. Sintaxis.
+
+int close(int fd);
+
+.- Parámetros.
+	.- fd: Descriptor de archivo que se desea cerrar. Este descriptor identifica un archivo,
+socket, tubería u otro recurso que fue abierto previamente.
+
+3. Valor de Retorno.
+.- Devuelve 0 si se cierra el descriptor exitosamente.
+.- Devuelve -1 si ocurre un error, y establece la variable global errno con el código del error
+específico.
+
+4. Funcionamiento.
+Cuando se invoca close, se realizan las siguientes operaciones:
+
+.- Se libera el descriptor de archivo, permitiendo que el sistema lo reutilice para otro archivo o
+recurso.
+.- Se aseguran todos los datos pendientes de escritura en búferes asociados al archivo (si los
+hay).
+.- Se notifica al sistema operativo que la aplicación ya no necesita acceder al archivo o recurso.
+
+5. Ejemplo Básico.
+
+#include <fcntl.h>
+#include <unistd.h>
+#include <stdio.h>
+
+int main()
+{
+	// Abrir un archivo
+	int fd = open("mi_archivo.txt", O_RDONLY);
+	if (fd == -1)
+	{
+		perror("Error al abrir el archivo");
+		return 1;
+	}
+	// Realizar operaciones en el archivo (por ejemplo, leer datos)...
+	// Cerrar el archivo
+	if (close(fd) == -1)
+	{
+		perror("Error al cerrar el archivo");
+		return 1;
+	}
+	printf("Archivo cerrado exitosamente.\n");
+	return 0;
+}
+
+6. Errores Comunes
+.- EBADF: El descriptor de archivo no es válido o no corresponde a un archivo abierto.
+.- EINTR: La llamada fue interrumpida por una señal antes de que se cerrara completamente.
+.- EIO: Ocurrió un error de entrada/salida al cerrar.
+
+7. Consideraciones Importantes.
+.- Cerrar siempre los descriptores abiertos: Si no se cierran, puede haber fugas de recursos que
+podrían agotar el límite de descriptores abiertos del proceso.
+.- No cerrar múltiples veces: Intentar cerrar el mismo descriptor más de una vez podría causar un
+comportamiento indefinido.
+.- Archivos compartidos: Si múltiples procesos acceden al mismo archivo, cerrar un descriptor en
+un proceso no afectará los descriptores del otro proceso.
+
+8. Aplicaciones Comunes.
+.- Liberar recursos del sistema tras terminar operaciones con archivos.
+.- Manejar conexiones de red, ya que close también se utiliza para sockets.
+.- Prevenir fugas de memoria o uso innecesario de recursos.

@@ -1,0 +1,58 @@
+1. free.
+Es una función incluida en la biblioteca estándar (en <stdlib.h>) que se utiliza para liberar
+memoria dinámica previamente asignada con las funciones como malloc, calloc o realloc. Su
+propósito principal es devolver la memoria al sistema operativo, evitando fugas de memoria
+(memory leaks) y optimizando el uso de recursos.
+
+2. Sintaxis:
+
+void	free(void *ptr);
+
+Aquí, ptr es un puntero a un bloque de memoria previamente asignado dinámicamente.
+
+3. Funcionamiento:
+La función toma como argumento un puntero (ptr) que apunta al comienzo del bloque de memoria que
+se desea liberar.
+Internamente, la función notifica al sistema operativo que ese bloque de memoria ya no está en uso.
+No modifica el valor del puntero después de liberar la memoria, lo que significa que el puntero
+original puede quedar "colgando" si no se le asigna un nuevo valor, como NULL.
+
+4. Buenas prácticas:
+Siempre liberar la memoria que ya no es necesaria para evitar fugas de memoria.
+Asignar NULL al puntero después de llamar a free para evitar accesos a memoria no válida (problema
+conocido como "dangling pointer").
+
+free(ptr);
+ptr = NULL;
+
+No intentar liberar memoria que no fue asignada dinámicamente, ya que podría causar un
+comportamiento indefinido.
+Nunca llamar a free dos veces con el mismo puntero sin reasignarlo, ya que esto también resulta en
+un comportamiento indefinido.
+
+5. Ejemplo:
+
+#include <stdlib.h>
+#include <stdio.h>
+
+int main()
+{
+	int *arr = malloc(5 * sizeof(int)); // Asignación de un arreglo de 5 enteros
+	if (arr == NULL)
+	{
+		printf("Error al asignar memoria\n");
+		return 1;
+	}
+	// Uso del arreglo
+	for (int i = 0; i < 5; i++)
+	{
+		arr[i] = i * 10;
+	}
+	// Liberar memoria
+	free(arr);
+	arr = NULL; // Evitar punteros colgantes
+	return 0;
+	
+}
+El uso correcto de free es esencial en programas de C que hacen uso de memoria dinámica, ya que
+garantiza la estabilidad y eficiencia de la aplicación.

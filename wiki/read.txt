@@ -1,0 +1,75 @@
+1. read.
+Es una función de bajo nivel que permite realizar operaciones de lectura en archivos o
+dispositivos. Es una llamada al sistema (system call) en sistemas Unix y Unix-like (como Linux) y
+está definida en la biblioteca <unistd.h>. Esta función es utilizada para leer datos desde un
+archivo o un flujo de entrada, directamente al búfer de memoria proporcionado.
+
+2. Sintaxis.
+
+ssize_t read(int fd, void *buf, size_t count);
+
+.-Parámetros.
+.- fd: Descriptor de archivo (file descriptor). Representa la fuente desde donde se va a
+leer, como:
+	.- 0 para stdin (entrada estándar).
+	.- Un descriptor de archivo retornado por open.
+	.- buf: Puntero a un bloque de memoria donde se almacenarán los datos leídos.
+	.- count: Número máximo de bytes a leer y almacenar en el búfer.
+
+3. Valor de Retorno.
+Devuelve el número de bytes realmente leídos.
+Si alcanza el final del archivo (EOF), devuelve 0.
+En caso de error, devuelve -1 y establece errno con el código del error.
+
+4. Funcionamiento.
+La función read intenta leer hasta count bytes desde el archivo identificado por el descriptor fd
+y los almacena en el bloque de memoria apuntado por buf. La cantidad de datos leídos puede ser
+menor que count si se encuentra el final del archivo o si hay menos datos disponibles en el búfer.
+
+5. Ejemplo Básico.
+
+#include <unistd.h>
+#include <fcntl.h>
+#include <stdio.h>
+
+int main()
+{
+	char buf[100]; // Búfer para almacenar los datos leídos
+	int fd = open("archivo.txt", O_RDONLY); // Abrir archivo en modo solo lectura
+	if (fd == -1)
+	{
+		perror("Error al abrir el archivo");
+		return 1;
+	} ssize_t bytes_leidos = read(fd, buf, sizeof(buf) - 1); // Leer hasta 99 bytes
+	if (bytes_leidos == -1)
+	{
+		perror("Error al leer el archivo");
+		close(fd);
+		return 1;
+	}
+	buf[bytes_leidos] = '\0'; // Asegurar que la cadena termina en '\0'
+	printf("Contenido leído:\n%s", buf);
+	close(fd); // Cerrar el archivo
+	return 0;
+}
+
+6. Errores Comunes.
+.- EBADF: Descriptor de archivo no válido.
+.- EFAULT: Dirección del búfer no accesible.
+.- EINTR: La llamada fue interrumpida por una señal antes de leer datos.
+.- EINVAL: Parámetros inválidos, como un valor negativo en count.
+.- EIO: Error de entrada/salida a nivel del sistema.
+
+7. Casos de Uso.
+.- Lectura de Archivos: Ideal para leer datos binarios o texto desde un archivo directamente.
+.- Interacción con Dispositivos: Puede usarse para leer datos de dispositivos específicos, como
+puertos serie.
+.- Entrada del Usuario: Leer directamente desde el flujo de entrada estándar (stdin).
+
+8. Consideraciones.
+.- Tamaño del Búfer: Es crucial asegurarse de que el búfer tenga suficiente espacio para almacenar
+los datos leídos. De lo contrario, podría producirse un desbordamiento de búfer.
+.- Cantidad de Datos Leídos: La cantidad devuelta por read puede ser menor que count, por lo que
+siempre se debe verificar el valor de retorno.
+.- Bloqueo y No Bloqueo: Si el archivo o dispositivo está configurado en modo no bloqueante, read
+podría devolver inmediatamente sin leer datos, devolviendo 0 o un valor menor.

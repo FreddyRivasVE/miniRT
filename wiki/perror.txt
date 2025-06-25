@@ -1,0 +1,115 @@
+1. perror.
+Es una función que se utiliza para imprimir un mensaje descriptivo de error en la salida de error
+estándar (stderr). Este mensaje incluye una cadena personalizada proporcionada por el programador
+y una descripción legible asociada al código de error actual almacenado en la variable global
+errno. Está definida en <stdio.h> y es útil para diagnosticar errores en programas que interactúan
+con el sistema operativo.
+
+2. Sintaxis.
+
+void perror(const char *s);
+
+.- Parámetros.
+	.- s: Es una cadena de caracteres que el programador puede usar para identificar el
+	contexto del error. Si el valor de s no es NULL, se imprime seguido de dos puntos y un
+	espacio (:) antes de mostrar el mensaje de error generado por el sistema.
+	Si s es NULL o se pasa como una cadena vacía, solo se imprime el mensaje del error
+	correspondiente a errno.
+
+3. Funcionamiento.
+.- perror es una forma sencilla de mostrar tanto una descripción legible del error como un 
+contexto opcional proporcionado por el programador.
+.- El mensaje impreso combina la cadena proporcionada en s con el mensaje asociado al valor actual
+de errno.
+.- La variable global errno es configurada automáticamente por ciertas funciones de la biblioteca
+estándar y llamadas al sistema, como open, read, write, etc., cuando se encuentra un error.
+
+4. Ejemplo Básico.
+Este ejemplo muestra cómo usar perror para imprimir un mensaje de error cuando no se puede abrir
+un archivo:
+
+#include <stdio.h>
+#include <errno.h>
+
+int main()
+{
+	FILE *f = fopen("archivo_inexistente.txt", "r");
+	if (f == NULL)
+	{
+		perror("Error al abrir el archivo"); // Imprime un mensaje junto con la
+		descripción del error
+	}
+	return 0;
+}
+.- Salida esperada: Si el archivo no existe, la salida será similar a:
+	.- Error al abrir el archivo: No such file or directory.
+	En este caso, la descripción del error proviene del código de error asociado (errno), que
+	es ENOENT.
+
+5. Propósito de perror.
+.- Diagnóstico Rápido: Permite a los desarrolladores identificar la causa específica de un error
+rápidamente mediante mensajes descriptivos.
+.- Contexto: Combina una descripción personalizada con información del sistema para facilitar la
+depuración.
+.- Alternativa Simplicidad: Es más directa que usar strerror para convertir errno en una cadena y
+luego imprimirla manualmente.
+
+6. Ejemplo Avanzado: Múltiples Errores
+Este ejemplo utiliza perror para manejar diferentes errores en el mismo programa:
+
+#include <stdio.h>
+#include <errno.h>
+#include <fcntl.h>
+#include <unistd.h>
+
+int main()
+{
+	// Intentar abrir un archivo inexistente
+	int fd = open("archivo_no_existe.txt", O_RDONLY);
+	if (fd == -1)
+		{
+			perror("Error al abrir archivo_no_existe.txt");
+		}
+	// Intentar escribir en un archivo de solo lectura
+	FILE *f = fopen("archivo.txt", "r"); // Suponiendo que existe pero es de solo lectura
+	if (f != NULL)
+	{
+		if (write(fileno(f), "Texto", 5) == -1)
+		{
+			perror("Error al escribir en archivo.txt");
+		}
+		fclose(f);
+	}
+	else
+	{
+		perror("Error al abrir archivo.txt");
+	}
+	return 0;
+}
+.- Salida esperada:
+Dependiendo de los escenarios, se generará un mensaje específico para cada error.
+
+7. Diferencia entre perror y strerror.
+
+Característica		perror					strerror
+Propósito		Imprime un mensaje directamente		Devuelve una cadena descriptiva
+			en la salida de error estándar.		para que el programador la maneje.
+Formato del mensaje	Incluye el contexto (cadena 		Solo devuelve el mensaje del error
+			personalizada) y el mensaje del error.	asociado a errno.
+Complejidad		Más sencilla, útil para diagnósticos	Más flexible, pero requiere pasos
+			rápidos.				adicionales para mostrar mensajes.
+
+8. Consideraciones Importantes.
+.- Salida estándar de errores (stderr): perror siempre imprime en stderr, lo cual es útil para
+separar los mensajes de error de la salida normal del programa.
+.- Uso Correcto de errno: Es importante que errno tenga un valor significativo antes de llamar a
+perror. Si no se establece un error, su valor será indefinido.
+.- Evitar mensajes ambiguos: Proporcionar un contexto claro en la cadena s ayuda a identificar el
+origen del error.
+
+9. Limitaciones.
+.- Diseño para Diagnóstico Básico: perror no permite personalizar completamente el formato de los
+mensajes de error.
+.- Reentrancia: No es segura para hilos porque puede depender de recursos compartidos internos.
+Para soluciones más robustas en entornos multihilo, considera combinar strerror_r con mecanismos
+de impresión seguros.

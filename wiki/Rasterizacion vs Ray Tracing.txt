@@ -1,0 +1,30 @@
+Rasterization vs Ray Tracing
+🎯 Rasterización
+¿Qué hace? Convierte objetos 3D en imágenes 2D proyectando triángulos sobre la pantalla.
+
+¿Cómo funciona? Cada objeto se descompone en triángulos. Luego, se calcula qué píxeles de la pantalla
+cubren esos triángulos y se les asignan colores según la luz, textura, etc.
+
+Ventajas: Muy rápida y eficiente. Ideal para videojuegos y aplicaciones en tiempo real.
+
+Desventajas: No simula bien efectos complejos como reflejos, refracciones o sombras suaves. A menudo
+se “fingen” con trucos gráficos.
+
+💡 Ray Tracing (Trazado de Rayos)
+¿Qué hace? Simula el comportamiento real de la luz al lanzar rayos desde la cámara hacia la escena.
+
+¿Cómo funciona? Cada rayo rebota en superficies, generando reflejos, sombras y refracciones realistas.
+
+Ventajas: Produce imágenes increíblemente realistas. Perfecto para cine, animación y renderizado
+offline.
+
+Desventajas: Mucho más exigente en recursos. Hasta hace poco, era inviable en tiempo real, aunque eso
+está cambiando con GPUs modernas.
+
+🆚 ¿Cuál elegir?
+Para videojuegos: Rasterización sigue siendo la reina por su velocidad.
+
+Para cine o visualizaciones fotorrealistas: Ray tracing es el camino.
+
+Hoy en día: Muchos motores gráficos combinan ambas técnicas para lograr un equilibrio entre
+rendimiento y realismo (como en juegos con “ray tracing híbrido”).

@@ -1,0 +1,101 @@
+1. exit.
+Es una función de la biblioteca estándar utilizada para terminar un programa de manera controlada.
+Está definida en <stdlib.h> y se usa para cerrar un programa, liberando recursos del sistema y
+enviando un código de estado al sistema operativo, indicando cómo terminó el programa (de manera
+exitosa o con un error).
+
+2. Sintaxis.
+
+void exit(int status);
+
+.- Parámetros.
+	.- status: Es un valor entero que indica el estado de salida del programa. Los valores
+	comunes son:
+		.- EXIT_SUCCESS: Indica que el programa terminó correctamente. Este valor está
+		definido como constante en <stdlib.h>.
+		.- EXIT_FAILURE: Indica que el programa terminó debido a un error. También está
+		definido como constante en <stdlib.h>.
+		.- Valores personalizados: Puedes usar un número entero específico para comunicar
+		información adicional sobre el motivo de la terminación del programa.
+
+3. Comportamiento.
+.- Liberación de Recursos:
+	.- Antes de finalizar el programa, exit realiza las siguientes operaciones:
+		.- Cierra todos los archivos abiertos automáticamente.
+		.- Realiza una limpieza de los búferes de salida (por ejemplo, para imprimir datos
+		pendientes en la consola o archivos).
+		.- Si se registraron funciones mediante atexit, estas serán ejecutadas antes de
+		que el programa finalice.
+	.- Código de Retorno: El valor de status es enviado al sistema operativo, que puede ser
+	utilizado por otros procesos o scripts para evaluar cómo terminó el programa.
+	.- Terminación del Programa: exit nunca retorna. Una vez llamada, el control no vuelve al
+	programa que la invocó.
+
+4. Ejemplo Básico.
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+	printf("Inicio del programa\n");
+	if (1)
+	{ // Condición simulada de error
+		fprintf(stderr, "Ocurrió un error, terminando el programa...\n");
+		exit(EXIT_FAILURE); // Finaliza con un error
+	}
+	printf("Esto nunca se imprimirá\n");
+	exit(EXIT_SUCCESS); // Finaliza de forma exitosa
+}
+
+5. Uso de atexit.
+La función atexit permite registrar funciones que serán ejecutadas automáticamente cuando se llame
+a exit. Es útil para realizar tareas de limpieza antes de que el programa finalice.
+
+#include <stdio.h>
+#include <stdlib.h>
+
+void limpiar()
+{
+	printf("Limpieza final antes de salir...\n");
+}
+int main()
+{
+	atexit(limpiar); // Registrar la función de limpieza
+	printf("Inicio del programa\n");
+	exit(EXIT_SUCCESS); // Se ejecutará la función registrada
+}
+
+6. Diferencias con otras formas de finalizar un programa.
+.- return: return solo finaliza la función actual (como main), devolviendo un valor al llamador.
+.- exit finaliza el programa completo, independientemente de cuántas funciones estén en ejecución.
+
+Ejemplo:
+
+int main()
+{
+	printf("Termina con return\n");
+	return 0; // Equivalente a exit(EXIT_SUCCESS) en main
+}
+
+7. _exit:
+_exit es una llamada al sistema que termina un programa de manera abrupta. No realiza la limpieza
+que hace exit (como cerrar archivos o ejecutar funciones registradas con atexit). Se encuentra en
+<unistd.h>:
+
+#include <unistd.h>
+
+_exit(1); // Finaliza sin limpiar recursos
+
+8. Errores Comunes al Usar exit.
+.- Códigos de Estado No Descriptivos: Usar valores arbitrarios como -1 o 42 sin documentar puede
+dificultar la comprensión de los motivos de terminación.
+.- Omisión de Recursos Críticos: Aunque exit libera automáticamente algunos recursos (como
+archivos abiertos), es importante liberar manualmente memoria asignada dinámicamente (por ejemplo,
+con free) si es necesario.
+
+9. Consideraciones Importantes.
+.- Portabilidad: EXIT_SUCCESS y EXIT_FAILURE son portables y deben usarse en lugar de valores como
+0 o 1 para garantizar la claridad y compatibilidad en diferentes sistemas operativos.
+.- Limpieza Adicional: Siempre asegúrate de limpiar recursos críticos antes de llamar a exit si no
+usas funciones como atexit.
