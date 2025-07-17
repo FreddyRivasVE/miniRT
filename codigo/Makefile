@@ -1,3 +1,15 @@
+# ************************************************************************** #
+#                                                                            #
+#                                                        :::      ::::::::   #
+#   Makefile                                           :+:      :+:    :+:   #
+#                                                    +:+ +:+         +:+     #
+#   By: brivera <brivera@student.42madrid.com>     #+#  +:+       +#+        #
+#                                                +#+#+#+#+#+   +#+           #
+#   Created: 2025-07-17 16:24:12 by brivera           #+#    #+#             #
+#   Updated: 2025-07-17 16:24:12 by brivera          ###   ########.fr       #
+#                                                                            #
+# ************************************************************************** #
+
 NAME		:= miniRT
 
 CC 			:= cc
@@ -17,7 +29,7 @@ OBJ_DIR 	:= obj/
 OBJS 		:= $(addprefix $(OBJ_DIR), $(SRCS:$(SRC_DIR)%.c=%.o))
 
 
-INCLUDE := include/minirt.h
+INCLUDE 	:= include/minirt.h
 
 RED			:= \033[91;1m
 GREEN		:= \033[92;1m
