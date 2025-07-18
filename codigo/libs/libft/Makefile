@@ -26,9 +26,8 @@ SRC = $(SRC_DIR)/ft_isalpha.c $(SRC_DIR)/ft_isdigit.c $(SRC_DIR)/ft_isalnum.c \
       $(SRC_DIR)/ft_strjoin.c $(SRC_DIR)/ft_strtrim.c $(SRC_DIR)/ft_split.c \
       $(SRC_DIR)/ft_itoa.c $(SRC_DIR)/ft_strmapi.c $(SRC_DIR)/ft_striteri.c \
       $(SRC_DIR)/ft_putchar_fd.c $(SRC_DIR)/ft_putstr_fd.c $(SRC_DIR)/ft_putendl_fd.c \
-	  $(SRC_DIR)/ft_putnbr_fd.c \
-	  $(SRC_DIR)/get_next_line.c \
-	  $(SRC_DIR)/free_array.c \
+	  $(SRC_DIR)/ft_putnbr_fd.c $(SRC_DIR)/get_next_line.c \
+	  $(SRC_DIR)/free_memory.c $(SRC_DIR)/compare_str.c \
 	  $(SRC_DIR)/ft_lstnew_bonus.c $(SRC_DIR)/ft_lstadd_front_bonus.c \
 	  $(SRC_DIR)/ft_lstsize_bonus.c $(SRC_DIR)/ft_lstlast_bonus.c \
 	  $(SRC_DIR)/ft_lstadd_back_bonus.c $(SRC_DIR)/ft_lstdelone_bonus.c \
