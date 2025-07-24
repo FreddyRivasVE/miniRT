@@ -6,7 +6,7 @@
 /*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:34:00 by brivera           #+#    #+#             */
-/*   Updated: 2025/07/24 17:46:37 by brivera          ###   ########.fr       */
+/*   Updated: 2025/07/24 17:50:28 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int	mrt_read_file(char *file)
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
 		return (perror("Error"), false);
+	close(file); 
 	return (true);
 }
 
