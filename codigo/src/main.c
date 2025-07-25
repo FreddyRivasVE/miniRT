@@ -6,7 +6,7 @@
 /*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:34:00 by brivera           #+#    #+#             */
-/*   Updated: 2025/07/24 17:50:28 by brivera          ###   ########.fr       */
+/*   Updated: 2025/07/25 15:28:15 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	mrt_check_file_type(char *file)
 
 int	mrt_read_file(char *file)
 {
-	//char	*line;
+	char	*line;
 	int		fd;
 
 	if (!mrt_check_file_type(file))
@@ -39,7 +39,15 @@ int	mrt_read_file(char *file)
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
 		return (perror("Error"), false);
-	close(file); 
+	while (1)
+	{
+		line = get_next_line(fd);
+		if (!line)
+			break ;
+		printf("%s", line); //borrar
+		ft_free_ptr((void *)&line);
+	}
+	close(fd);
 	return (true);
 }
 
