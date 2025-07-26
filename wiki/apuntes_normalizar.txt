@@ -1,0 +1,96 @@
+### ✅ ¿Qué significa **normalizar** un vector en `MiniRT`?
+
+**Normalizar un vector** es transformarlo para que **mantenga su dirección** pero tenga **longitud 1**.
+
+Esto se hace mucho en raytracing para trabajar con **direcciones puras**, sin que la magnitud (el largo) del vector afecte las cuentas (como iluminación o rebotes).
+
+### 🎯 **Metáfora: "La dirección del camino, no la distancia"**
+
+Imaginá que estás parada en un punto del mapa y querés indicar **en qué dirección está una montaña** ⛰️.
+
+* Podés señalar con un palo de **3 metros** apuntando hacia ella.
+* O con un palito de **30 cm** apuntando igual.
+
+❗ Lo que importa no es **cuán largo es el palo**, sino **hacia dónde apunta**.
+
+---
+
+### ✨ Entonces...
+
+**Normalizar** ese palo sería **acortarlo** a una **longitud fija de 1 metro**, **sin cambiar la dirección**.
+
+* Así podés comparar muchas direcciones sin preocuparte por el largo del palo.
+* Todos los palos apuntan a distintos lugares, pero **miden lo mismo** → eso es normalizar.
+
+---
+
+### 💻 En `MiniRT`:
+
+* Tenés un vector `(3, 0, 4)` → es como un palo que apunta a cierta dirección, con una longitud de 5.
+* Lo **normalizás** → ahora es `(0.6, 0.0, 0.8)`, que **apunta igual**, pero mide 1.
+
+---
+
+### 📦 Resumen de la metáfora:
+
+> “Normalizar un vector es como recortar un palo que apunta a una montaña para que mida exactamente 1 metro, sin cambiar a dónde apunta.”
+
+---
+
+### 🧮 Ejemplo con `t_vec4`:
+
+Supongamos que tenés:
+
+```c
+t_vec4 v = {3.0f, 0.0f, 4.0f, 0.0f};
+```
+
+> Recordá: si `t_vec4` es un vector de 4 `floats`, el cuarto componente (`w`) lo podés dejar en 0 para vectores (o en 1 para puntos si hacés transformaciónes homogéneas, pero eso es más avanzado).
+
+---
+
+### 1. Calculás la **longitud** del vector:
+
+```c
+float len = sqrt(v[0]*v[0] + v[1]*v[1] + v[2]*v[2]);
+// len = sqrt(3² + 0² + 4²) = sqrt(9 + 0 + 16) = sqrt(25) = 5
+```
+
+---
+
+### 2. Normalizás cada componente:
+
+```c
+t_vec4 norm_v = {v[0]/len, v[1]/len, v[2]/len, 0.0f};
+// norm_v = (0.6, 0.0, 0.8, 0.0)
+```
+
+Ahora ese nuevo vector **apunta igual**, pero su **longitud es exactamente 1**.
+
+---
+
+### 🧠 ¿Por qué sirve?
+
+* En iluminación: usás vectores normalizados para calcular la luz que incide en un punto (producto escalar, reflejos, etc.).
+* En geometría: normalizás la dirección del rayo o de la normal de una superficie.
+
+---
+
+### 🛠️ ¿Querés una función `normalize()` en C?
+
+```c
+t_vec4	normalize(t_vec4 v)
+{
+	float	len = sqrtf(v[0]*v[0] + v[1]*v[1] + v[2]*v[2]);
+	if (len == 0.0f)
+		return (t_vec4){0.0f, 0.0f, 0.0f, 0.0f};
+	return (t_vec4){v[0]/len, v[1]/len, v[2]/len, 0.0f};
+}
+```
+
+🧯 **Siempre chequeá que el vector no tenga longitud 0**, porque no podés dividir por 0.
+
+---
+
+¿Querés que también escribamos una `length()` para que quede separado?
+
