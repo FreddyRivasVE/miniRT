@@ -23,7 +23,7 @@ LIBFT_DIR	:= libs/libft
 LIBFTA		:= $(LIBFT_DIR)/libft.a
 
 SRC_DIR		:= src/
-SRCS 		:= $(SRC_DIR)main.c
+SRCS 		:= $(SRC_DIR)main.c $(SRC_DIR)parce_00.c
 
 OBJ_DIR 	:= obj/
 OBJS 		:= $(addprefix $(OBJ_DIR), $(SRCS:$(SRC_DIR)%.c=%.o))

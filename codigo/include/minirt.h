@@ -6,7 +6,7 @@
 /*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:14:15 by brivera           #+#    #+#             */
-/*   Updated: 2025/07/26 19:11:46 by brivera          ###   ########.fr       */
+/*   Updated: 2025/07/26 21:18:06 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,5 +206,9 @@ typedef struct s_data
 	t_point_light	*light;		// Luz puntual
 	t_object_list	*objects;	// Lista de objetos de la escena
 }	t_data;
+
+
+//parce
+int		mrt_read_file(char *file);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:34:00 by brivera           #+#    #+#             */
-/*   Updated: 2025/07/26 19:21:05 by brivera          ###   ########.fr       */
+/*   Updated: 2025/07/26 21:49:27 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,39 +23,17 @@ t_window	mrt_setup_window(mlx_t **mlx)
 	return (window);
 }
 
-int	mrt_check_file_type(char *file)
+void	mrt_keyfuncion(mlx_key_data_t keydata, void *data)
 {
-	size_t	len;
+	mlx_t	*mlx;
 
-	len = ft_strlen(file);
-	if (len < 3)
-		return (ft_print_error("Error\nExample: ./miniRT file.rt"), false);
-	if (ft_strncmp(&file[len - 3], ".rt", 3))
-		return (ft_print_error("Error\nExample: ./miniRT file.rt"), false);
-	return (true);
+	(void)keydata;  // para evitar warning
+	mlx = (mlx_t *)data;
+	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
+		mlx_close_window(mlx);
 }
 
-int	mrt_read_file(char *file)
-{
-	char	*line;
-	int		fd;
 
-	if (!mrt_check_file_type(file))
-		return (false);
-	fd = open(file, O_RDONLY);
-	if (fd == -1)
-		return (perror("Error"), false);
-	while (1)
-	{
-		line = get_next_line(fd);
-		if (!line)
-			break ;
-		printf("%s", line); //borrar
-		ft_free_ptr((void *)&line);
-	}
-	close(fd);
-	return (true);
-}
 
 int	main(int argc, char **argv)
 {
@@ -68,6 +46,7 @@ int	main(int argc, char **argv)
 		return (1);
 	window = mrt_setup_window(&mlx);
 	mlx_image_to_window(mlx, window.image, 0, 0);
+	mlx_key_hook(mlx, &mrt_keyfuncion, mlx);
 	mlx_loop(mlx);
 	mlx_terminate(mlx);
 	return (0);
