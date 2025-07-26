@@ -6,11 +6,22 @@
 /*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:34:00 by brivera           #+#    #+#             */
-/*   Updated: 2025/07/25 15:28:15 by brivera          ###   ########.fr       */
+/*   Updated: 2025/07/26 19:21:05 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+
+t_window	mrt_setup_window(mlx_t **mlx)
+{
+	t_window	window;
+
+	window.width = WIDTH;
+	window.height = (int)(window.width / ASPECT_RATIO);
+	*mlx = mlx_init(window.width, window.height, "miniRT", true);
+	window.image = mlx_new_image(*mlx, window.width, window.height);
+	return (window);
+}
 
 int	mrt_check_file_type(char *file)
 {
@@ -48,9 +59,16 @@ int	mrt_read_file(char *file)
 
 int	main(int argc, char **argv)
 {
+	t_window	window;
+	mlx_t		*mlx;
+
 	if (argc != 2)
 		return (ft_print_error("Error\nFaltan argumentos!.Ejemplo:./miniRT file.rt"), 1);
 	if (!mrt_read_file(argv[1]))
 		return (1);
+	window = mrt_setup_window(&mlx);
+	mlx_image_to_window(mlx, window.image, 0, 0);
+	mlx_loop(mlx);
+	mlx_terminate(mlx);
 	return (0);
 }

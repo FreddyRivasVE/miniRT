@@ -6,11 +6,11 @@
 /*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:14:15 by brivera           #+#    #+#             */
-/*   Updated: 2025/07/25 15:27:54 by brivera          ###   ########.fr       */
+/*   Updated: 2025/07/26 19:11:46 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# ifndef MINIRT_H
+#ifndef MINIRT_H
 # define MINIRT_H
 
 # include <stdlib.h>
@@ -22,12 +22,23 @@
 # include "../libs/libft/libft.h"
 # include "MLX42/MLX42.h"
 
+# define WIDTH 800
+# define ASPECT_RATIO 1.7777777778 // producto de 16 % 8
+
 typedef enum e_obj_type
 {
 	SPHERE,
 	PLANE,
 	CYLINDER
 }	t_obj_type;
+
+// Estructura para manejar los datos de la ventana e imagen de dibujo
+typedef struct s_window
+{
+	int				width;
+	int				height;
+	mlx_image_t		*image;	
+}	t_window;
 
 /*
 Definimos un tipo vectorial de 4 floats (vec4), usando extensiones de GCC/Clang.
