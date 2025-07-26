@@ -54,7 +54,6 @@ typedef struct s_ambient
 	t_vec4		color;	// RGB entre 0 y 255
 }	t_ambient;
 
-
 /*
  * Usamos `t_camara` para guardar los datos crudos del archivo .rt:
  *   - Posición de la cámara

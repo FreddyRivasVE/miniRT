@@ -18,3 +18,8 @@ void	ft_putstr_fd(char *s, int fd)
 		return ;
 	write(fd, s, ft_strlen(s));
 }
+
+void	ft_print_error(char *msj)
+{
+	ft_putendl_fd(msj, 2);
+}

@@ -79,5 +79,5 @@ int			ft_strcmp(const char *s1, const char *s2);
 size_t		ft_strspn(const char *s, const char *accept);
 size_t		ft_strcspn(const char *s, const char *reject);
 size_t		ft_seek_lastc(char *str, char c);
-
+void		ft_print_error(char *msj);
 #endif

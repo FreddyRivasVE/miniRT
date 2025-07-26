@@ -12,11 +12,6 @@
 
 #include "minirt.h"
 
-void	ft_print_error(char *msj)
-{
-	ft_putendl_fd(msj, 2);
-}
-
 int	mrt_check_file_type(char *file)
 {
 	size_t	len;
