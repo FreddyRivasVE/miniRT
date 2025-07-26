@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINIRT_H
+# ifndef MINIRT_H
 # define MINIRT_H
 
 # include <stdlib.h>
@@ -39,20 +39,20 @@ de manera más eficiente usando instrucciones del procesador (SIMD). */
 
 typedef float	t_vec4 __attribute__((vector_size(16)));
 
-/*
-typedef struct s_color
-{
-	int	r;
-	int	g;
-	int	b;
-}	t_color;
-*/
-
 typedef struct s_ambient
 {
-	float		ratio;	// entre 0 y 1
+	float		ratio;	// entre 0.0 y 1.0
 	t_vec4		color;	// RGB entre 0 y 255
 }	t_ambient;
+
+/*
+| `ambient_ratio` | Resultado visual                          |
+| --------------- | ----------------------------------------- |
+| `0.0`           | Las sombras son negras, muy oscuro        |
+| `0.2`           | Sombras visibles, pero aún marcadas       |
+| `0.5`           | Iluminación pareja, detalles más visibles |
+| `1.0`           | Todo iluminado por igual, sin sombras     |
+*/
 
 /*
  * Usamos `t_camara` para guardar los datos crudos del archivo .rt:
@@ -71,11 +71,11 @@ typedef struct s_ambient
 typedef struct s_camera
 {
 	t_vec4	origin;	// Posición de la cámara (p.ej. C -50.0,0,20)
-	t_vec4	dir;	// Vector de orientación (normalizado, ej: 0 0,1)
-	double	fov;	// Campo de visión en grados (ej: 70)
+	t_vec4	dir;	// Vector de orientación (normalizado, ej: 0.0,0.0,1.0) rango -1 a 1
+	double	fov;	// Campo de visión en grados (ej: 70) rango de 0 a 180
 }	t_camera;
 
-typedef struct s_camera_view
+typedef struct s_camera_view //para render
 {
 	t_vec4	origin;
 	t_vec4	horizontal;
@@ -102,7 +102,15 @@ typedef struct s_point_light
 	t_vec4	spec_color;		// Color de la luz especular
 	float	spec_power;		// Intensidad de la luz especular
 }	t_point_light;
+/*
+| Brightness Ratio | Efecto Visual                           |
+| ---------------- | --------------------------------------- |
+| `0.0`            | La luz está apagada, no se ve su efecto |
+| `0.3`            | Luz muy tenue, sombras suaves           |
+| `0.6`            | Luz moderada, ilumina con claridad      |
+| `1.0`            | Luz intensa, bordes y sombras marcados  |
 
+*/
 typedef struct s_ray
 {
 	t_vec4	origin;		// Punto de origen del rayo
@@ -114,7 +122,7 @@ typedef struct s_hit_record
 	t_vec4	point;		// Punto de intersección
 	t_vec4	normal;		// Normal en el punto
 	float	t;			// Valor de t en el rayo (distancia)
-	t_vec4	color;		// Color del objeto impactado
+	t_vec4	color;		// Color del objeto impactado (opcional)
 }	t_hit_record;
 
 typedef struct s_sphere

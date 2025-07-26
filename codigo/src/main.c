@@ -18,9 +18,9 @@ int	mrt_check_file_type(char *file)
 
 	len = ft_strlen(file);
 	if (len < 3)
-		return (ft_print_error("Example: ./miniRT file.rt"), false);
+		return (ft_print_error("Error\nExample: ./miniRT file.rt"), false);
 	if (ft_strncmp(&file[len - 3], ".rt", 3))
-		return (ft_print_error("Example: ./miniRT file.rt"), false);
+		return (ft_print_error("Error\nExample: ./miniRT file.rt"), false);
 	return (true);
 }
 
@@ -49,7 +49,7 @@ int	mrt_read_file(char *file)
 int	main(int argc, char **argv)
 {
 	if (argc != 2)
-		return (ft_print_error("Example: ./miniRT file.rt"), 1);
+		return (ft_print_error("Error\nFaltan argumentos!.Ejemplo:./miniRT file.rt"), 1);
 	if (!mrt_read_file(argv[1]))
 		return (1);
 	return (0);
