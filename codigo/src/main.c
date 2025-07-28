@@ -6,7 +6,7 @@
 /*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:34:00 by brivera           #+#    #+#             */
-/*   Updated: 2025/07/28 20:25:46 by brivera          ###   ########.fr       */
+/*   Updated: 2025/07/28 20:35:20 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,20 +71,17 @@ t_ray	mrt_create_ray(t_vec4 origin, t_vec4 direction)
 // Genera un rayo desde la cámara hacia un píxel específico (i, j) en la ventana
 t_ray	mrt_generate_camera_ray(t_camera_view camera, float pixel_x, float pixel_y, t_window window)
 {
-	float	u;
-	float	v;
+	float	normalized_x;
+	float	normalized_y;
 	t_vec4	image_point;
 	t_vec4	ray_dir;
 
-	// Normaliza la coordenada del píxel horizontalmente (de 0 a 1)
-	u = pixel_x / (window.width - 1);
-	// Normaliza la coordenada del píxel verticalmente (de 0 a 1)
-	v = pixel_y / (window.height - 1);
-	// Calcula el punto en el plano de imagen hacia el cual lanzar el rayo
-	image_point = camera.bottom_left_corner + (u * camera.horizontal) + (v * camera.vertical);
-	// Dirección del rayo: desde la cámara hacia ese punto
+	normalized_x = pixel_x / (window.width - 1);
+	normalized_y = pixel_y / (window.height - 1);
+	image_point = camera.bottom_left_corner +\
+			(normalized_x * camera.horizontal)\
+			 + (normalized_y * camera.vertical);
 	ray_dir = image_point - camera.origin;
-	// Crea y retorna el rayo correspondiente al píxel
 	return (mrt_create_ray(camera.origin, ray_dir));
 }
 
