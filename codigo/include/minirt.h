@@ -6,7 +6,7 @@
 /*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:14:15 by brivera           #+#    #+#             */
-/*   Updated: 2025/07/26 21:18:06 by brivera          ###   ########.fr       */
+/*   Updated: 2025/07/28 20:10:54 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <fcntl.h>
+# include <math.h>
 
 //libs42
 # include "../libs/libft/libft.h"
@@ -82,7 +83,7 @@ typedef struct s_ambient
 typedef struct s_camera
 {
 	t_vec4	origin;	// Posición de la cámara (p.ej. C -50.0,0,20)
-	t_vec4	dir;	// Vector de orientación (normalizado, ej: 0.0,0.0,1.0) rango -1 a 1
+	t_vec4	direction;	// Vector de orientación (normalizado, ej: 0.0,0.0,1.0) rango -1 a 1
 	double	fov;	// Campo de visión en grados (ej: 70) rango de 0 a 180
 }	t_camera;
 
@@ -203,12 +204,14 @@ typedef struct s_data
 {
 	t_ambient		*ambient;	// Luz ambiente
 	t_camera		*camera;	// Cámara
-	t_point_light	*light;		// Luz puntual
-	t_object_list	*objects;	// Lista de objetos de la escena
+	//t_point_light	*light;		// Luz puntual
+	//t_object_list	*objects;	// Lista de objetos de la escena
 }	t_data;
 
-
 //parce
-int		mrt_read_file(char *file);
+int			mrt_read_file(char *file);
+//window
+t_window	mrt_setup_window(mlx_t **mlx);
+void		mrt_keyfuncion(mlx_key_data_t keydata, void *data);
 
 #endif
