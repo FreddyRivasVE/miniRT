@@ -187,7 +187,7 @@ int	main(int argc, char **argv)
 	mlx_t		*mlx;
 
 	if (argc != 2)
-		return (ft_print_error("Error\nFaltan argumentos!.Ejemplo:./miniRT file.rt"), 1);
+		return (ft_print_error("Error\nFaltan argumentos.Ejemplo:./miniRT file.rt"), 1);
 	if (!mrt_read_file(argv[1]))
 		return (1);
 	window = mrt_setup_window(&mlx);
