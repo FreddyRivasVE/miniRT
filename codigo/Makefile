@@ -13,28 +13,30 @@
 NAME		:= miniRT
 
 CC 			:= cc
-CFLAGS		:= -Wall -Wextra -Werror #-g3 -fsanitize=address
+CFLAGS		:= -Wall -Wextra -Werror -g3 -fsanitize=address
 
-MLX42_DIR	:= libs/MLX42
-MLX42 		:= $(MLX42_DIR)/build/libmlx42.a
-MLX42_INC 	:= $(MLX42_DIR)/include
+MLX42_DIR	:=	libs/MLX42
+MLX42 		:= 	$(MLX42_DIR)/build/libmlx42.a
+MLX42_INC 	:= 	$(MLX42_DIR)/include
 
-LIBFT_DIR	:= libs/libft
-LIBFTA		:= $(LIBFT_DIR)/libft.a
+LIBFT_DIR	:= 	libs/libft
+LIBFTA		:= 	$(LIBFT_DIR)/libft.a
 
-SRC_DIR		:= src/
-SRCS 		:= $(SRC_DIR)main.c $(SRC_DIR)parce_00.c $(SRC_DIR)window_setup.c
+SRC_DIR		:= 	src/
+SRCS 		:= 	$(SRC_DIR)main.c \
+		  		$(SRC_DIR)parce_00.c \
+				$(SRC_DIR)window_setup.c \
+				$(SRC_DIR)vec_utils.c
+OBJ_DIR 	:=	obj/
+OBJS 		:=	$(addprefix $(OBJ_DIR), $(SRCS:$(SRC_DIR)%.c=%.o))
 
-OBJ_DIR 	:= obj/
-OBJS 		:= $(addprefix $(OBJ_DIR), $(SRCS:$(SRC_DIR)%.c=%.o))
 
+INCLUDE 	:=	include/minirt.h
 
-INCLUDE 	:= include/minirt.h
-
-RED			:= \033[91;1m
-GREEN		:= \033[92;1m
-CLEAR_COLOR	:= \033[0m
-CYAN 		:= \033[96;1m
+RED			:=	\033[91;1m
+GREEN		:=	\033[92;1m
+CLEAR_COLOR	:=	\033[0m
+CYAN 		:=	\033[96;1m
 
 OS = $(shell uname)
 ifeq ($(OS), Linux)

@@ -34,30 +34,6 @@ t_camera_view	setup_test_camera(t_window window)
 	return (camera);
 }
 
-// vec_utils.c // cuentas que hay que hacer 
-// Escala un vector por un escalar: v * s
-t_vec4	vec4_scale(t_vec4 v, float s)
-{
-	return ((t_vec4){v[0] * s, v[1] * s, v[2] * s, v[3] * s});
-}
-
-// Suma de vectores: a + b
-t_vec4	vec4_add(t_vec4 a, t_vec4 b)
-{
-	return ((t_vec4){a[0] + b[0], a[1] + b[1], a[2] + b[2], a[3] + b[3]});
-}
-
-// Normaliza un vector
-t_vec4	vec4_normalize(t_vec4 v)
-{
-	float	len;
-
-	len = sqrtf(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
-	if (len == 0.0f)
-		return ((t_vec4){0, 0, 0, 0});
-	return ((t_vec4){v[0] / len, v[1] / len, v[2] / len, v[3]});
-}
-
 // Crea un rayo con un origen y una dirección específicos
 t_ray	mrt_create_ray(t_vec4 origin, t_vec4 direction)
 {
@@ -85,7 +61,7 @@ t_ray	mrt_generate_camera_ray(t_camera_view camera, float pixel_x, float pixel_y
 	return (mrt_create_ray(camera.origin, ray_dir));
 }
 
-// Devuelve el color del cielo en función de la dirección del rayo
+// Devuelve colors en función de la dirección del rayo
 t_vec4	mrt_ray_color(t_ray ray, t_data *elements)
 {
 	t_vec4	unit_dir;
@@ -179,7 +155,6 @@ void	mrt_draw_to_window(t_window window)
 		j++;
 	}
 }
-
 
 int	main(int argc, char **argv)
 {

@@ -213,5 +213,8 @@ int			mrt_read_file(char *file);
 //window
 t_window	mrt_setup_window(mlx_t **mlx);
 void		mrt_keyfuncion(mlx_key_data_t keydata, void *data);
-
+//operaciones de vectores
+t_vec4		vec4_normalize(t_vec4 v);
+t_vec4		vec4_add(t_vec4 a, t_vec4 b);
+t_vec4		vec4_scale(t_vec4 v, float s);
 #endif
