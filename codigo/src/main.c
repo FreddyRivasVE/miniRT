@@ -12,7 +12,42 @@
 
 #include "minirt.h"
 
-//borrar pero es una prueba
+bool	mrt_hit_sphere(t_ray ray, t_sphere sphere, float *t_hit)
+{
+	t_vec4	oc = ray.origin - sphere.center;
+	float	a = vec4_dot(ray.direction, ray.direction);
+	float	b = 2.0f * vec4_dot(oc, ray.direction);
+	float	c = vec4_dot(oc, oc) - (sphere.radius * sphere.radius);
+	float	discriminant = b * b - 4 * a * c;
+
+	if (discriminant < 0)
+		return (false);
+	*t_hit = (-b - sqrtf(discriminant)) / (2.0f * a);
+	return (*t_hit > 0);
+}
+ 
+/*
+ * Configura una cámara de prueba con parámetros básicos para renderizar la escena.
+ * 
+ * Esta cámara tiene:
+ * - Un viewport con altura fija de 2 unidades y ancho ajustado según la relación
+ *   de aspecto (ancho/alto) de la ventana para evitar distorsiones.
+ * - Una distancia focal fija (focal_length) de 1 unidad.
+ * - El origen de la cámara ubicado en (0,0,0).
+ * - Los vectores horizontal y vertical que definen el tamaño y orientación del viewport.
+ * - El punto bottom_left_corner que representa la esquina inferior izquierda del viewport
+ *   en el espacio 3D, calculado para centrar el viewport frente a la cámara.
+ * 
+ * Nota: debido al campo de visión (FOV) fijo, mover mucho la esfera puede hacer que se
+ * deforme visualmente, ya que no se está aplicando una corrección avanzada de perspectiva.
+ *
+ * Parámetros:
+ * - window: estructura que contiene el ancho y alto de la ventana para calcular la proporción.
+ *
+ * Retorna:
+ * - Un struct t_camera_view con los datos necesarios para generar los rayos de la cámara.
+ */
+
 t_camera_view	setup_test_camera(t_window window)
 {
 	t_camera_view	camera;
@@ -26,7 +61,7 @@ t_camera_view	setup_test_camera(t_window window)
 	t_vec4	bottom_left_corner = origin 
 		- horizontal * 0.5 
 		- vertical * 0.5 
-		- (t_vec4){0.0, 0.0, focal_length, 0.0};
+		- (t_vec4){0.0, 0.3, focal_length, 0.0};
 	camera.origin = origin;
 	camera.horizontal = horizontal;
 	camera.vertical = vertical;
@@ -61,21 +96,74 @@ t_ray	mrt_generate_camera_ray(t_camera_view camera, float pixel_x, float pixel_y
 	return (mrt_create_ray(camera.origin, ray_dir));
 }
 
-// Devuelve colors en función de la dirección del rayo
-t_vec4	mrt_ray_color(t_ray ray, t_data *elements)
-{
-	t_vec4	unit_dir;
-	float	t;
-	t_vec4	white;
-	t_vec4	blue;
+/**
+ * Calcula el color que debe tener un rayo lanzado desde la cámara en la escena.
+ * 
+ * Esta función determina si el rayo intersecta con una esfera fija en el espacio.
+ * Si hay intersección, calcula la iluminación en el punto de impacto
+ * usando un modelo simple con luz puntual que considera luz difusa y especular.
+ * Si no hay intersección, retorna un color de fondo degradado (skybox simple).
+ * 
+ * @param ray El rayo con origen y dirección desde la cámara.
+ * @param elements Puntero a elementos de la escena (no usado en esta versión).
+ * @return t_vec4 Color RGBA resultante para el rayo.
+ * 
+ * Proceso:
+ * 1. Define una esfera con centro en (0,0,-5) y radio 1.
+ * 2. Verifica si el rayo intersecta la esfera con mrt_hit_sphere().
+ * 3. Si hay impacto:
+ *    - Calcula el punto de impacto y el vector normal en ese punto.
+ *    - Define una luz puntual con componentes difusa y especular.
+ *    - Calcula la intensidad de la luz difusa basada en el ángulo entre normal y dirección de luz.
+ *    - Calcula la intensidad especular basada en el ángulo entre la dirección de vista y el vector reflejado.
+ *    - Suma el color base de la esfera con las componentes difusa y especular.
+ * 4. Si no hay impacto:
+ *    - Calcula un color de fondo degradado entre blanco y azul en función de la dirección del rayo.
+ */
 
-	(void)elements;
-	unit_dir = vec4_normalize(ray.direction);
-	t = 0.5f * (unit_dir[1] + 1.0f);  // componente Y del vector
-	white = (t_vec4){1.0f, 1.0f, 1.0f, 0.0f}; // blanco
-	blue = (t_vec4){0.5f, 0.7f, 1.0f, 0.0f};  // azul cielo
+t_vec4 mrt_ray_color(t_ray ray, t_data *elements)
+{
+	t_sphere sphere;
+	t_vec4 center = (t_vec4){0.0f, 0.0f, -5.0f, 0.0f};
+	sphere.center = center;
+	sphere.radius = 1.0f;
+
+	elements = NULL;
+	float t_hit;
+	if (mrt_hit_sphere(ray, sphere, &t_hit))
+	{
+		t_point_light light = {
+			.position = (t_vec4){10.0f, 10.0f, -5.0f, 0.0f},
+			.diff_color = (t_vec4){0.5f, 0.5f, 0.5f, 0.0f},
+			.diff_power = 1.0f,
+			.spec_color = (t_vec4){0.2f, 0.2f, 0.2f, 0.0f},
+			.spec_power = 0.5f
+		};
+		t_vec4 point = ray.origin + vec4_scale(ray.direction, t_hit);
+		t_vec4 normal = vec4_normalize(point - sphere.center);
+		t_vec4 light_dir = vec4_normalize(light.position - point);
+
+		float diff_intensity = fmax(0.0f, vec4_dot(normal, light_dir)) * light.diff_power;
+		t_vec4 diff = vec4_scale(light.diff_color, diff_intensity);
+
+		t_vec4 view_dir = vec4_normalize(ray.origin - point);
+		t_vec4 reflect_dir = vec4_reflect(vec4_scale(light_dir, -1.0f), normal);
+		float shininess = 32.0f;
+		float spec_intensity = powf(fmax(0.0f, vec4_dot(view_dir, reflect_dir)), shininess) * light.spec_power;
+		t_vec4 spec = vec4_scale(light.spec_color, spec_intensity);
+
+		t_vec4 base_color = (t_vec4){0.8f, 0.6f, 0.0f, 0.0f};
+		return (vec4_add(base_color, vec4_add(diff, spec)));
+	}
+
+	// Fondo degradado
+	t_vec4 unit_dir = vec4_normalize(ray.direction);
+	float t = 0.5f * (unit_dir[1] + 1.0f);
+	t_vec4 white = (t_vec4){1.0f, 1.0f, 1.0f, 0.0f};
+	t_vec4 blue = (t_vec4){0.5f, 0.9f, 1.0f, 0.0f};
 	return (vec4_add(vec4_scale(white, 1.0f - t), vec4_scale(blue, t)));
 }
+
 
 /**
  * Crea un color en formato RGBA codificado en un solo entero de 32 bits.

@@ -23,7 +23,7 @@
 # include "../libs/libft/libft.h"
 # include "MLX42/MLX42.h"
 
-# define WIDTH 800
+# define WIDTH 1200
 # define ASPECT_RATIO 1.7777777778 // producto de 16 % 8
 
 typedef enum e_obj_type
@@ -217,4 +217,8 @@ void		mrt_keyfuncion(mlx_key_data_t keydata, void *data);
 t_vec4		vec4_normalize(t_vec4 v);
 t_vec4		vec4_add(t_vec4 a, t_vec4 b);
 t_vec4		vec4_scale(t_vec4 v, float s);
+float		vec4_dot(t_vec4 a, t_vec4 b);
+t_vec4		vec4_sub(t_vec4 a, t_vec4 b);
+t_vec4		vec4_reflect(t_vec4 v, t_vec4 n);
+
 #endif
