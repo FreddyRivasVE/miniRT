@@ -12,14 +12,47 @@
 
 #include "minirt.h"
 
+/**
+ * Calcula si un rayo intersecta una esfera en el espacio 3D.
+ *
+ * Esta función resuelve la ecuación cuadrática que surge al sustituir
+ * la ecuación del rayo en la ecuación implícita de una esfera:
+ *
+ *    |P(t) - C|^2 = r^2   donde P(t) = O + tD
+ *
+ * P(t): punto del rayo en función de t
+ * C: centro de la esfera
+ * r: radio de la esfera
+ * O: origen del rayo
+ * D: dirección del rayo
+ *
+ * Se obtiene una ecuación de segundo grado en t:
+ *    at^2 + bt + c = 0
+ * y se calcula su discriminante para saber si hay intersección.
+ *
+ * Si hay colisión, se guarda en *t_hit el valor más cercano de t > 0
+ * (es decir, la distancia desde el origen del rayo al punto de impacto)
+ * y se retorna true.
+ * 
+ * @param ray     El rayo con origen y dirección
+ * @param sphere  La esfera con centro y radio
+ * @param t_hit   Puntero donde se guarda la distancia al punto de colisión
+ * @return        true si hay intersección visible, false si no
+ */
+
 bool	mrt_hit_sphere(t_ray ray, t_sphere sphere, float *t_hit)
 {
-	t_vec4	oc = ray.origin - sphere.center;
-	float	a = vec4_dot(ray.direction, ray.direction);
-	float	b = 2.0f * vec4_dot(oc, ray.direction);
-	float	c = vec4_dot(oc, oc) - (sphere.radius * sphere.radius);
-	float	discriminant = b * b - 4 * a * c;
+	t_vec4	oc;
+	float	a;
+	float	b;
+	float	c;
+	float	discriminant;
 
+	oc = ray.origin - sphere.center;
+	a = vec4_dot(ray.direction, ray.direction);
+	b = 2.0f * vec4_dot(oc, ray.direction);
+	c = vec4_dot(oc, oc) - (sphere.radius * sphere.radius);
+	discriminant = b * b - 4 * a * c;
 	if (discriminant < 0)
 		return (false);
 	*t_hit = (-b - sqrtf(discriminant)) / (2.0f * a);
@@ -124,9 +157,9 @@ t_ray	mrt_generate_camera_ray(t_camera_view camera, float pixel_x, float pixel_y
 t_vec4 mrt_ray_color(t_ray ray, t_data *elements)
 {
 	t_sphere sphere;
-	t_vec4 center = (t_vec4){0.0f, 0.0f, -5.0f, 0.0f};
+	t_vec4 center = (t_vec4){0.0f, 0.0f, -3.0f, 0.0f};
 	sphere.center = center;
-	sphere.radius = 1.0f;
+	sphere.radius = 0.5f;
 
 	elements = NULL;
 	float t_hit;
@@ -155,7 +188,6 @@ t_vec4 mrt_ray_color(t_ray ray, t_data *elements)
 		t_vec4 base_color = (t_vec4){0.8f, 0.6f, 0.0f, 0.0f};
 		return (vec4_add(base_color, vec4_add(diff, spec)));
 	}
-
 	// Fondo degradado
 	t_vec4 unit_dir = vec4_normalize(ray.direction);
 	float t = 0.5f * (unit_dir[1] + 1.0f);
@@ -163,7 +195,6 @@ t_vec4 mrt_ray_color(t_ray ray, t_data *elements)
 	t_vec4 blue = (t_vec4){0.5f, 0.9f, 1.0f, 0.0f};
 	return (vec4_add(vec4_scale(white, 1.0f - t), vec4_scale(blue, t)));
 }
-
 
 /**
  * Crea un color en formato RGBA codificado en un solo entero de 32 bits.
@@ -185,6 +216,22 @@ int	create_rgba(int r, int g, int b, int a)
 {
 	return (r << 24 | g << 16 | b << 8 | a);
 }
+
+/**
+ * Limita un valor flotante dentro de un rango dado.
+ *
+ * Si el valor `x` es menor que `min`, devuelve `min`.
+ * Si el valor `x` es mayor que `max`, devuelve `max`.
+ * Si `x` está dentro del rango `[min, max]`, lo devuelve sin cambios.
+ *
+ * Es útil para asegurar que un valor permanezca dentro de un intervalo
+ * válido, por ejemplo, para colores en el rango [0.0, 1.0].
+ *
+ * @param x   Valor a limitar
+ * @param min Límite inferior
+ * @param max Límite superior
+ * @return    Valor clamped entre min y max
+ */
 
 float	clamp_float(float x, float min, float max)
 {

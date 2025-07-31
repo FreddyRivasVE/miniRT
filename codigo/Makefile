@@ -13,7 +13,7 @@
 NAME		:= miniRT
 
 CC 			:= cc
-CFLAGS		:= -Wall -Wextra -Werror -g3 -fsanitize=address
+CFLAGS		:= -Wall -Wextra -Werror #-g3 -fsanitize=address
 
 MLX42_DIR	:=	libs/MLX42
 MLX42 		:= 	$(MLX42_DIR)/build/libmlx42.a
@@ -87,7 +87,7 @@ valgrind:
 		--track-origins=yes \
 		--suppressions=valgrind/valgrind.sup \
 		--log-file=valgrind/informe \
-		./$(NAME)
+		./$(NAME) ejemplo.rt
 
 norminette:
 	@norminette $(SRCS)

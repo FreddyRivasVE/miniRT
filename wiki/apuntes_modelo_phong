@@ -1,0 +1,187 @@
+
+## 💡 MODELO COMPLETO DE PHONG
+
+El modelo de iluminación de **Phong** simula cómo se comporta la luz cuando choca con una superficie. Tiene **tres componentes**:
+
+---
+
+### 1. ☀️ **Luz ambiental (ambient light)**
+
+* Ilumina todo por igual, incluso en sombras.
+* Simula la luz reflejada por el entorno.
+* **Constante**, no depende de la dirección.
+
+```c
+color_ambient = ambient_light_color * object_color;
+```
+
+---
+
+### 2. 🌤️ **Luz difusa (diffuse)**
+
+* Simula la luz que **golpea una superficie mate (opaca)**.
+* Más luz si el rayo de luz choca perpendicular a la superficie.
+* Calculada con el **producto punto entre la normal y la dirección de la luz**:
+
+```c
+diffuse_intensity = max(dot(normal, light_dir), 0);
+color_diffuse = diffuse_intensity * light_color * object_color;
+```
+
+---
+
+### 3. ✨ **Luz especular (specular)**
+
+* Simula **brillos**, como el reflejo en un objeto pulido o metálico.
+
+* Depende del ángulo entre:
+
+  * la dirección a la cámara (**view\_dir**),
+  * y la dirección de la **reflexión de la luz** (**reflect\_dir**).
+
+* Fórmula:
+
+```c
+reflect_dir = reflect(-light_dir, normal);
+specular_intensity = pow(max(dot(view_dir, reflect_dir), 0.0), shininess);
+color_specular = specular_intensity * light_color * specular_strength;
+```
+
+* `shininess`: número grande = reflejo más nítido.
+* `specular_strength`: cuánto influye la especular en total.
+
+---
+
+## 🎨 ¿Cómo saber si una superficie es opaca, pulida o metálica?
+
+En **miniRT**, vos como programadora tenés que definir eso.
+
+### En la versión básica:
+
+* No se diferencia entre materiales.
+* Solo usás el color del objeto y aplicás ambient + diffuse.
+
+### En el **bonus con Phong completo**, podés:
+
+#### 💡 OPCIÓN 1: Definir materiales manualmente en `.rt`
+
+Agregar algo como:
+
+```
+sp 0,0,0 1 255,0,0  shininess:50 specular:0.3
+pl 0,-1,0 0,1,0 128,128,128  shininess:5 specular:0.0
+```
+
+Y luego, cuando hacés el shading:
+
+* Si `shininess` es bajo y `specular` ≈ 0 → superficie **opaca/mate**.
+* Si `shininess` es alto y `specular` alto → **pulida/metálica**.
+
+#### 💡 OPCIÓN 2: Asumir materiales por objeto
+
+Por ejemplo:
+
+* Esfera → material pulido.
+* Plano → material opaco.
+* Cilindro → metálico.
+
+Esto es más limitado, pero más simple.
+
+---
+
+### 🧠 Resumen visual:
+
+| Superficie        | ¿Refleja luz difusa? | ¿Refleja luz especular? | Valores típicos                      |
+| ----------------- | -------------------- | ----------------------- | ------------------------------------ |
+| Opaca (mate)      | ✅ Sí                 | ❌ No                    | `specular = 0.0`, `shininess = 5`    |
+| Pulida (plástico) | ✅ Sí                 | ✅ Sí                    | `specular = 0.3`, `shininess = 50`   |
+| Metálica          | ❌ Poco diffuse       | ✅ Mucha specular        | `specular = 0.7`, `shininess = 100+` |
+
+---
+
+## 🎨 ¿Qué pasa si la luz tiene color?
+
+Cuando una luz tiene color (por ejemplo, roja, azul, amarilla), **ese color se mezcla con el color del objeto**, modificando el resultado final del shading (iluminación).
+
+---
+
+### 🧠 ¿Cómo se calcula?
+
+Supongamos que:
+
+* La luz es **roja** → `light_color = (1.0, 0.0, 0.0)`
+* El objeto es **blanco** → `object_color = (1.0, 1.0, 1.0)`
+
+Entonces:
+
+* La **luz difusa** se calcula como:
+
+  ```c
+  diffuse = light_color * object_color * intensidad
+          = (1.0, 0.0, 0.0) * (1.0, 1.0, 1.0) * intensidad
+          = (intensidad, 0.0, 0.0) // Solo rojo
+  ```
+
+Resultado: **el objeto blanco se verá rojizo si lo ilumina una luz roja**.
+
+---
+
+### 💡 Ejemplo con Phong completo
+
+Supongamos:
+
+* `light_color = (0.5, 0.8, 1.0)` (celeste claro)
+* `object_color = (1.0, 0.0, 0.0)` (rojo)
+* `diffuse_intensity = 0.7`
+* `specular_intensity = 0.3`
+
+Entonces:
+
+```c
+color_diffuse = light_color * object_color * diffuse_intensity
+              = (0.5, 0.8, 1.0) * (1.0, 0.0, 0.0) * 0.7
+              = (0.35, 0.0, 0.0)  // Solo se mezcla el rojo
+
+color_specular = light_color * specular_intensity * specular_strength
+               = (0.5, 0.8, 1.0) * 0.3 * 0.5
+               = (0.075, 0.12, 0.15)  // Celeste brillante
+```
+
+### Resultado final:
+
+```c
+final_color = ambient + diffuse + specular
+```
+
+El objeto se verá rojo con brillos celestes, porque **el color de la luz especular no depende del color del objeto**, solo de la luz.
+
+---
+
+## 🛠️ ¿Cómo se usa en miniRT?
+
+En el archivo `.rt` podés tener luces con color, como:
+
+```
+L 10,10,10 0.8 255,200,100
+```
+
+Esto significa:
+
+* Posición: `10,10,10`
+* Intensidad: `0.8`
+* Color: RGB amarillo-anaranjado
+
+Tenés que **convertir el color de luz a valores entre 0.0 y 1.0** al usarlo en los cálculos.
+
+---
+
+### 🎯 En resumen:
+
+| Tipo de luz  | ¿Color influye? | ¿Cómo afecta?                                    |
+| ------------ | --------------- | ------------------------------------------------ |
+| **Ambient**  | ✅ Sí            | Mezclado con color del objeto                    |
+| **Diffuse**  | ✅ Sí            | Se mezcla con color del objeto                   |
+| **Specular** | ✅ Sí            | Refleja el **color de la luz**, no el del objeto |
+
+---
+

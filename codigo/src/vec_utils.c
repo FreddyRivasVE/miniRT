@@ -59,7 +59,6 @@ float	vec4_dot(t_vec4 a, t_vec4 b)
 	return (a[0] * b[0] + a[1] * b[1] + a[2] * b[2]);
 }
 
-
 /* 
  * Escala un vector por un escalar: v * s
  * Multiplica cada componente del vector 'v' por el escalar 's'.

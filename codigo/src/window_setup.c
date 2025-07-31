@@ -18,7 +18,7 @@ t_window	mrt_setup_window(mlx_t **mlx)
 
 	window.width = WIDTH;
 	window.height = (int)(window.width / ASPECT_RATIO);
-	*mlx = mlx_init(window.width, window.height, "miniRT", false);
+	*mlx = mlx_init(window.width, window.height, "miniRT", true);
 	window.image = mlx_new_image(*mlx, window.width, window.height);
 	return (window);
 }
