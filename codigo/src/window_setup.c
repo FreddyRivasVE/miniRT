@@ -18,7 +18,7 @@ t_window	mrt_setup_window(mlx_t **mlx)
 
 	window.width = WIDTH;
 	window.height = (int)(window.width / ASPECT_RATIO);
-	*mlx = mlx_init(window.width, window.height, "miniRT", true);
+	*mlx = mlx_init(window.width, window.height, "miniRT", false);
 	window.image = mlx_new_image(*mlx, window.width, window.height);
 	return (window);
 }
@@ -27,7 +27,7 @@ void	mrt_keyfuncion(mlx_key_data_t keydata, void *data)
 {
 	mlx_t	*mlx;
 
-	(void)keydata;  // para evitar warning
+	(void)keydata;
 	mlx = (mlx_t *)data;
 	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(mlx);

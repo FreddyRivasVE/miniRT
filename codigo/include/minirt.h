@@ -23,7 +23,7 @@
 # include "../libs/libft/libft.h"
 # include "MLX42/MLX42.h"
 
-# define WIDTH 1200
+# define WIDTH 1980
 # define ASPECT_RATIO 1.7777777778 // producto de 16 % 8
 
 typedef enum e_obj_type

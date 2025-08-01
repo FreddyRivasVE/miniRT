@@ -12,6 +12,70 @@
 
 #include "minirt.h"
 
+/*
+ * Configura una cámara de prueba con parámetros básicos para renderizar la escena.
+ * 
+ * Esta cámara tiene:
+ * - Un viewport con altura fija de 2 unidades y ancho ajustado según la relación
+ *   de aspecto (ancho/alto) de la ventana para evitar distorsiones.
+ * - Una distancia focal fija (focal_length) de 1 unidad.
+ * - El origen de la cámara ubicado en (0,0,0).
+ * - Los vectores horizontal y vertical que definen el tamaño y orientación del viewport.
+ * - El punto bottom_left_corner que representa la esquina inferior izquierda del viewport
+ *   en el espacio 3D, calculado para centrar el viewport frente a la cámara.
+ * 
+ * Nota: debido al campo de visión (FOV) fijo, mover mucho la esfera puede hacer que se
+ * deforme visualmente, ya que no se está aplicando una corrección avanzada de perspectiva.
+ *
+ * Parámetros:
+ * - window: estructura que contiene el ancho y alto de la ventana para calcular la proporción.
+ *
+ * Retorna:
+ * - Un struct t_camera_view con los datos necesarios para generar los rayos de la cámara.
+ */
+
+t_camera_view	setup_test_camera(t_window window)
+{
+	t_camera_view	camera;
+	float			viewport_height = 2.0;
+	float			viewport_width = viewport_height * ((float)window.width / window.height);
+	float			focal_length = 1.0;
+
+	t_vec4	origin = (t_vec4){0.0, 0.0, 0.0, 0.0};
+	t_vec4	horizontal = (t_vec4){viewport_width, 0.0, 0.0, 0.0};
+	t_vec4	vertical = (t_vec4){0.0, viewport_height, 0.0, 0.0};
+	t_vec4	bottom_left_corner = origin
+		- horizontal * 0.5 
+		- vertical * 0.5 
+		- (t_vec4){0.0, 0.0, focal_length, 0.0};
+	camera.origin = origin;
+	camera.horizontal = horizontal;
+	camera.vertical = vertical;
+	camera.bottom_left_corner = bottom_left_corner;
+	return (camera);
+}
+
+t_point_light setup_test_light(void)
+{
+	t_point_light	light;
+
+	light.position = (t_vec4){0.0f, 5.0f, -2.0f, 0.0f};
+	light.diff_color = (t_vec4){0.5f, 0.5f, 0.5f, 0.0f};
+	light.diff_power = 1.0f;
+	light.spec_color = (t_vec4){0.2f, 0.2f, 0.2f, 0.0f};
+	light.spec_power = 0.5f;
+	return (light);
+}
+
+t_sphere	setup_test_sphere(void)
+{
+	t_sphere	sphere;
+
+	sphere.center = (t_vec4){0.0f, 0.0f, -8.0f, 0.0f};
+	sphere.radius = 0.8f;
+	return (sphere);
+}
+
 /**
  * Calcula si un rayo intersecta una esfera en el espacio 3D.
  *
@@ -59,49 +123,6 @@ bool	mrt_hit_sphere(t_ray ray, t_sphere sphere, float *t_hit)
 	return (*t_hit > 0);
 }
  
-/*
- * Configura una cámara de prueba con parámetros básicos para renderizar la escena.
- * 
- * Esta cámara tiene:
- * - Un viewport con altura fija de 2 unidades y ancho ajustado según la relación
- *   de aspecto (ancho/alto) de la ventana para evitar distorsiones.
- * - Una distancia focal fija (focal_length) de 1 unidad.
- * - El origen de la cámara ubicado en (0,0,0).
- * - Los vectores horizontal y vertical que definen el tamaño y orientación del viewport.
- * - El punto bottom_left_corner que representa la esquina inferior izquierda del viewport
- *   en el espacio 3D, calculado para centrar el viewport frente a la cámara.
- * 
- * Nota: debido al campo de visión (FOV) fijo, mover mucho la esfera puede hacer que se
- * deforme visualmente, ya que no se está aplicando una corrección avanzada de perspectiva.
- *
- * Parámetros:
- * - window: estructura que contiene el ancho y alto de la ventana para calcular la proporción.
- *
- * Retorna:
- * - Un struct t_camera_view con los datos necesarios para generar los rayos de la cámara.
- */
-
-t_camera_view	setup_test_camera(t_window window)
-{
-	t_camera_view	camera;
-	float			viewport_height = 2.0;
-	float			viewport_width = viewport_height * ((float)window.width / window.height);
-	float			focal_length = 1.0;
-
-	t_vec4	origin = (t_vec4){0.0, 0.0, 0.0, 0.0};
-	t_vec4	horizontal = (t_vec4){viewport_width, 0.0, 0.0, 0.0};
-	t_vec4	vertical = (t_vec4){0.0, viewport_height, 0.0, 0.0};
-	t_vec4	bottom_left_corner = origin 
-		- horizontal * 0.5 
-		- vertical * 0.5 
-		- (t_vec4){0.0, 0.3, focal_length, 0.0};
-	camera.origin = origin;
-	camera.horizontal = horizontal;
-	camera.vertical = vertical;
-	camera.bottom_left_corner = bottom_left_corner;
-	return (camera);
-}
-
 // Crea un rayo con un origen y una dirección específicos
 t_ray	mrt_create_ray(t_vec4 origin, t_vec4 direction)
 {
@@ -156,35 +177,25 @@ t_ray	mrt_generate_camera_ray(t_camera_view camera, float pixel_x, float pixel_y
 
 t_vec4 mrt_ray_color(t_ray ray, t_data *elements)
 {
-	t_sphere sphere;
-	t_vec4 center = (t_vec4){0.0f, 0.0f, -3.0f, 0.0f};
-	sphere.center = center;
-	sphere.radius = 0.5f;
+	t_sphere		sphere;
+	t_point_light	light;
+	float			t_hit;
 
 	elements = NULL;
-	float t_hit;
+	sphere = setup_test_sphere();
+	light = setup_test_light();
 	if (mrt_hit_sphere(ray, sphere, &t_hit))
 	{
-		t_point_light light = {
-			.position = (t_vec4){10.0f, 10.0f, -5.0f, 0.0f},
-			.diff_color = (t_vec4){0.5f, 0.5f, 0.5f, 0.0f},
-			.diff_power = 1.0f,
-			.spec_color = (t_vec4){0.2f, 0.2f, 0.2f, 0.0f},
-			.spec_power = 0.5f
-		};
 		t_vec4 point = ray.origin + vec4_scale(ray.direction, t_hit);
 		t_vec4 normal = vec4_normalize(point - sphere.center);
 		t_vec4 light_dir = vec4_normalize(light.position - point);
-
 		float diff_intensity = fmax(0.0f, vec4_dot(normal, light_dir)) * light.diff_power;
 		t_vec4 diff = vec4_scale(light.diff_color, diff_intensity);
-
 		t_vec4 view_dir = vec4_normalize(ray.origin - point);
 		t_vec4 reflect_dir = vec4_reflect(vec4_scale(light_dir, -1.0f), normal);
 		float shininess = 32.0f;
 		float spec_intensity = powf(fmax(0.0f, vec4_dot(view_dir, reflect_dir)), shininess) * light.spec_power;
 		t_vec4 spec = vec4_scale(light.spec_color, spec_intensity);
-
 		t_vec4 base_color = (t_vec4){0.8f, 0.6f, 0.0f, 0.0f};
 		return (vec4_add(base_color, vec4_add(diff, spec)));
 	}
@@ -196,7 +207,7 @@ t_vec4 mrt_ray_color(t_ray ray, t_data *elements)
 	return (vec4_add(vec4_scale(white, 1.0f - t), vec4_scale(blue, t)));
 }
 
-/**
+/* 
  * Crea un color en formato RGBA codificado en un solo entero de 32 bits.
  *
  * @param r Componente rojo (0-255)
@@ -211,11 +222,12 @@ t_vec4 mrt_ray_color(t_ray ray, t_data *elements)
 	g << 16 → mueve el verde 16 bits a la izquierda
 	b << 8 → mueve el azul 8 bits a la izquierda
 	a → se queda en los 8 bits más bajos (sin desplazamiento)
- */
-int	create_rgba(int r, int g, int b, int a)
+
+
+int create_rgba(int r, int g, int b, int a)
 {
 	return (r << 24 | g << 16 | b << 8 | a);
-}
+}*/
 
 /**
  * Limita un valor flotante dentro de un rango dado.
@@ -233,7 +245,7 @@ int	create_rgba(int r, int g, int b, int a)
  * @return    Valor clamped entre min y max
  */
 
-float	clamp_float(float x, float min, float max)
+float	mrt_clamp_float(float x, float min, float max)
 {
 	if (x < min)
 		return (min);
@@ -242,12 +254,12 @@ float	clamp_float(float x, float min, float max)
 	return (x);
 }
 
-/**
+/* 
  * Escribe un color en el pixel (x, y) de la imagen, convirtiendo valores
  * flotantes de color en el rango [0.0, 1.0] a enteros [0, 255].
  *
  * @param color Vector t_vec4 con los componentes R, G, B
- * (el 4to valor se ignora pero es el canal de opacidad)
+ * (el 4to valor se ignora pero es el canal de opacidad/alfa)
  * @param x Posición horizontal del pixel
  * @param y Posición vertical del pixel
  * @param window Estructura de ventana que contiene
@@ -255,16 +267,18 @@ float	clamp_float(float x, float min, float max)
  *  Se usa 255.99 en lugar de 255.0 para evitar un borde en el redondeo:
 	sin ese .99, un valor como 0.999 podría truncarse a 254 en lugar de 255.
  */
+
 void	mrt_put_color(t_vec4 color, int x, int y, t_window window)
 {
-	int	read_int;
-	int	green_int;
-	int	blue_int;
+	int			index;
+	uint8_t		*pixels;
 
-	read_int = (int)(255.99 * clamp_float(color[0], 0, 0.999));
-	green_int = (int)(255.99 * clamp_float(color[1], 0, 0.999));
-	blue_int = (int)(255.99 * clamp_float(color[2], 0, 0.999));
-	mlx_put_pixel(window.image, x, window.height - y - 1, create_rgba(read_int, green_int, blue_int, 255));
+	index = (y * window.width + x) * 4;
+	pixels = window.image->pixels;
+	pixels[index] = (uint8_t)(255.99 * mrt_clamp_float(color[0], 0, 0.999));
+	pixels[index + 1] = (uint8_t)(255.99 * mrt_clamp_float(color[1], 0, 0.999));
+	pixels[index + 2] = (uint8_t)(255.99 * mrt_clamp_float(color[2], 0, 0.999));
+	pixels[index + 3] = 255;
 }
 
 void	mrt_draw_to_window(t_window window)
