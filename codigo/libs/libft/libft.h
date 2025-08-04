@@ -80,5 +80,5 @@ size_t		ft_strspn(const char *s, const char *accept);
 size_t		ft_strcspn(const char *s, const char *reject);
 size_t		ft_seek_lastc(char *str, char c);
 void		ft_print_error(char *msj);
-int			ft_isspace(int c)
+int			ft_isspace(int c);
 #endif
