@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/05 18:33:31 by brivera           #+#    #+#             */
-/*   Updated: 2025/04/05 18:55:48 by brivera@stu      ###   ########.fr       */
+/*   Updated: 2025/08/04 13:49:06 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,4 +80,5 @@ size_t		ft_strspn(const char *s, const char *accept);
 size_t		ft_strcspn(const char *s, const char *reject);
 size_t		ft_seek_lastc(char *str, char c);
 void		ft_print_error(char *msj);
+int			ft_isspace(int c)
 #endif

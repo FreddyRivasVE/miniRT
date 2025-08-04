@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 21:16:28 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/04 12:58:50 by frivas           ###   ########.fr       */
+/*   Updated: 2025/08/04 14:18:08 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,17 @@ int	mrt_upload_row_data(char *line, t_row_data *r_data)
 		r_data->r_cylinder = ft_strdup(line);
 	else
 		return (0);
+	if (!r_data->r_amb_light || !r_data->r_camera || !r_data->r_light)
+		return (0);
 	return (1);
 }
+
+int	mrt_check_row_data(t_row_data *r_data)
+{
+	if (!mrt_check_ambient(&r_data))
+		return (0);
+}
+
 
 int	mrt_read_file(char *file)
 {
@@ -62,15 +71,15 @@ int	mrt_read_file(char *file)
 		return (false);
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
-		return (perror("Error"), false);
+		return (perror("Error\n No se puede abrir el archivo"), false);
 	while (1)
 	{
 		line = get_next_line(fd);
 		if (!line)
 			break ;
-		if (mrt_upload_row_data(line, &r_data) == 0)
+		if ((mrt_upload_row_data(line, &r_data) == 0)
+			|| (mrt_check_row_data(&r_data) == 0))
 			return (ft_print_error("Error\n Argumentos errados!"), false);
-		//printf("%s", line); //borrar
 		ft_free_ptr((void *)&line);
 	}
 	close(fd);

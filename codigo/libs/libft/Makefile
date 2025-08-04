@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: brivera@student.42madrid.com <brivera>     +#+  +:+       +#+         #
+#    By: frivas <frivas@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/25 10:33:30 by brivera           #+#    #+#              #
-#    Updated: 2025/04/05 18:48:00 by brivera@stu      ###   ########.fr        #
+#    Updated: 2025/08/04 13:49:46 by frivas           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ SRC = $(SRC_DIR)/ft_isalpha.c $(SRC_DIR)/ft_isdigit.c $(SRC_DIR)/ft_isalnum.c \
 	  $(SRC_DIR)/ft_lstsize_bonus.c $(SRC_DIR)/ft_lstlast_bonus.c \
 	  $(SRC_DIR)/ft_lstadd_back_bonus.c $(SRC_DIR)/ft_lstdelone_bonus.c \
 	  $(SRC_DIR)/ft_lstclear_bonus.c $(SRC_DIR)/ft_lstiter_bonus.c \
-	  $(SRC_DIR)/ft_lstmap_bonus.c
+	  $(SRC_DIR)/ft_lstmap_bonus.c $(SRC_DIR)/ft_isspace.c
 
 OBJ_DIR = src/obj
 OBJ = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
