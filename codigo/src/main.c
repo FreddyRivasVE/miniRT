@@ -76,6 +76,33 @@ t_sphere	setup_test_sphere(void)
 	return (sphere);
 }
 
+t_plane	setup_test_plane(void)
+{
+	t_plane plane;
+
+	plane.point = (t_vec4){0.0f, 0.0f, 0.0f, 0.0f};
+	plane.normal = (t_vec4){0.0f, 1.0f, 0.0f, 0.0f};
+	return (plane);
+}
+
+bool	mrt_hit_plane(t_ray ray, t_plane plane, float *t_hit)
+{
+	float	denom;
+	float	t;
+	t_vec4	polo;
+
+	denom = vec4_dot(plane.normal, ray.direction);
+	if (fabs(denom) < 1e-6) // casi 0, el rayo es paralelo
+		return (false);
+	polo = plane.point - ray.origin;
+	t = vec4_dot(polo, plane.normal) / denom;
+	if (t < 0)
+		return (false); // intersección detrás del origen
+	*t_hit = t;
+	return (true);
+}
+
+
 /**
  * Calcula si un rayo intersecta una esfera en el espacio 3D.
  *
@@ -177,16 +204,18 @@ t_ray	mrt_generate_camera_ray(t_camera_view camera, float pixel_x, float pixel_y
 
 t_vec4 mrt_ray_color(t_ray ray, t_data *elements)
 {
-	t_sphere		sphere;
-	t_point_light	light;
-	float			t_hit;
+	t_sphere		sphere = setup_test_sphere();
+	t_plane			plane = setup_test_plane();
+	t_point_light	light = setup_test_light();
+	float			t_sphere_hit;
+	float			t_plane_hit;
+	bool			hit_sphere = mrt_hit_sphere(ray, sphere, &t_sphere_hit);
+	bool			hit_plane = mrt_hit_plane(ray, plane, &t_plane_hit);
 
 	elements = NULL;
-	sphere = setup_test_sphere();
-	light = setup_test_light();
-	if (mrt_hit_sphere(ray, sphere, &t_hit))
+	if (hit_sphere && (!hit_plane || t_sphere_hit < t_plane_hit))
 	{
-		t_vec4 point = ray.origin + vec4_scale(ray.direction, t_hit);
+		t_vec4 point = ray.origin + vec4_scale(ray.direction, t_sphere_hit);
 		t_vec4 normal = vec4_normalize(point - sphere.center);
 		t_vec4 light_dir = vec4_normalize(light.position - point);
 		float diff_intensity = fmax(0.0f, vec4_dot(normal, light_dir)) * light.diff_power;
@@ -196,16 +225,26 @@ t_vec4 mrt_ray_color(t_ray ray, t_data *elements)
 		float shininess = 32.0f;
 		float spec_intensity = powf(fmax(0.0f, vec4_dot(view_dir, reflect_dir)), shininess) * light.spec_power;
 		t_vec4 spec = vec4_scale(light.spec_color, spec_intensity);
-		t_vec4 base_color = (t_vec4){0.8f, 0.6f, 0.0f, 0.0f};
+		t_vec4 base_color = (t_vec4){0.8f, 0.6f, 0.0f, 0.0f}; // color de la esfera
 		return (vec4_add(base_color, vec4_add(diff, spec)));
 	}
-	// Fondo degradado
+	else if (hit_plane)
+	{
+		t_vec4 point = ray.origin + vec4_scale(ray.direction, t_plane_hit);
+		t_vec4 normal = vec4_normalize(plane.normal);
+		t_vec4 light_dir = vec4_normalize(light.position - point);
+		float diff_intensity = fmax(0.0f, vec4_dot(normal, light_dir)) * light.diff_power;
+		t_vec4 diff = vec4_scale(light.diff_color, diff_intensity);
+		t_vec4 base_color = (t_vec4){0.2f, 0.5f, 0.2f, 0.0f}; // color del plano
+		return (vec4_add(base_color, diff)); // sin especular por ahora
+	}
 	t_vec4 unit_dir = vec4_normalize(ray.direction);
 	float t = 0.5f * (unit_dir[1] + 1.0f);
 	t_vec4 white = (t_vec4){1.0f, 1.0f, 1.0f, 0.0f};
 	t_vec4 blue = (t_vec4){0.5f, 0.9f, 1.0f, 0.0f};
 	return (vec4_add(vec4_scale(white, 1.0f - t), vec4_scale(blue, t)));
 }
+
 
 /* 
  * Crea un color en formato RGBA codificado en un solo entero de 32 bits.
