@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:14:15 by brivera           #+#    #+#             */
-/*   Updated: 2025/07/28 20:10:54 by brivera          ###   ########.fr       */
+/*   Updated: 2025/08/04 11:03:01 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,16 @@
 
 # define WIDTH 1980
 # define ASPECT_RATIO 1.7777777778 // producto de 16 % 8
+
+typedef struct s_row_data
+{
+	char	*r_amb_light;
+	char	*r_camera;
+	char	*r_light;
+	char	*r_sphere;
+	char	*r_plane;
+	char	*r_cylinder;
+}	t_row_data;
 
 typedef enum e_obj_type
 {
