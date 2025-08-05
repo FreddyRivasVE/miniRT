@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mrt_create_render.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera <brivera@student.42madrid.com>     #+#  +:+       +#+        */
+/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-08-05 13:03:36 by brivera           #+#    #+#             */
-/*   Updated: 2025-08-05 13:03:36 by brivera          ###   ########.fr       */
+/*   Created: 2025/08/05 13:03:36 by brivera           #+#    #+#             */
+/*   Updated: 2025/08/05 21:14:24 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,77 +32,7 @@
  *
  * Retorna:
  * - Un struct t_camera_view con los datos necesarios para generar los rayos de la cámara.
- */
-
-t_camera_view	setup_test_camera(t_window window)
-{
-	t_camera_view	camera;
-	float			viewport_height = 2.0;
-	float			viewport_width = viewport_height * ((float)window.width / window.height);
-	float			focal_length = 1.0;
-
-	t_vec4	origin = (t_vec4){0.0, 0.0, 0.0, 0.0};
-	t_vec4	horizontal = (t_vec4){viewport_width, 0.0, 0.0, 0.0};
-	t_vec4	vertical = (t_vec4){0.0, viewport_height, 0.0, 0.0};
-	t_vec4	bottom_left_corner = origin
-		- horizontal * 0.5 
-		- vertical * 0.5 
-		- (t_vec4){0.0, 0.0, focal_length, 0.0};
-	camera.origin = origin;
-	camera.horizontal = horizontal;
-	camera.vertical = vertical;
-	camera.bottom_left_corner = bottom_left_corner;
-	return (camera);
-}
-
-t_point_light setup_test_light(void)
-{
-	t_point_light	light;
-
-	light.position = (t_vec4){0.0f, 5.0f, -2.0f, 0.0f};
-	light.diff_color = (t_vec4){0.5f, 0.5f, 0.5f, 0.0f};
-	light.diff_power = 1.0f;
-	light.spec_color = (t_vec4){0.2f, 0.2f, 0.2f, 0.0f};
-	light.spec_power = 0.5f;
-	return (light);
-}
-
-t_sphere	setup_test_sphere(void)
-{
-	t_sphere	sphere;
-
-	sphere.center = (t_vec4){0.0f, 0.0f, -5.0f, 0.0f};
-	sphere.radius = 2.0f;
-	return (sphere);
-}
-
-t_plane	setup_test_plane(void)
-{
-	t_plane plane;
-
-	plane.point = (t_vec4){0.0f, -2.0f, 0.0f, 0.0f};
-	plane.normal = (t_vec4){0.0f, 1.0f, 0.0f, 0.0f};
-	return (plane);
-}
-
-/**
- * Comprueba si un rayo intersecta con un plano y, de ser así, 
- * guarda en *t_hit la distancia desde el origen del rayo hasta 
- * el punto de intersección.
- * 
- * El plano está definido por un punto y un vector normal.
- * El rayo está definido por un punto de origen y un vector dirección.
- * 
- * Método:
- * Se resuelve la intersección usando la fórmula:
- *      t = ((plane.point - ray.origin) ⋅ plane.normal) / (ray.direction ⋅ plane.normal)
- * 
- * Si el denominador es cercano a 0, significa que el rayo es paralelo al plano
- * y no hay intersección. Si t < 0, la intersección ocurre "detrás" del origen 
- * del rayo y tampoco se considera válida.
- * 
- * Devuelve true si hay una intersección válida (t >= 0), false en caso contrario.
- */
+ 
 
 bool	mrt_hit_plane(t_ray ray, t_plane plane, float *t_hit)
 {
@@ -121,7 +51,6 @@ bool	mrt_hit_plane(t_ray ray, t_plane plane, float *t_hit)
 	return (true);
 }
 
-/**
  * Calcula si un rayo intersecta una esfera en el espacio 3D.
  *
  * Esta función resuelve la ecuación cuadrática que surge al sustituir
@@ -147,7 +76,7 @@ bool	mrt_hit_plane(t_ray ray, t_plane plane, float *t_hit)
  * @param sphere  La esfera con centro y radio
  * @param t_hit   Puntero donde se guarda la distancia al punto de colisión
  * @return        true si hay intersección visible, false si no
- */
+ 
 
 bool	mrt_hit_sphere(t_ray ray, t_sphere sphere, float *t_hit)
 {
@@ -193,7 +122,7 @@ t_ray	mrt_generate_camera_ray(t_camera_view camera, float pixel_x, float pixel_y
 	return (mrt_create_ray(camera.origin, ray_dir));
 }
 
-/**
+
  * Calcula el color que debe tener un rayo lanzado desde la cámara en la escena.
  * 
  * Esta función determina si el rayo intersecta con una esfera fija en el espacio.
@@ -216,13 +145,10 @@ t_ray	mrt_generate_camera_ray(t_camera_view camera, float pixel_x, float pixel_y
  *    - Suma el color base de la esfera con las componentes difusa y especular.
  * 4. Si no hay impacto:
  *    - Calcula un color de fondo degradado entre blanco y azul en función de la dirección del rayo.
- */
+ 
 
 t_vec4 mrt_ray_color(t_ray ray, t_data *elements)
 {
-	t_sphere		sphere = setup_test_sphere();
-	t_plane			plane = setup_test_plane();
-	t_point_light	light = setup_test_light();
 	float			t_sphere_hit;
 	float			t_plane_hit;
 	bool			hit_sphere = mrt_hit_sphere(ray, sphere, &t_sphere_hit);
@@ -258,7 +184,7 @@ t_vec4 mrt_ray_color(t_ray ray, t_data *elements)
 	return (black);
 }
 
-/**
+
  * Limita un valor flotante dentro de un rango dado.
  *
  * Si el valor `x` es menor que `min`, devuelve `min`.
@@ -272,7 +198,7 @@ t_vec4 mrt_ray_color(t_ray ray, t_data *elements)
  * @param min Límite inferior
  * @param max Límite superior
  * @return    Valor clamped entre min y max
- */
+ 
 
 float	mrt_clamp_float(float x, float min, float max)
 {
@@ -295,25 +221,25 @@ void	mrt_put_color(t_vec4 color, int x, int y, t_window window)
 	pixels[index + 2] = (uint8_t)(255.99 * mrt_clamp_float(color[2], 0, 0.999));
 	pixels[index + 3] = 255;
 }
+*/
 
-void	mrt_draw_to_window(t_window window)
+void	mrt_draw_to_window(t_window window, t_data *elements)
 {
 	int				j;
 	int				i;
-	t_vec4			color;
-	t_camera_view	camera;
-	t_ray			ray;
+//	t_vec4			color;
+//	t_ray			ray;
 
-	camera = setup_test_camera(window);
 	j = 0;
+	(void)elements; // Evita warning de variable no usada
 	while (j < window.height)
 	{
 		i = 0;
 		while (i < window.width)
 		{
-			ray = mrt_generate_camera_ray(camera, i, j, window);
-			color = mrt_ray_color(ray, NULL);
-			mrt_put_color(color, i, j, window);
+			//ray = mrt_generate_camera_ray(camera, i, j, window);
+			//color = mrt_ray_color(ray, NULL);
+			//mrt_put_color(color, i, j, window);
 			i++;
 		}
 		j++;

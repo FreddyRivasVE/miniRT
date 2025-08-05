@@ -3,14 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   vec_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera <brivera@student.42madrid.com>     #+#  +:+       +#+        */
+/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-07-30 10:50:20 by brivera           #+#    #+#             */
-/*   Updated: 2025-07-30 10:50:20 by brivera          ###   ########.fr       */
+/*   Created: 2025/07/30 10:50:20 by brivera           #+#    #+#             */
+/*   Updated: 2025/08/05 20:44:58 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+
+t_vec4	vec4_create(float x, float y, float z, float w)
+{
+	return ((t_vec4){x, y, z, w});
+}
 
 /**
  * Calcula el vector reflejado de un vector incidente respecto a una normal.
@@ -109,9 +114,9 @@ t_vec4	vec4_sub(t_vec4 a, t_vec4 b)
  * 
 */
 
-t_vec4  vec4_normalize(t_vec4 v)
+t_vec4	vec4_normalize(t_vec4 v)
 {
-	float   len;
+	float	len;
 
 	len = sqrtf(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
 	if (len == 0.0f)
