@@ -71,8 +71,8 @@ t_sphere	setup_test_sphere(void)
 {
 	t_sphere	sphere;
 
-	sphere.center = (t_vec4){0.0f, 0.0f, -8.0f, 0.0f};
-	sphere.radius = 0.8f;
+	sphere.center = (t_vec4){0.0f, 0.0f, -5.0f, 0.0f};
+	sphere.radius = 2.0f;
 	return (sphere);
 }
 
@@ -80,7 +80,7 @@ t_plane	setup_test_plane(void)
 {
 	t_plane plane;
 
-	plane.point = (t_vec4){0.0f, 0.0f, 0.0f, 0.0f};
+	plane.point = (t_vec4){0.0f, -2.0f, 0.0f, 0.0f};
 	plane.normal = (t_vec4){0.0f, 1.0f, 0.0f, 0.0f};
 	return (plane);
 }
@@ -238,13 +238,9 @@ t_vec4 mrt_ray_color(t_ray ray, t_data *elements)
 		t_vec4 base_color = (t_vec4){0.2f, 0.5f, 0.2f, 0.0f}; // color del plano
 		return (vec4_add(base_color, diff)); // sin especular por ahora
 	}
-	t_vec4 unit_dir = vec4_normalize(ray.direction);
-	float t = 0.5f * (unit_dir[1] + 1.0f);
-	t_vec4 white = (t_vec4){1.0f, 1.0f, 1.0f, 0.0f};
-	t_vec4 blue = (t_vec4){0.5f, 0.9f, 1.0f, 0.0f};
-	return (vec4_add(vec4_scale(white, 1.0f - t), vec4_scale(blue, t)));
+	t_vec4 black = (t_vec4){0.0f, 0.0f, 0.0f, 0.0f};
+	return (black);
 }
-
 
 /* 
  * Crea un color en formato RGBA codificado en un solo entero de 32 bits.
@@ -361,3 +357,4 @@ int	main(int argc, char **argv)
 	mlx_terminate(mlx);
 	return (0);
 }
+
