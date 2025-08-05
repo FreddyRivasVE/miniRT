@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 11:54:52 by frivas            #+#    #+#             */
-/*   Updated: 2025/08/05 13:48:04 by frivas           ###   ########.fr       */
+/*   Updated: 2025/08/05 13:53:24 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ static int	check_rgb_components(const char *str)
 	i = 0;
 	counter = 0;
 	value = 0;
-
 	while (str[i] != '\0')
 	{
 		value = 0;
@@ -93,6 +92,5 @@ int	mrt_check_rgb(int i, const char *arg)
 		return (0);
 	if (!check_rgb_components(buffer))
 		return (0);
-	printf("%s\n", buffer); //borrar
 	return (1);
 }
