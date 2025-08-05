@@ -225,6 +225,8 @@ int			mrt_check_rgb(int i, const char *arg);
 //window
 t_window	mrt_setup_window(mlx_t **mlx);
 void		mrt_keyfuncion(mlx_key_data_t keydata, void *data);
+void		mrt_draw_to_window(t_window window);
+
 //operaciones de vectores
 t_vec4		vec4_normalize(t_vec4 v);
 t_vec4		vec4_add(t_vec4 a, t_vec4 b);

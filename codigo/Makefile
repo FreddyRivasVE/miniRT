@@ -24,6 +24,7 @@ LIBFTA		:= 	$(LIBFT_DIR)/libft.a
 
 SRC_DIR		:= 	src/
 SRCS 		:= 	$(SRC_DIR)main.c $(SRC_DIR)parce_00.c $(SRC_DIR)window_setup.c \
+				$(SRC_DIR)mrt_create_render.c \
 				$(SRC_DIR)vec_utils.c $(SRC_DIR)mrt_check_input.c $(SRC_DIR)mrt_check_rgb.c
 OBJ_DIR 	:=	obj/
 OBJS 		:=	$(addprefix $(OBJ_DIR), $(SRCS:$(SRC_DIR)%.c=%.o))
