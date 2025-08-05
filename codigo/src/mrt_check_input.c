@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 13:40:57 by frivas            #+#    #+#             */
-/*   Updated: 2025/08/04 14:25:08 by frivas           ###   ########.fr       */
+/*   Updated: 2025/08/05 12:56:37 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	mrt_check_ambient(t_row_data *r_data)
 	i++;
 	while (r_data->r_amb_light[i] && ft_isspace(r_data->r_amb_light[i]))
 		i++;
-	if (r_data->r_amb_light[i] && mrt_check_rgb(i, r_data))
+	if (r_data->r_amb_light[i] && mrt_check_rgb(i, r_data->r_amb_light))
 		return (1);
 	else
 		return (0);

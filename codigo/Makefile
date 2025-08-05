@@ -13,7 +13,7 @@
 NAME		:= miniRT
 
 CC 			:= cc
-CFLAGS		:= -Wall -Wextra -Werror #-g3 -fsanitize=address
+CFLAGS		:= -Wall -Wextra -Werror -g3 #-fsanitize=address
 
 MLX42_DIR	:=	libs/MLX42
 MLX42 		:= 	$(MLX42_DIR)/build/libmlx42.a
@@ -23,10 +23,8 @@ LIBFT_DIR	:= 	libs/libft
 LIBFTA		:= 	$(LIBFT_DIR)/libft.a
 
 SRC_DIR		:= 	src/
-SRCS 		:= 	$(SRC_DIR)main.c \
-		  		$(SRC_DIR)parce_00.c \
-				$(SRC_DIR)window_setup.c \
-				$(SRC_DIR)vec_utils.c
+SRCS 		:= 	$(SRC_DIR)main.c $(SRC_DIR)parce_00.c $(SRC_DIR)window_setup.c \
+				$(SRC_DIR)vec_utils.c $(SRC_DIR)mrt_check_input.c $(SRC_DIR)mrt_check_rgb.c
 OBJ_DIR 	:=	obj/
 OBJS 		:=	$(addprefix $(OBJ_DIR), $(SRCS:$(SRC_DIR)%.c=%.o))
 

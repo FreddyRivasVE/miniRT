@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 21:16:28 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/04 14:18:08 by frivas           ###   ########.fr       */
+/*   Updated: 2025/08/05 13:27:04 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,14 @@ int	mrt_upload_row_data(char *line, t_row_data *r_data)
 		r_data->r_cylinder = ft_strdup(line);
 	else
 		return (0);
-	if (!r_data->r_amb_light || !r_data->r_camera || !r_data->r_light)
-		return (0);
 	return (1);
 }
 
 int	mrt_check_row_data(t_row_data *r_data)
 {
-	if (!mrt_check_ambient(&r_data))
+	if (!mrt_check_ambient(r_data))
 		return (0);
+	return (1);
 }
 
 
@@ -81,6 +80,9 @@ int	mrt_read_file(char *file)
 			|| (mrt_check_row_data(&r_data) == 0))
 			return (ft_print_error("Error\n Argumentos errados!"), false);
 		ft_free_ptr((void *)&line);
+//		if (!r_data.r_amb_light || !r_data.r_camera || !r_data.r_light) falta gestionar si falta algun dato en
+// ambient, camara o light.
+//			return (0);
 	}
 	close(fd);
 	printf("Luz ambiental: %s", r_data.r_amb_light); //borrar

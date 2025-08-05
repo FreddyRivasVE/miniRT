@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:14:15 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/04 11:03:01 by frivas           ###   ########.fr       */
+/*   Updated: 2025/08/05 12:57:22 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,6 +220,8 @@ typedef struct s_data
 
 //parce
 int			mrt_read_file(char *file);
+int			mrt_check_ambient(t_row_data *r_data);
+int			mrt_check_rgb(int i, const char *arg);
 //window
 t_window	mrt_setup_window(mlx_t **mlx);
 void		mrt_keyfuncion(mlx_key_data_t keydata, void *data);
