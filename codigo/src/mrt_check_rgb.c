@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 11:54:52 by frivas            #+#    #+#             */
-/*   Updated: 2025/08/05 12:53:48 by frivas           ###   ########.fr       */
+/*   Updated: 2025/08/05 13:48:04 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ static int	mrt_extrac_rgb_data(int i, const char *arg, char *dest, int max_len)
 		k++;
 	}
 	dest[j] = '\0';
+	if (arg[k] != '\0' && arg[k] != '\n')
+		return (0);
 	return (j);
 }
 
@@ -91,5 +93,6 @@ int	mrt_check_rgb(int i, const char *arg)
 		return (0);
 	if (!check_rgb_components(buffer))
 		return (0);
+	printf("%s\n", buffer); //borrar
 	return (1);
 }
