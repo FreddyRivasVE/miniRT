@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 21:16:28 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/06 11:00:04 by frivas           ###   ########.fr       */
+/*   Updated: 2025/08/06 13:36:43 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ int	mrt_check_row_data(t_row_data *r_data)
 {
 	if (!mrt_check_ambient(r_data->r_amb_light))
 		return (0);
-//	if (!mrt_check_camera(r_data->r_camera))
-//		return (0);
+	if (!mrt_check_camera(r_data->r_camera))
+		return (0);
 	return (1);
 }
 
@@ -78,14 +78,15 @@ int	mrt_read_file(char *file)
 		line = get_next_line(fd);
 		if (!line)
 			break ;
-		if ((mrt_upload_row_data(line, &r_data) == 0)
-			|| (mrt_check_row_data(&r_data) == 0))
+		if (mrt_upload_row_data(line, &r_data) == 0)
 			return (ft_print_error("Error\n Argumentos errados!"), false);
 		ft_free_ptr((void *)&line);
 //		if (!r_data.r_amb_light || !r_data.r_camera || !r_data.r_light) falta gestionar si falta algun dato en
 // ambient, camara o light.
 //			return (0);
 	}
+	if (mrt_check_row_data(&r_data) == 0)
+		return (ft_print_error("Error\n Argumentos errados!"), false);
 	close(fd);
 	printf("Luz ambiental: %s", r_data.r_amb_light); //borrar
 	printf("Camara: %s", r_data.r_camera); //borrar
