@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vec_utils_00.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera <brivera@student.42madrid.com>     #+#  +:+       +#+        */
+/*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-08-06 13:19:37 by brivera           #+#    #+#             */
-/*   Updated: 2025-08-06 13:19:37 by brivera          ###   ########.fr       */
+/*   Created: 2025/08/06 13:19:37 by brivera           #+#    #+#             */
+/*   Updated: 2025/08/07 00:14:38 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ float	vec4_dot(t_vec4 a, t_vec4 b)
  *
 */
 
-t_vec4  vec4_scale(t_vec4 v, float s)
+t_vec4	vec4_scale(t_vec4 v, float s)
 {
 	return ((t_vec4){v[0] * s, v[1] * s, v[2] * s, v[3] * s});
 }
@@ -85,7 +85,7 @@ t_vec4  vec4_scale(t_vec4 v, float s)
  * 
  */
 
-t_vec4  vec4_add(t_vec4 a, t_vec4 b)
+t_vec4	vec4_add(t_vec4 a, t_vec4 b)
 {
 	return ((t_vec4){a[0] + b[0], a[1] + b[1], a[2] + b[2], a[3] + b[3]});
 }

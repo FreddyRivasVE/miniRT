@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   mrt_free_memory.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera <brivera@student.42madrid.com>     #+#  +:+       +#+        */
+/*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-08-06 13:27:33 by brivera           #+#    #+#             */
-/*   Updated: 2025-08-06 13:27:33 by brivera          ###   ########.fr       */
+/*   Created: 2025/08/06 13:27:33 by brivera           #+#    #+#             */
+/*   Updated: 2025/08/07 00:13:41 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-static void    mrt_free_scene_nodes(t_scene_node **lst)
+static void	mrt_free_scene_nodes(t_scene_node **lst)
 {
-	t_scene_node *current;
-	t_scene_node *next;
+	t_scene_node	*current;
+	t_scene_node	*next;
 
 	if (!lst || !*lst)
 		return ;

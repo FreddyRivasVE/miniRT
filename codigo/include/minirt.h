@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:14:15 by brivera           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2025/08/06 23:48:45 by frivas           ###   ########.fr       */
-=======
-/*   Updated: 2025/08/06 22:02:32 by brivera          ###   ########.fr       */
->>>>>>> a948c3aa20dfe63d8be4a1e646f7d15545b0bb50
+/*   Updated: 2025/08/07 00:11:09 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +18,7 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <math.h>
+# include <stddef.h>
 
 //libs42
 # include "../libs/libft/libft.h"
