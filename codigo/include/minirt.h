@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
+/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:14:15 by brivera           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/08/06 23:48:45 by frivas           ###   ########.fr       */
+=======
+/*   Updated: 2025/08/06 22:02:32 by brivera          ###   ########.fr       */
+>>>>>>> a948c3aa20dfe63d8be4a1e646f7d15545b0bb50
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +29,7 @@
 
 # define WIDTH 1980
 # define ASPECT_RATIO 1.7777777778
+# define PI 3.14159265358979323846
 
 typedef float	t_vec4 __attribute__((vector_size(16)));
 
@@ -38,7 +43,7 @@ typedef struct s_row_data
 	char	*r_cylinder;
 }	t_row_data;
 
-typedef enum e_obj_type
+typedef enum s_type
 {
 	SPHERE,
 	PLANE,
@@ -46,7 +51,7 @@ typedef enum e_obj_type
 	AMBIENT,
 	LIGHT,
 	CAMERA
-}	t_obj_type;
+}	t_type;
 
 typedef struct s_window
 {
@@ -99,14 +104,6 @@ typedef struct s_camera_view //para render
 	t_vec4	bottom_left_corner;
 }	t_camera_view;
 
-typedef struct s_lighting
-{
-	t_vec4	diff;
-	t_vec4	spec;
-	bool	if_s;
-	t_vec4	shadow;
-}	t_lighting;
-
 // estrucutura para pensar la iluminacion con mas info
 typedef struct s_point_light
 {
@@ -131,27 +128,12 @@ typedef struct s_ray
 	t_vec4	direction;	// Dirección normalizada del rayo
 }	t_ray;
 
-typedef struct s_hit_record
-{
-	t_vec4	point;		// Punto de intersección
-	t_vec4	normal;		// Normal en el punto
-	float	t;			// Valor de t en el rayo (distancia)
-	t_vec4	color;		// Color del objeto impactado (opcional)
-}	t_hit_record;
-
 typedef struct s_object
 {
-	t_obj_type	type;	// Tipo del objeto (esfera, plano, cilindro)
+	t_type		type;	// Tipo del objeto (esfera, plano, cilindro)
 	void		*data;	// Puntero a la estructura concreta
 	t_vec4		color;	// Color del objeto (RGB)
 }	t_object;
-
-typedef struct s_object_list
-{
-	t_object				*object;	// Objeto de la escena
-	struct s_object_list	*next;
-	struct s_object_list	*prev;
-}	t_object_list;
 
 typedef struct s_sphere
 {
@@ -174,6 +156,13 @@ typedef struct s_cylinder
 	t_vec4	n;
 }	t_cylinder;
 
+typedef struct s_hit_record
+{
+	t_vec4	point;		// Punto de intersección
+	t_vec4	normal;		// Normal en el punto
+	float	t;			// Valor de t en el rayo (distancia)
+}	t_hit_record;
+
 typedef struct s_hittable
 {
 	t_ray			*ray;
@@ -182,22 +171,22 @@ typedef struct s_hittable
 	t_hit_record	*rec;
 }	t_hittable;
 
-typedef struct s_hittable_lst
+typedef struct s_scene_node
 {
-	t_obj_type				type;
+	t_type					type;
 	void					*object; // puede ser t_sphere*, t_plane*, etc.
-	t_hittable				hit;
+	t_hittable				*hit;
 	t_vec4					color;
-	struct s_hittable_lst	*next;
-	struct s_hittable_lst	*prev;
-}	t_hittable_lst;
+	struct s_scene_node		*next;
+	struct s_scene_node		*prev;
+}	t_scene_node;
 
 typedef struct s_data
 {
 	t_ambient		*ambient;
 	t_camera		*camera;
 	t_point_light	*light;
-	t_hittable_lst	*objects;
+	t_scene_node	*objects;
 }	t_data;
 
 //parce
@@ -211,16 +200,19 @@ int			mrt_parse_vector(char **str, double min, double max);
 int			mrt_is_view_in_range(double val, double min, double max);
 int			mrt_check_light(char *light);
 //window
-t_window	mrt_setup_window(mlx_t **mlx);
-void		mrt_keyfuncion(mlx_key_data_t keydata, void *data);
-void		mrt_draw_to_window(t_window window, t_data *elements);
+t_window		mrt_setup_window(mlx_t **mlx);
+void			mrt_keyfuncion(mlx_key_data_t keydata, void *data);
+void			mrt_draw_to_window(t_window window, t_data *elements);
 //operaciones de vectores
-t_vec4		vec4_normalize(t_vec4 v);
-t_vec4		vec4_add(t_vec4 a, t_vec4 b);
-t_vec4		vec4_scale(t_vec4 v, float s);
-float		vec4_dot(t_vec4 a, t_vec4 b);
-t_vec4		vec4_sub(t_vec4 a, t_vec4 b);
-t_vec4		vec4_reflect(t_vec4 v, t_vec4 n);
-t_vec4		vec4_create(float x, float y, float z, float w);
+t_vec4			vec4_normalize(t_vec4 v);
+t_vec4			vec4_add(t_vec4 a, t_vec4 b);
+t_vec4			vec4_scale(t_vec4 v, float s);
+float			vec4_dot(t_vec4 a, t_vec4 b);
+t_vec4			vec4_sub(t_vec4 a, t_vec4 b);
+t_vec4			vec4_reflect(t_vec4 v, t_vec4 n);
+t_vec4			vec4_create(float x, float y, float z, float w);
+t_vec4			vec4_cross(t_vec4 a, t_vec4 b);
+//liberacion de memoria
+void			mrt_clear_scene(t_data *element);
 
 #endif

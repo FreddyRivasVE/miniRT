@@ -6,34 +6,13 @@
 /*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 13:03:36 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/05 21:14:24 by brivera          ###   ########.fr       */
+/*   Updated: 2025/08/06 22:02:45 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
 /*
- * Configura una cámara de prueba con parámetros básicos para renderizar la escena.
- * 
- * Esta cámara tiene:
- * - Un viewport con altura fija de 2 unidades y ancho ajustado según la relación
- *   de aspecto (ancho/alto) de la ventana para evitar distorsiones.
- * - Una distancia focal fija (focal_length) de 1 unidad.
- * - El origen de la cámara ubicado en (0,0,0).
- * - Los vectores horizontal y vertical que definen el tamaño y orientación del viewport.
- * - El punto bottom_left_corner que representa la esquina inferior izquierda del viewport
- *   en el espacio 3D, calculado para centrar el viewport frente a la cámara.
- * 
- * Nota: debido al campo de visión (FOV) fijo, mover mucho la esfera puede hacer que se
- * deforme visualmente, ya que no se está aplicando una corrección avanzada de perspectiva.
- *
- * Parámetros:
- * - window: estructura que contiene el ancho y alto de la ventana para calcular la proporción.
- *
- * Retorna:
- * - Un struct t_camera_view con los datos necesarios para generar los rayos de la cámara.
- 
-
 bool	mrt_hit_plane(t_ray ray, t_plane plane, float *t_hit)
 {
 	float	denom;
@@ -222,6 +201,40 @@ void	mrt_put_color(t_vec4 color, int x, int y, t_window window)
 	pixels[index + 3] = 255;
 }
 */
+
+t_camera_view	setup_camera_view(t_camera *cam)
+{
+	t_camera_view	view;
+	t_vec4			up;
+	t_vec4			w;
+	t_vec4			u;
+	t_vec4			v;
+	t_vec4			half_horiz;
+	t_vec4			half_vert;
+	double			theta;
+	double			half_height;
+	double			half_width;
+
+	view.origin = cam->origin;
+	theta = cam->fov * (PI / 180.0);
+	half_height = tan(theta / 2.0);
+	half_width = ASPECT_RATIO * half_height;
+	up = vec4_create(0, 1, 0, 0);
+	w = vec4_normalize(vec4_scale(cam->direction, -1));
+	u = vec4_normalize(vec4_cross(up, w));
+	v = vec4_cross(w, u);
+	view.horizontal = vec4_scale(u, 2.0 * half_width);
+	view.vertical = vec4_scale(v, 2.0 * half_height);
+	half_horiz = vec4_scale(view.horizontal, 0.5);
+	half_vert = vec4_scale(view.vertical, 0.5);
+	view.bottom_left_corner = vec4_sub(
+			vec4_sub(
+				vec4_sub(view.origin, half_horiz),
+				half_vert),
+			w);
+	return (view);
+}
+
 
 void	mrt_draw_to_window(t_window window, t_data *elements)
 {

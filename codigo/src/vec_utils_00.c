@@ -1,25 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vec_utils.c                                        :+:      :+:    :+:   */
+/*   vec_utils_00.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: brivera <brivera@student.42madrid.com>     #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/30 10:50:20 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/05 20:44:58 by brivera          ###   ########.fr       */
+/*   Created: 2025-08-06 13:19:37 by brivera           #+#    #+#             */
+/*   Updated: 2025-08-06 13:19:37 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-t_vec4	vec4_create(float x, float y, float z, float w)
-{
-	return ((t_vec4){x, y, z, w});
-}
-
 /**
- * Calcula el vector reflejado de un vector incidente respecto a una normal.
- * Ambos vectores se normalizan antes de calcular la reflexión para asegurar
+ * Calcula el vector reflejado de un vector incidente respecto
+ * a una normal.
+ * Ambos vectores se normalizan antes de calcular la reflexión
+ * para asegurar
  * que el resultado sea correcto.
  *
  * @param v Vector incidente (t_vec4)
@@ -47,17 +44,21 @@ t_vec4	vec4_reflect(t_vec4 v, t_vec4 n)
  *
  * @param a Primer vector de tipo t_vec4.
  * @param b Segundo vector de tipo t_vec4.
- * @return Un número flotante que representa el producto escalar entre a y b.
+ * @return Un número flotante que representa el producto escalar
+ * entre a y b.
  *
- * Solo se consideran las componentes X, Y y Z de los vectores (a[0], a[1], a[2]),
- * ya que la componente W no se usa en cálculos geométricos tradicionales.
+ * Solo se consideran las componentes X, Y y Z
+ * de los vectores (a[0], a[1], a[2]),
+ * ya que la componente W no se usa en cálculos 
+ * geométricos tradicionales.
  *
  * El producto escalar se usa, por ejemplo, para:
  * - Determinar el ángulo entre dos vectores
  * - Calcular proyecciones
  * - Evaluar intersecciones en ray tracing
  *
- * Si el resultado es 0, los vectores son ortogonales (perpendiculares).
+ * Si el resultado es 0, los vectores son ortogonales
+ * (perpendiculares).
  */
 float	vec4_dot(t_vec4 a, t_vec4 b)
 {
@@ -123,4 +124,3 @@ t_vec4	vec4_normalize(t_vec4 v)
 		return ((t_vec4){0, 0, 0, 0});
 	return ((t_vec4){v[0] / len, v[1] / len, v[2] / len, v[3]});
 }
-
