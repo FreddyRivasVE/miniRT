@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:34:00 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/05 21:07:28 by brivera          ###   ########.fr       */
+/*   Updated: 2025/08/06 09:26:20 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ int	main(int argc, char **argv)
 	if (argc != 2)
 		return (ft_print_error("Error\nFaltan argumentos. Ejemplo: ./miniRT file.rt"), 1);
 	if (!mrt_read_file(argv[1]))
-		return (ft_print_error("Error\nNo se pudo leer el archivo"), 1);
+		return (1);
 	elements.camera = setup_test_camera();
 	elements.light = setup_test_light();
 	elements.ambient = setup_test_ambient();

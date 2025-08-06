@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:14:15 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/05 21:05:08 by brivera          ###   ########.fr       */
+/*   Updated: 2025/08/06 09:23:56 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,7 +202,7 @@ typedef struct s_data
 
 //parce
 int			mrt_read_file(char *file);
-int			mrt_check_ambient(t_row_data *r_data);
+int			mrt_check_ambient(char *r_data);
 int			mrt_check_rgb(int i, const char *arg);
 //window
 t_window	mrt_setup_window(mlx_t **mlx);
