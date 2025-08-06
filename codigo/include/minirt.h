@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:14:15 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/06 13:09:53 by frivas           ###   ########.fr       */
+/*   Updated: 2025/08/06 23:48:45 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,9 +203,13 @@ typedef struct s_data
 //parce
 int			mrt_read_file(char *file);
 int			mrt_check_ambient(char *r_data);
-int			mrt_check_rgb(int i, const char *arg);
+int			mrt_check_rgb(char **ptr);
 int			mrt_check_camera(char *camera);
 int			mrt_parse_float(char **str, double *out);
+void		mrt_skip_spaces(char **str);
+int			mrt_parse_vector(char **str, double min, double max);
+int			mrt_is_view_in_range(double val, double min, double max);
+int			mrt_check_light(char *light);
 //window
 t_window	mrt_setup_window(mlx_t **mlx);
 void		mrt_keyfuncion(mlx_key_data_t keydata, void *data);
