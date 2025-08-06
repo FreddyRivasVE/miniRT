@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vec_utils_01.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera <brivera@student.42madrid.com>     #+#  +:+       +#+        */
+/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-08-06 13:02:04 by brivera           #+#    #+#             */
-/*   Updated: 2025-08-06 13:02:04 by brivera          ###   ########.fr       */
+/*   Created: 2025/08/06 13:02:04 by brivera           #+#    #+#             */
+/*   Updated: 2025/08/06 21:58:29 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_vec4	vec4_create(float x, float y, float z, float w)
  * Calcula el producto vectorial (cross product) entre dos vectores 3D.
  *
  * El producto vectorial de dos vectores a y b da como resultado un nuevo vector 
- * perpendicular a ambos, siguiendo la regla de la mano derecha.
+ * perpendicular a ambos
  * Es útil en gráficos 3D para obtener normales a superficies, calcular 
  * orientaciones y rotaciones.
  *
@@ -41,11 +41,10 @@ t_vec4	vec4_create(float x, float y, float z, float w)
  * @return Vector resultante (t_vec4) perpendicular a a y b
  */
 
-t_vec4 vec4_cross(t_vec4 a, t_vec4 b)
+t_vec4	vec4_cross(t_vec4 a, t_vec4 b)
 {
-	return vec4_create(
-		a[1] * b[2] - a[2] * b[1],
-		a[2] * b[0] - a[0] * b[2],
-		a[0] * b[1] - a[1] * b[0],
-		0.0f);
+	return (vec4_create(a[1] * b[2] - a[2] * b[1],
+			a[2] * b[0] - a[0] * b[2],
+			a[0] * b[1] - a[1] * b[0],
+			0.0f));
 }

@@ -24,7 +24,7 @@ LIBFTA		:= 	$(LIBFT_DIR)/libft.a
 
 SRC_DIR		:= 	src/
 SRCS 		:= 	$(SRC_DIR)main.c $(SRC_DIR)parce_00.c $(SRC_DIR)window_setup.c \
-				$(SRC_DIR)mrt_create_render.c \
+				$(SRC_DIR)mrt_create_render.c $(SRC_DIR)mrt_setup_element.c \
 				$(SRC_DIR)vec_utils_00.c $(SRC_DIR)vec_utils_01.c\
 				$(SRC_DIR)mrt_check_ambient.c $(SRC_DIR)mrt_check_rgb.c \
 				$(SRC_DIR)mrt_check_camera.c $(SRC_DIR)mrt_parse_float.c \

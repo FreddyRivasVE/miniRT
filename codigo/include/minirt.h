@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
+/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:14:15 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/06 13:09:53 by frivas           ###   ########.fr       */
+/*   Updated: 2025/08/06 22:02:32 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 
 # define WIDTH 1980
 # define ASPECT_RATIO 1.7777777778
+# define PI 3.14159265358979323846
 
 typedef float	t_vec4 __attribute__((vector_size(16)));
 
@@ -172,8 +173,8 @@ typedef struct s_scene_node
 	void					*object; // puede ser t_sphere*, t_plane*, etc.
 	t_hittable				*hit;
 	t_vec4					color;
-	struct	s_scene_node	*next;
-	struct	s_scene_node	*prev;
+	struct s_scene_node		*next;
+	struct s_scene_node		*prev;
 }	t_scene_node;
 
 typedef struct s_data
@@ -185,25 +186,31 @@ typedef struct s_data
 }	t_data;
 
 //parce
-int			mrt_read_file(char *file);
-int			mrt_check_ambient(char *r_data);
-int			mrt_check_rgb(int i, const char *arg);
-int			mrt_check_camera(char *camera);
-int			mrt_parse_float(char **str, double *out);
+int				mrt_read_file(char *file);
+int				mrt_check_ambient(char *r_data);
+int				mrt_check_rgb(int i, const char *arg);
+int				mrt_check_camera(char *camera);
+int				mrt_parse_float(char **str, double *out);
+//setup element
+t_plane			*setup_test_plane(void);
+t_sphere		*setup_test_sphere(void);
+t_ambient		*setup_test_ambient(void);
+t_point_light	*setup_test_light(void);
+t_camera		*setup_test_camera(void);
 //window
-t_window	mrt_setup_window(mlx_t **mlx);
-void		mrt_keyfuncion(mlx_key_data_t keydata, void *data);
-void		mrt_draw_to_window(t_window window, t_data *elements);
+t_window		mrt_setup_window(mlx_t **mlx);
+void			mrt_keyfuncion(mlx_key_data_t keydata, void *data);
+void			mrt_draw_to_window(t_window window, t_data *elements);
 //operaciones de vectores
-t_vec4		vec4_normalize(t_vec4 v);
-t_vec4		vec4_add(t_vec4 a, t_vec4 b);
-t_vec4		vec4_scale(t_vec4 v, float s);
-float		vec4_dot(t_vec4 a, t_vec4 b);
-t_vec4		vec4_sub(t_vec4 a, t_vec4 b);
-t_vec4		vec4_reflect(t_vec4 v, t_vec4 n);
-t_vec4		vec4_create(float x, float y, float z, float w);
-t_vec4		vec4_cross(t_vec4 a, t_vec4 b);
+t_vec4			vec4_normalize(t_vec4 v);
+t_vec4			vec4_add(t_vec4 a, t_vec4 b);
+t_vec4			vec4_scale(t_vec4 v, float s);
+float			vec4_dot(t_vec4 a, t_vec4 b);
+t_vec4			vec4_sub(t_vec4 a, t_vec4 b);
+t_vec4			vec4_reflect(t_vec4 v, t_vec4 n);
+t_vec4			vec4_create(float x, float y, float z, float w);
+t_vec4			vec4_cross(t_vec4 a, t_vec4 b);
 //liberacion de memoria
-void		mrt_clear_scene(t_data *element);
+void			mrt_clear_scene(t_data *element);
 
 #endif
