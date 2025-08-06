@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mrt_check_rgb.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 11:54:52 by frivas            #+#    #+#             */
-/*   Updated: 2025/08/05 13:53:24 by frivas           ###   ########.fr       */
+/*   Updated: 2025/08/06 15:02:58 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,22 @@ static int	mrt_comma_counter(const char *str)
 	return (commas);
 }
 
-static int	check_rgb_components(const char *str)
+static	int	mrt_parse_component(const char *str, int *i, int *value)
+{
+	*value = 0;
+	if (!ft_isdigit(str[*i]))
+		return (0);
+	while (ft_isdigit(str[*i]))
+	{
+		*value = *value * 10 + (str[*i] - '0');
+		(*i)++;
+	}
+	if (*value < 0 || *value > 255)
+		return (0);
+	return (1);
+}
+
+static int	mrt_check_rgb_components(const char *str)
 {
 	int	i;
 	int	counter;
@@ -60,16 +75,9 @@ static int	check_rgb_components(const char *str)
 
 	i = 0;
 	counter = 0;
-	value = 0;
 	while (str[i] != '\0')
 	{
-		value = 0;
-		while (ft_isdigit(str[i]))
-		{
-			value = value * 10 + (str[i] - '0');
-			i++;
-		}
-		if (value < 0 || value > 255)
+		if (!mrt_parse_component(str, &i, &value))
 			return (0);
 		counter++;
 		if (str[i] == ',')
@@ -90,7 +98,7 @@ int	mrt_check_rgb(int i, const char *arg)
 		return (0);
 	if (mrt_comma_counter(buffer) != 2)
 		return (0);
-	if (!check_rgb_components(buffer))
+	if (!mrt_check_rgb_components(buffer))
 		return (0);
 	return (1);
 }
