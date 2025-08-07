@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 21:16:28 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/07 13:21:15 by frivas           ###   ########.fr       */
+/*   Updated: 2025/08/07 13:57:18 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	mrt_check_row_data(t_row_data *r_data)
 		return (0);
 	if (!mrt_check_light(r_data->r_light))
 		return (0);
-	if (!mrt_check_sphere(r_data->r_sphere))
+	if (r_data->r_sphere && !mrt_check_sphere(r_data->r_sphere))
 		return (0);
 	return (1);
 }

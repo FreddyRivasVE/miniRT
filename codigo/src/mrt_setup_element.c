@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   mrt_setup_element.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 21:24:46 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/06 21:25:43 by brivera          ###   ########.fr       */
+/*   Updated: 2025/08/07 13:43:04 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-t_camera	*setup_test_camera(void)
+t_camera	*setup_test_camera(t_vec4 origen, t_vec4 direccion)
 {
 	t_camera	*cam;
 
 	cam = ft_calloc(1, sizeof(t_camera));
 	if (!cam)
 		return (NULL);
-	cam->origin = vec4_create(0.0f, 0.0f, 0.0f, 1.0f);
+	cam->origin = origen;
 	cam->direction = vec4_create(0.0f, 0.0f, -1.0f, 0.0f);
 	cam->fov = 70.0f;
 	return (cam);
