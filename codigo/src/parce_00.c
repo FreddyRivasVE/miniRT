@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 21:16:28 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/07 13:16:46 by frivas           ###   ########.fr       */
+/*   Updated: 2025/08/07 13:21:15 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,8 @@ int	mrt_read_file(char *file)
 			return (ft_print_error("Error\n Argumentos errados!"), false);
 		ft_free_ptr((void *)&line);
 	}
-//	if (!r_data.r_amb_light || !r_data.r_camera || !r_data.r_light)
-//		return (ft_print_error("Error\n Argumentos errados!"), false);
+	if (!r_data.r_amb_light || !r_data.r_camera || !r_data.r_light)
+		return (ft_print_error("Error\n Argumentos errados!"), false);
 	if (mrt_check_row_data(&r_data) == 0)
 		return (ft_print_error("Error\n Argumentos errados!"), false);
 	close(fd);
