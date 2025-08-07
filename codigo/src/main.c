@@ -40,17 +40,35 @@ int	mrt_push_object(t_scene_node **lst, t_type type, void *obj, t_vec4 rgb)
 	return (1);
 }
 
+/*
+ * Funcion para cargar la estrucutura pincipal
+ * aca deberia llegar lo del parce
+ * pude haber dos esferas, aspecto que ahora no se tienen en cuenta
+ * todo se caga en una lista 
+ * ya esta la funcion de free lista
+ * asi que al menos aca no deberian salir leeks
+ * 
+*/
 int	mrt_init_scene(t_data *data)
 {
+	t_sphere	*sp1;
+	t_sphere	*sp2;
+	t_vec4		sp1_rgb;
+	t_vec4		sp2_rgb;
+
 	ft_memset(data, 0, sizeof(t_data));
 	data->camera = setup_test_camera();
 	data->light = setup_test_light();
 	data->ambient = setup_test_ambient();
 	if (!data->camera || !data->ambient || !data->light)
 		return (0);
-	if (!mrt_push_object(&data->objects, SPHERE, setup_test_sphere(), vec4_create(1, 0, 0, 0)))
+	sp1 = setup_test_sphere(vec4_create(0.0f, 0.0f, -3.0f, 1.0f), (float)1.0);
+	sp1_rgb = vec4_create(1, 0, 0, 0);
+	sp2 = setup_test_sphere(vec4_create(2.0f, 0.0f, -4.0f, 1.0f), (float)1.0);
+	sp2_rgb = vec4_create(0.3, 0.5, 0.3, 0);
+	if (!mrt_push_object(&data->objects, SPHERE, sp1, sp1_rgb))
 		return (0);
-	if (!mrt_push_object(&data->objects, PLANE, setup_test_plane(), vec4_create(0.3, 0.5, 0.3, 0)))
+	if (!mrt_push_object(&data->objects, SPHERE, sp2, sp2_rgb))
 		return (0);
 	return (1);
 }
@@ -62,11 +80,18 @@ int	main(int argc, char **argv)
 	t_data		elements;
 
 	if (argc != 2)
-		return (ft_print_error("Error\nFaltan argumentos. Ejemplo: ./miniRT file.rt"), 1);
+	{
+		ft_print_error("Error\nFaltan argumentos. Ejemplo: ./miniRT file.rt");
+		return (1);
+	}
 	if (!mrt_read_file(argv[1]))
 		return (1);
 	if (!mrt_init_scene(&elements))
-		return (ft_print_error("Error\nAl asignar memoria para t_data"), 1);
+	{
+		mrt_clear_scene(&elements);
+		ft_print_error("Error\nAl asignar memoria");
+		return (1);
+	}
 	window = mrt_setup_window(&mlx);
 	mrt_draw_to_window(window, &elements);
 	mlx_image_to_window(mlx, window.image, 0, 0);
@@ -76,5 +101,3 @@ int	main(int argc, char **argv)
 	mlx_terminate(mlx);
 	return (0);
 }
-
-

@@ -101,26 +101,3 @@ t_vec4	vec4_sub(t_vec4 a, t_vec4 b)
 {
 	return ((t_vec4){a[0] - b[0], a[1] - b[1], a[2] - b[2], a[3] - b[3]});
 }
-
-/* 
- * Normaliza un vector
- * Devuelve un nuevo vector con la misma dirección que 'v' pero de longitud 1.
- * Si el vector tiene longitud cero, se devuelve un vector nulo.
- * 
- * Calcula la longitud (norma euclídea) del vector en 3D: sqrtf(x² + y² + z²)
- * len = sqrtf(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
- * 
- * Divide las primeras tres componentes por la longitud
- * para obtener un vector unitario. La componente w queda igual.
- * 
-*/
-
-t_vec4	vec4_normalize(t_vec4 v)
-{
-	float	len;
-
-	len = sqrtf(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
-	if (len == 0.0f)
-		return ((t_vec4){0, 0, 0, 0});
-	return ((t_vec4){v[0] / len, v[1] / len, v[2] / len, v[3]});
-}

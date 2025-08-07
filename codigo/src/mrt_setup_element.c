@@ -12,14 +12,14 @@
 
 #include "minirt.h"
 
-t_camera	*setup_test_camera(t_vec4 origen, t_vec4 direccion)
+t_camera	*setup_test_camera(void)
 {
 	t_camera	*cam;
 
 	cam = ft_calloc(1, sizeof(t_camera));
 	if (!cam)
 		return (NULL);
-	cam->origin = origen;
+	cam->origin = vec4_create(0.0f, 0.0f, 0.0f, 1.0f);
 	cam->direction = vec4_create(0.0f, 0.0f, -1.0f, 0.0f);
 	cam->fov = 70.0f;
 	return (cam);
@@ -55,15 +55,15 @@ t_ambient	*setup_test_ambient(void)
 	return (amb);
 }
 
-t_sphere	*setup_test_sphere(void)
+t_sphere	*setup_test_sphere(t_vec4 center, float radius)
 {
 	t_sphere	*sp;
 
 	sp = ft_calloc(1, sizeof(t_sphere));
 	if (!sp)
 		return (NULL);
-	sp->center = vec4_create(0, 0, -3, 1);
-	sp->radius = 1.0;
+	sp->center = center;
+	sp->radius = radius;
 	return (sp);
 }
 
