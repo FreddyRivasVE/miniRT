@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parce_00.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 21:16:28 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/06 23:46:07 by frivas           ###   ########.fr       */
+/*   Updated: 2025/08/07 13:16:46 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ int	mrt_check_row_data(t_row_data *r_data)
 	if (!mrt_check_camera(r_data->r_camera))
 		return (0);
 	if (!mrt_check_light(r_data->r_light))
+		return (0);
+	if (!mrt_check_sphere(r_data->r_sphere))
 		return (0);
 	return (1);
 }

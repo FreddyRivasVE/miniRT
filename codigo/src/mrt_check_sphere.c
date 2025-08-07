@@ -1,24 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mrt_check_light.c                                  :+:      :+:    :+:   */
+/*   mrt_check_sphere.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/06 15:17:40 by frivas            #+#    #+#             */
-/*   Updated: 2025/08/07 13:02:27 by frivas           ###   ########.fr       */
+/*   Created: 2025/08/07 11:00:38 by frivas            #+#    #+#             */
+/*   Updated: 2025/08/07 11:27:34 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-int	mrt_check_light(char *light)
+int	mrt_check_sphere(char *sphere)
 {
 	char	*ptr;
-	double	lbrig;
+	double	sph_diameter;
 
-	ptr = light;
-	if (*ptr != 'L')
+	ptr = sphere;
+	if (*ptr != 's')
+		return (0);
+	ptr++;
+	if (*ptr != 'p')
 		return (0);
 	ptr++;
 	if (!ft_isspace(*ptr))
@@ -28,9 +31,9 @@ int	mrt_check_light(char *light)
 	if (!mrt_parse_vector(&ptr, -1000.0, 1000.0))
 		return (0);
 	mrt_skip_spaces(&ptr);
-	if (!mrt_parse_float(&ptr, &lbrig))
+	if (!mrt_parse_float(&ptr, &sph_diameter))
 		return (0);
-	if (!mrt_is_view_in_range(lbrig, 0.0, 1.0))
+	if (sph_diameter <= 0)
 		return (0);
 	mrt_skip_spaces(&ptr);
 	if (*ptr && mrt_check_rgb(&ptr))

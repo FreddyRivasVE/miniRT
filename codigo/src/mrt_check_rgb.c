@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mrt_check_rgb.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 11:54:52 by frivas            #+#    #+#             */
-/*   Updated: 2025/08/06 23:55:35 by frivas           ###   ########.fr       */
+/*   Updated: 2025/08/07 13:13:19 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,19 @@ static int	mrt_extrac_rgb_data(char **arg, char *dest, int max_len)
 	int	j;
 
 	j = 0;
-	while (**arg != '\0' && j < max_len - 1)
+	while (**arg != '\0' && **arg != '\n' && j < max_len - 1)
 	{
 		if (ft_isdigit(**arg) || **arg == ',')
-			dest[j++] = **arg;
-		else if (**arg == '\n' || ft_isspace(**arg))
-			(*arg)++;
+		{
+			dest[j] = **arg;
+			j++;
+		}
 		else
 			break ;
 		(*arg)++;
 	}
 	dest[j] = '\0';
-	if (**arg != '\0' && **arg != '\n')
+	if (**arg != '\n' && **arg != '\0')
 		return (0);
 	return (j);
 }
