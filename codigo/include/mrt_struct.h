@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mrt_struct.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 13:43:23 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/08 14:29:48 by frivas           ###   ########.fr       */
+/*   Updated: 2025/08/08 19:18:45 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ typedef struct s_camera_view
 	t_vec4	bottom_left_corner;
 }	t_camera_view;
 
-// estrucutura para pensar la iluminacion con mas info
 typedef struct s_point_light
 {
 	t_vec4	position;		// Posición 3D de la luz
@@ -103,13 +102,6 @@ typedef struct s_ray
 	t_vec4	direction;	// Dirección normalizada del rayo
 }	t_ray;
 
-typedef struct s_object
-{
-	t_type		type;	// Tipo del objeto (esfera, plano, cilindro)
-	void		*data;	// Puntero a la estructura concreta
-	t_vec4		color;	// Color del objeto (RGB)
-}	t_object;
-
 typedef struct s_sphere
 {
 	t_vec4	center;		// Centro de la esfera
@@ -128,7 +120,6 @@ typedef struct s_cylinder
 	t_vec4	axis;		// Eje (dirección) del cilindro
 	float	radius;		// Radio
 	float	angle;
-	t_vec4	n;
 }	t_cylinder;
 
 typedef struct s_hit_record
@@ -153,7 +144,6 @@ typedef struct s_scene_node
 	t_hittable				*hit;
 	t_vec4					color;
 	struct s_scene_node		*next;
-	struct s_scene_node		*prev;
 }	t_scene_node;
 
 typedef struct s_data

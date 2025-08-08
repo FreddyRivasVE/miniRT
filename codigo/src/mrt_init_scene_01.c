@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mrt_init_scene_01.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera <brivera@student.42madrid.com>     #+#  +:+       +#+        */
+/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-08-08 13:59:10 by brivera           #+#    #+#             */
-/*   Updated: 2025-08-08 13:59:10 by brivera          ###   ########.fr       */
+/*   Created: 2025/08/08 13:59:10 by brivera           #+#    #+#             */
+/*   Updated: 2025/08/08 19:09:19 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int	mrt_push_object(t_scene_node **lst, t_type type, void *obj, t_vec4 rgb)
 	new->object = obj;
 	new->color = rgb;
 	new->next = NULL;
-	new->prev = NULL;
 	if (!*lst)
 	{
 		*lst = new;
@@ -36,7 +35,6 @@ int	mrt_push_object(t_scene_node **lst, t_type type, void *obj, t_vec4 rgb)
 	while (last->next)
 		last = last->next;
 	last->next = new;
-	new->prev = last;
 	return (1);
 }
 

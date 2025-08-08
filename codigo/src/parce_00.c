@@ -3,49 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   parce_00.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 21:16:28 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/08 15:11:51 by frivas           ###   ########.fr       */
+/*   Updated: 2025/08/08 19:21:51 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-int	mrt_check_file_type(char *file)
-{
-	size_t	len;
-
-	len = ft_strlen(file);
-	if (len < 3)
-		return (ft_print_error("Error\nExample: ./miniRT file.rt"), false);
-	if (ft_strncmp(&file[len - 3], ".rt", 3))
-		return (ft_print_error("Error\nExample: ./miniRT file.rt"), false);
-	return (true);
-}
-
-int	mrt_upload_row_data(char *line, t_list **row_data)
-{
-	t_list	*new_node;
-	char	*content;
-
-	content = ft_strdup(line);
-	if (!content)
-		return (0);
-	new_node = ft_lstnew(content);
-	if (!new_node)
-	{
-		ft_lstclear(row_data, free);
-		return (0);
-	}
-	ft_lstadd_back(row_data, new_node);
-	return (1);
-}
-
 int	mrt_validator_row_data(char *content)
 {
-	if (content[0] == '\n')
-		return (1);
 	if (content[0] == 'A' && mrt_check_ambient(content))
 		return (1);
 	else if (content[0] == 'C' && mrt_check_camera(content))

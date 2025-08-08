@@ -3,14 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   mrt_read_file.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera <brivera@student.42madrid.com>     #+#  +:+       +#+        */
+/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-08-08 14:18:57 by brivera           #+#    #+#             */
-/*   Updated: 2025-08-08 14:18:57 by brivera          ###   ########.fr       */
+/*   Created: 2025/08/08 14:18:57 by brivera           #+#    #+#             */
+/*   Updated: 2025/08/08 19:24:36 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+
+/*
+ * Esta función lee un archivo .rt línea por línea, 
+ * almacenando cada línea pero evitando líneas vacías.
+*/
+static int	mrt_upload_row_data(char *line, t_list **row_data)
+{
+	t_list	*new_node;
+	char	*content;
+
+	if (!ft_strcmp(line, "\n"))
+		return (1);
+	content = ft_strdup(line);
+	if (!content)
+		return (0);
+	new_node = ft_lstnew(content);
+	if (!new_node)
+	{
+		ft_lstclear(row_data, free);
+		return (0);
+	}
+	ft_lstadd_back(row_data, new_node);
+	return (1);
+}
 
 static int	mrt_check_file_type(char *file)
 {
@@ -24,9 +48,9 @@ static int	mrt_check_file_type(char *file)
 	return (true);
 }
 
-static int	mrt_ckeck_file(char *file)
+static int	mrt_check_file(char *file)
 {
-	int fd;
+	int	fd;
 
 	if (!mrt_check_file_type(file))
 		return (false);
@@ -44,7 +68,7 @@ t_list	*mrt_read_file(char *file)
 	bool		flag;
 
 	row_data = NULL;
-	fd = mrt_ckeck_file(file);
+	fd = mrt_check_file(file);
 	if (fd == 0)
 		return (NULL);
 	flag = false;

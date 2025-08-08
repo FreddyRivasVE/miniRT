@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:14:15 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/08 14:31:02 by frivas           ###   ########.fr       */
+/*   Updated: 2025/08/08 19:13:48 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # include "../libs/libft/libft.h"
 # include "../include/mrt_struct.h"
 
-# define WIDTH 1980
+# define WIDTH 800
 # define ASPECT_RATIO 1.7777777778
 # define PI 3.14159265358979323846
 
@@ -40,7 +40,6 @@ int				mrt_is_view_in_range(double val, double min, double max);
 int				mrt_check_light(char *light);
 int				mrt_check_sp(char *sphere);
 int				mrt_read_row_data(t_list *lst);
-int				mrt_upload_row_data(char *line, t_list **row_data);
 //window
 t_window		mrt_setup_window(void);
 void			mrt_keyfuncion(mlx_key_data_t keydata, void *data);
