@@ -1,76 +1,59 @@
-==3531602== Memcheck, a memory error detector
-==3531602== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==3531602== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==3531602== Command: ./miniRT ejemplo.rt
-==3531602== Parent PID: 3531225
-==3531602== 
-==3531602== 
-==3531602== HEAP SUMMARY:
-==3531602==     in use at exit: 318,285 bytes in 3,113 blocks
-==3531602==   total heap usage: 121,428 allocs, 118,315 frees, 60,888,266 bytes allocated
-==3531602== 
-==3531602== 32 bytes in 1 blocks are definitely lost in loss record 369 of 2,277
-==3531602==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3531602==    by 0x404624: ft_calloc (in /home/brivera/Documents/42/minirt/repomio/codigo/miniRT)
-==3531602==    by 0x4046B2: ft_strdup (in /home/brivera/Documents/42/minirt/repomio/codigo/miniRT)
-==3531602==    by 0x4028C9: mrt_upload_row_data (parce_00.c:34)
-==3531602==    by 0x402BB4: mrt_read_file (parce_00.c:84)
-==3531602==    by 0x4026D7: main (main.c:66)
-==3531602== 
-==3531602== 48 bytes in 1 blocks are definitely lost in loss record 1,843 of 2,277
-==3531602==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3531602==    by 0x404624: ft_calloc (in /home/brivera/Documents/42/minirt/repomio/codigo/miniRT)
-==3531602==    by 0x4046B2: ft_strdup (in /home/brivera/Documents/42/minirt/repomio/codigo/miniRT)
-==3531602==    by 0x4029DC: mrt_upload_row_data (parce_00.c:42)
-==3531602==    by 0x402BB4: mrt_read_file (parce_00.c:84)
-==3531602==    by 0x4026D7: main (main.c:66)
-==3531602== 
-==3531602== 49 bytes in 1 blocks are definitely lost in loss record 1,892 of 2,277
-==3531602==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3531602==    by 0x404624: ft_calloc (in /home/brivera/Documents/42/minirt/repomio/codigo/miniRT)
-==3531602==    by 0x4046B2: ft_strdup (in /home/brivera/Documents/42/minirt/repomio/codigo/miniRT)
-==3531602==    by 0x40294A: mrt_upload_row_data (parce_00.c:38)
-==3531602==    by 0x402BB4: mrt_read_file (parce_00.c:84)
-==3531602==    by 0x4026D7: main (main.c:66)
-==3531602== 
-==3531602== 50 bytes in 1 blocks are definitely lost in loss record 1,925 of 2,277
-==3531602==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3531602==    by 0x404624: ft_calloc (in /home/brivera/Documents/42/minirt/repomio/codigo/miniRT)
-==3531602==    by 0x4046B2: ft_strdup (in /home/brivera/Documents/42/minirt/repomio/codigo/miniRT)
-==3531602==    by 0x402901: mrt_upload_row_data (parce_00.c:36)
-==3531602==    by 0x402BB4: mrt_read_file (parce_00.c:84)
-==3531602==    by 0x4026D7: main (main.c:66)
-==3531602== 
-==3531602== 50 bytes in 1 blocks are definitely lost in loss record 1,926 of 2,277
-==3531602==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3531602==    by 0x404624: ft_calloc (in /home/brivera/Documents/42/minirt/repomio/codigo/miniRT)
-==3531602==    by 0x4046B2: ft_strdup (in /home/brivera/Documents/42/minirt/repomio/codigo/miniRT)
-==3531602==    by 0x402993: mrt_upload_row_data (parce_00.c:40)
-==3531602==    by 0x402BB4: mrt_read_file (parce_00.c:84)
-==3531602==    by 0x4026D7: main (main.c:66)
-==3531602== 
-==3531602== 53 bytes in 1 blocks are definitely lost in loss record 2,024 of 2,277
-==3531602==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==3531602==    by 0x404624: ft_calloc (in /home/brivera/Documents/42/minirt/repomio/codigo/miniRT)
-==3531602==    by 0x4046B2: ft_strdup (in /home/brivera/Documents/42/minirt/repomio/codigo/miniRT)
-==3531602==    by 0x402892: mrt_upload_row_data (parce_00.c:32)
-==3531602==    by 0x402BB4: mrt_read_file (parce_00.c:84)
-==3531602==    by 0x4026D7: main (main.c:66)
-==3531602== 
-==3531602== LEAK SUMMARY:
-==3531602==    definitely lost: 282 bytes in 6 blocks
-==3531602==    indirectly lost: 0 bytes in 0 blocks
-==3531602==      possibly lost: 0 bytes in 0 blocks
-==3531602==    still reachable: 0 bytes in 0 blocks
-==3531602==         suppressed: 318,003 bytes in 3,107 blocks
-==3531602== 
-==3531602== ERROR SUMMARY: 6 errors from 6 contexts (suppressed: 3 from 3)
---3531602-- 
---3531602-- used_suppression:    430 <MLX42> valgrind/valgrind.sup:38 suppressed: 145,077 bytes in 518 blocks
---3531602-- used_suppression:   1768 <MLX42> valgrind/valgrind.sup:32 suppressed: 121,849 bytes in 1,770 blocks
---3531602-- used_suppression:     69 <MLX42> valgrind/valgrind.sup:20 suppressed: 50,469 bytes in 812 blocks
---3531602-- used_suppression:      4 <MLX42> valgrind/valgrind.sup:14 suppressed: 608 bytes in 7 blocks
---3531602-- used_suppression:      1 <insert_a_suppression_name_here> valgrind/valgrind.sup:63
---3531602-- used_suppression:      1 <insert_a_suppression_name_here> valgrind/valgrind.sup:44
-==3531602== 
-==3531602== ERROR SUMMARY: 6 errors from 6 contexts (suppressed: 3 from 3)
+==3699728== Memcheck, a memory error detector
+==3699728== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==3699728== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==3699728== Command: ./miniRT ejemplo.rt
+==3699728== Parent PID: 3699726
+==3699728== 
+==3699728== 
+==3699728== HEAP SUMMARY:
+==3699728==     in use at exit: 331 bytes in 5 blocks
+==3699728==   total heap usage: 17 allocs, 12 frees, 401,512 bytes allocated
+==3699728== 
+==3699728== 32 bytes in 1 blocks are definitely lost in loss record 1 of 5
+==3699728==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3699728==    by 0x404F54: ft_calloc (in /home/frivas/entregas/cursus42/viajera/minirt/codigo/miniRT)
+==3699728==    by 0x404FE2: ft_strdup (in /home/frivas/entregas/cursus42/viajera/minirt/codigo/miniRT)
+==3699728==    by 0x402939: mrt_upload_row_data (parce_00.c:34)
+==3699728==    by 0x402C24: mrt_read_file (parce_00.c:84)
+==3699728==    by 0x402737: main (main.c:87)
+==3699728== 
+==3699728== 50 bytes in 1 blocks are definitely lost in loss record 2 of 5
+==3699728==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3699728==    by 0x405836: ft_substr (in /home/frivas/entregas/cursus42/viajera/minirt/codigo/miniRT)
+==3699728==    by 0x405483: extract_line_content (in /home/frivas/entregas/cursus42/viajera/minirt/codigo/miniRT)
+==3699728==    by 0x405208: get_next_line (in /home/frivas/entregas/cursus42/viajera/minirt/codigo/miniRT)
+==3699728==    by 0x402C03: mrt_read_file (parce_00.c:81)
+==3699728==    by 0x402737: main (main.c:87)
+==3699728== 
+==3699728== 50 bytes in 1 blocks are definitely lost in loss record 3 of 5
+==3699728==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3699728==    by 0x404F54: ft_calloc (in /home/frivas/entregas/cursus42/viajera/minirt/codigo/miniRT)
+==3699728==    by 0x404FE2: ft_strdup (in /home/frivas/entregas/cursus42/viajera/minirt/codigo/miniRT)
+==3699728==    by 0x402971: mrt_upload_row_data (parce_00.c:36)
+==3699728==    by 0x402C24: mrt_read_file (parce_00.c:84)
+==3699728==    by 0x402737: main (main.c:87)
+==3699728== 
+==3699728== 53 bytes in 1 blocks are definitely lost in loss record 4 of 5
+==3699728==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3699728==    by 0x404F54: ft_calloc (in /home/frivas/entregas/cursus42/viajera/minirt/codigo/miniRT)
+==3699728==    by 0x404FE2: ft_strdup (in /home/frivas/entregas/cursus42/viajera/minirt/codigo/miniRT)
+==3699728==    by 0x402902: mrt_upload_row_data (parce_00.c:32)
+==3699728==    by 0x402C24: mrt_read_file (parce_00.c:84)
+==3699728==    by 0x402737: main (main.c:87)
+==3699728== 
+==3699728== 146 bytes in 1 blocks are still reachable in loss record 5 of 5
+==3699728==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3699728==    by 0x405836: ft_substr (in /home/frivas/entregas/cursus42/viajera/minirt/codigo/miniRT)
+==3699728==    by 0x40554F: update_storage (in /home/frivas/entregas/cursus42/viajera/minirt/codigo/miniRT)
+==3699728==    by 0x405242: get_next_line (in /home/frivas/entregas/cursus42/viajera/minirt/codigo/miniRT)
+==3699728==    by 0x402C03: mrt_read_file (parce_00.c:81)
+==3699728==    by 0x402737: main (main.c:87)
+==3699728== 
+==3699728== LEAK SUMMARY:
+==3699728==    definitely lost: 185 bytes in 4 blocks
+==3699728==    indirectly lost: 0 bytes in 0 blocks
+==3699728==      possibly lost: 0 bytes in 0 blocks
+==3699728==    still reachable: 146 bytes in 1 blocks
+==3699728==         suppressed: 0 bytes in 0 blocks
+==3699728== 
+==3699728== ERROR SUMMARY: 4 errors from 4 contexts (suppressed: 0 from 0)

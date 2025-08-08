@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 21:16:28 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/07 13:57:18 by frivas           ###   ########.fr       */
+/*   Updated: 2025/08/08 15:11:51 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,53 +24,69 @@ int	mrt_check_file_type(char *file)
 	return (true);
 }
 
-int	mrt_upload_row_data(char *line, t_row_data *r_data)
+int	mrt_upload_row_data(char *line, t_list **row_data)
 {
-	if (line[0] == '\n')
-		return (1);
-	if (line[0] == 'A' && !r_data->r_amb_light)
-		r_data->r_amb_light = ft_strdup(line);
-	else if (line[0] == 'C' && !r_data->r_camera)
-		r_data->r_camera = ft_strdup(line);
-	else if (line[0] == 'L' && !r_data->r_light)
-		r_data->r_light = ft_strdup(line);
-	else if (line[0] == 'p' && line [1] == 'l' && !r_data->r_plane)
-		r_data->r_plane = ft_strdup(line);
-	else if (line[0] == 's' && line [1] == 'p' && !r_data->r_sphere)
-		r_data->r_sphere = ft_strdup(line);
-	else if (line[0] == 'c' && line [1] == 'y' && !r_data->r_cylinder)
-		r_data->r_cylinder = ft_strdup(line);
-	else
+	t_list	*new_node;
+	char	*content;
+
+	content = ft_strdup(line);
+	new_node = ft_lstnew(content);
+	if (!new_node)
+	{
+		ft_lstclear(row_data, free);
 		return (0);
+	}
+	ft_lstadd_back(row_data, new_node);
 	return (1);
 }
 
-int	mrt_check_row_data(t_row_data *r_data)
+int	mrt_validator_row_data(char *content)
 {
-	if (!mrt_check_ambient(r_data->r_amb_light))
+	if (content[0] == '\n')
+		return (1);
+	if (content[0] == 'A' && mrt_check_ambient(content))
+		return (1);
+	else if (content[0] == 'C' && mrt_check_camera(content))
+		return (1);
+	else if (content[0] == 'L' && mrt_check_light(content))
+		return (1);
+	else if (content[0] == 'p' && content [1] == 'l') //ojo falta el check
+		return (1);
+	else if (content[0] == 's' && content [1] == 'p' && mrt_check_sp(content))
+		return (1);
+	else if (content[0] == 'c' && content [1] == 'y') // ojo con el check
+		return (1);
+	else
+		return (printf("hola4\n"), 0);
+}
+
+int	mrt_read_row_data(t_list *lst)
+{
+	t_list	*current;
+
+	current = lst;
+	if (!current)
 		return (0);
-	if (!mrt_check_camera(r_data->r_camera))
-		return (0);
-	if (!mrt_check_light(r_data->r_light))
-		return (0);
-	if (r_data->r_sphere && !mrt_check_sphere(r_data->r_sphere))
-		return (0);
+	while (current)
+	{
+		if (!mrt_validator_row_data(current->content))
+		{
+			ft_lstclear(&lst, free);
+			return (0);
+		}
+		current = current->next;
+	}
 	return (1);
 }
+
 
 int	mrt_read_file(char *file)
 {
-	t_row_data	r_data;
-	char		*line;
+	t_list		*row_data;
+	char		*content;
 	int			fd;
 
-	r_data.r_amb_light = NULL;
-	r_data.r_camera = NULL;
-	r_data.r_light = NULL;
-	r_data.r_plane = NULL;
-	r_data.r_plane = NULL;
-	r_data.r_sphere = NULL;
-	r_data.r_cylinder = NULL;
+	row_data = NULL;
 	if (!mrt_check_file_type(file))
 		return (false);
 	fd = open(file, O_RDONLY);
@@ -78,16 +94,16 @@ int	mrt_read_file(char *file)
 		return (perror("Error\n No se puede abrir el archivo"), false);
 	while (1)
 	{
-		line = get_next_line(fd);
-		if (!line)
+		content = get_next_line(fd);
+		if (!content)
 			break ;
-		if (mrt_upload_row_data(line, &r_data) == 0)
+		if (mrt_upload_row_data(content, &row_data) == 0)
+		{
 			return (ft_print_error("Error\n Argumentos errados!"), false);
-		ft_free_ptr((void *)&line);
+		}
+		ft_free_ptr((void *)&content);
 	}
-	if (!r_data.r_amb_light || !r_data.r_camera || !r_data.r_light)
-		return (ft_print_error("Error\n Argumentos errados!"), false);
-	if (mrt_check_row_data(&r_data) == 0)
+	if (!mrt_read_row_data(row_data))
 		return (ft_print_error("Error\n Argumentos errados!"), false);
 	close(fd);
 	return (true);

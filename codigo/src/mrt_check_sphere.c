@@ -6,13 +6,13 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 11:00:38 by frivas            #+#    #+#             */
-/*   Updated: 2025/08/07 11:27:34 by frivas           ###   ########.fr       */
+/*   Updated: 2025/08/08 14:32:31 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-int	mrt_check_sphere(char *sphere)
+int	mrt_check_sp(char *sphere)
 {
 	char	*ptr;
 	double	sph_diameter;

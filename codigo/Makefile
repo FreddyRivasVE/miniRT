@@ -82,7 +82,7 @@ fclean: clean
 
 re: fclean all
 
-valgrind: re
+valgrind: 
 	valgrind -s \
 		--tool=memcheck \
 		--leak-check=full \

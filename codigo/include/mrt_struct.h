@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mrt_struct.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera <brivera@student.42madrid.com>     #+#  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-08-07 13:43:23 by brivera           #+#    #+#             */
-/*   Updated: 2025-08-07 13:43:23 by brivera          ###   ########.fr       */
+/*   Created: 2025/08/07 13:43:23 by brivera           #+#    #+#             */
+/*   Updated: 2025/08/08 14:29:48 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,6 @@
 # include "MLX42/MLX42.h"
 
 typedef float	t_vec4 __attribute__((vector_size(16)));
-
-typedef struct s_row_data
-{
-	char	*r_amb_light;
-	char	*r_camera;
-	char	*r_light;
-	char	*r_sphere;
-	char	*r_plane;
-	char	*r_cylinder;
-}	t_row_data;
 
 typedef enum s_type
 {

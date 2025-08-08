@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:14:15 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/07 11:54:21 by frivas           ###   ########.fr       */
+/*   Updated: 2025/08/08 14:31:02 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void			mrt_skip_spaces(char **str);
 int				mrt_parse_vector(char **str, double min, double max);
 int				mrt_is_view_in_range(double val, double min, double max);
 int				mrt_check_light(char *light);
-int				mrt_check_sphere(char *sphere);
+int				mrt_check_sp(char *sphere);
 //window
 t_window		mrt_setup_window(mlx_t **mlx);
 void			mrt_keyfuncion(mlx_key_data_t keydata, void *data);
