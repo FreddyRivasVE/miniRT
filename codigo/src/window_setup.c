@@ -12,14 +12,14 @@
 
 #include "minirt.h"
 
-t_window	mrt_setup_window(mlx_t **mlx)
+t_window	mrt_setup_window(void)
 {
 	t_window	window;
 
 	window.width = WIDTH;
 	window.height = (int)(window.width / ASPECT_RATIO);
-	*mlx = mlx_init(window.width, window.height, "miniRT", false);
-	window.image = mlx_new_image(*mlx, window.width, window.height);
+	window.mlx = mlx_init(window.width, window.height, "miniRT", false);
+	window.image = mlx_new_image(window.mlx, window.width, window.height);
 	return (window);
 }
 

@@ -30,6 +30,8 @@ int	mrt_upload_row_data(char *line, t_list **row_data)
 	char	*content;
 
 	content = ft_strdup(line);
+	if (!content)
+		return (0);
 	new_node = ft_lstnew(content);
 	if (!new_node)
 	{
@@ -77,34 +79,4 @@ int	mrt_read_row_data(t_list *lst)
 		current = current->next;
 	}
 	return (1);
-}
-
-
-int	mrt_read_file(char *file)
-{
-	t_list		*row_data;
-	char		*content;
-	int			fd;
-
-	row_data = NULL;
-	if (!mrt_check_file_type(file))
-		return (false);
-	fd = open(file, O_RDONLY);
-	if (fd == -1)
-		return (perror("Error\n No se puede abrir el archivo"), false);
-	while (1)
-	{
-		content = get_next_line(fd);
-		if (!content)
-			break ;
-		if (mrt_upload_row_data(content, &row_data) == 0)
-		{
-			return (ft_print_error("Error\n Argumentos errados!"), false);
-		}
-		ft_free_ptr((void *)&content);
-	}
-	if (!mrt_read_row_data(row_data))
-		return (ft_print_error("Error\n Argumentos errados!"), false);
-	close(fd);
-	return (true);
 }

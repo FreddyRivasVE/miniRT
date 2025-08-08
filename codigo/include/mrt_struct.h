@@ -29,6 +29,7 @@ typedef enum s_type
 
 typedef struct s_window
 {
+	mlx_t			*mlx;
 	int				width;
 	int				height;
 	mlx_image_t		*image;	

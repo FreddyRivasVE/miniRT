@@ -51,7 +51,7 @@ t_ambient	*setup_test_ambient(void)
 	if (!amb)
 		return (NULL);
 	amb->ratio = 0.1;
-	amb->color = vec4_create(1, 1, 1, 0);
+	amb->color = vec4_create(0.5, 0.5, 0.5, 0);
 	return (amb);
 }
 

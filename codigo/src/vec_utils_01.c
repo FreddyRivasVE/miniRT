@@ -21,7 +21,6 @@ t_vec4	vec4_clamp(t_vec4 v, float min, float max)
 	result[1] = fminf(fmaxf(v[1], min), max);
 	result[2] = fminf(fmaxf(v[2], min), max);
 	result[3] = 0.0f;
-
 	return (result);
 }
 

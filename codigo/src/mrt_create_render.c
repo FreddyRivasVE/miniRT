@@ -53,7 +53,6 @@ t_vec4	mrt_ray_color(t_ray ray, t_data *elements)
 	}
 	if (!hit_sphere)
 		return (vec4_create(0, 0, 0, 0)); // fondo negro
-
 	// Iluminación
 	t_vec4 hit_point = vec4_add(ray.origin, vec4_scale(ray.direction, closest_t));
 	t_vec4 normal = vec4_normalize(vec4_sub(hit_point, hit_sphere->center));

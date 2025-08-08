@@ -13,7 +13,7 @@
 NAME		:= miniRT
 
 CC 			:= cc
-CFLAGS		:= -Wall -Wextra -Werror -g3 #-fsanitize=address
+CFLAGS		:= -O3 -Wall -Wextra -Werror -g3 #-fsanitize=address
 
 MLX42_DIR	:=	libs/MLX42
 MLX42 		:= 	$(MLX42_DIR)/build/libmlx42.a
@@ -33,7 +33,9 @@ SRCS 		:= 	$(SRC_DIR)main.c $(SRC_DIR)parce_00.c $(SRC_DIR)window_setup.c \
 				$(SRC_DIR)mrt_parse_float.c $(SRC_DIR)mrt_check_light.c \
 				$(SRC_DIR)mrt_setup_element.c $(SRC_DIR)vec_utils_00.c \
 				$(SRC_DIR)vec_utils_01.c $(SRC_DIR)mrt_free_memory.c \
-				$(SRC_DIR)mrt_check_sphere.c 
+				$(SRC_DIR)mrt_check_sphere.c  $(SRC_DIR)mrt_read_file.c \
+				$(SRC_DIR)mrt_init_scene_01.c
+
 OBJ_DIR 	:=	obj/
 OBJS 		:=	$(addprefix $(OBJ_DIR), $(SRCS:$(SRC_DIR)%.c=%.o))
 
@@ -82,7 +84,7 @@ fclean: clean
 
 re: fclean all
 
-valgrind: 
+valgrind: re
 	valgrind -s \
 		--tool=memcheck \
 		--leak-check=full \

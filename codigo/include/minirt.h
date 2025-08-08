@@ -29,7 +29,7 @@
 # define PI 3.14159265358979323846
 
 //parce
-int				mrt_read_file(char *file);
+t_list			*mrt_read_file(char *file);
 int				mrt_check_ambient(char *r_data);
 int				mrt_check_rgb(char **ptr);
 int				mrt_check_camera(char *camera);
@@ -39,9 +39,13 @@ int				mrt_parse_vector(char **str, double min, double max);
 int				mrt_is_view_in_range(double val, double min, double max);
 int				mrt_check_light(char *light);
 int				mrt_check_sp(char *sphere);
+int				mrt_read_row_data(t_list *lst);
+int				mrt_upload_row_data(char *line, t_list **row_data);
 //window
-t_window		mrt_setup_window(mlx_t **mlx);
+t_window		mrt_setup_window(void);
 void			mrt_keyfuncion(mlx_key_data_t keydata, void *data);
+//init_element
+int				mrt_init_scene(t_data *data, t_list **file);
 //operaciones de vectores
 t_vec4			vec4_normalize(t_vec4 v);
 t_vec4			vec4_add(t_vec4 a, t_vec4 b);
