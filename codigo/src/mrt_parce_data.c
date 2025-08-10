@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parce_00.c                                         :+:      :+:    :+:   */
+/*   mrt_parce_data.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 21:16:28 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/10 10:21:34 by frivas           ###   ########.fr       */
+/*   Updated: 2025/08/10 10:33:36 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	mrt_validator_row_data(char *content)
 		return (1);
 	else if (content[0] == 'L' && mrt_check_light(content))
 		return (1);
-	else if (content[0] == 'p' && content [1] == 'l') //ojo falta el check
+	else if (content[0] == 'p' && content [1] == 'l' && mrt_check_pl(content))
 		return (1);
 	else if (content[0] == 's' && content [1] == 'p' && mrt_check_sp(content))
 		return (1);
