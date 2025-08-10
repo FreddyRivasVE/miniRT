@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 13:59:10 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/10 17:54:22 by frivas           ###   ########.fr       */
+/*   Updated: 2025/08/10 18:27:16 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	mrt_init_scene(t_data *data, t_list **row_data)
 	
 	node = *row_data;
 	ft_memset(data, 0, sizeof(t_data));
-	data->light = setup_test_light(); //ir borrando
+//	data->light = setup_test_light(); //ir borrando
 	while (node)
 	{
 		tokens = ft_split(node->content, ' ');
@@ -100,6 +100,12 @@ int	mrt_init_scene(t_data *data, t_list **row_data)
 		{
 			data->camera = mrt_setup_camera(tokens);
 			if (!data->camera)
+				return (0);
+		}
+		else if(tokens[0][0] == 'L')
+		{
+			data->light = mrt_setup_light(tokens);
+			if (!data->light)
 				return (0);
 		}
 		ft_free_array(tokens);

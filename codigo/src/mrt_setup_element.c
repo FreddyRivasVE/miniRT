@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 21:24:46 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/10 17:48:48 by frivas           ###   ########.fr       */
+/*   Updated: 2025/08/10 18:25:52 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,22 +26,22 @@
 // }
 
 //L <x,y,z> <brightness> <R,G,B>
-t_point_light	*setup_test_light(void)
-{
-	t_point_light	*light;
+// t_point_light	*setup_test_light(void)
+// {
+// 	t_point_light	*light;
 
-	light = ft_calloc(1, sizeof(t_point_light));
-	if (!light)
-		return (NULL);
-	*light = (t_point_light){
-		.position = vec4_create(10, 10, 10, 1),
-		.diff_color = vec4_create(1, 1, 1, 0),
-		.diff_power = 0.9f,
-		.spec_color = vec4_create(1, 1, 1, 0),
-		.spec_power = 1.0f
-	};
-	return (light);
-}
+// 	light = ft_calloc(1, sizeof(t_point_light));
+// 	if (!light)
+// 		return (NULL);
+// 	*light = (t_point_light){
+// 		.position = vec4_create(10, 10, 10, 1),
+// 		.diff_color = vec4_create(1, 1, 1, 0),
+// 		.diff_power = 0.9f,
+// 		.spec_color = vec4_create(1, 1, 1, 0),
+// 		.spec_power = 1.0f
+// 	};
+// 	return (light);
+// }
 
 // t_ambient	*setup_test_ambient(void)
 // {
@@ -78,6 +78,23 @@ t_camera	*mrt_setup_camera(char **r_cam)
 	cam->direction = mrt_extrac_vector(r_cam[2], 0.0f);
 	cam->fov = ft_atof(r_cam[3]);
 	return (cam);
+}
+
+t_point_light	*mrt_setup_light(char **r_light)
+{
+	t_point_light	*light;
+
+	light = ft_calloc(1, sizeof(t_point_light));
+	if (!light)
+		return (NULL);
+	*light = (t_point_light){
+		.position = mrt_extrac_vector(r_light[1], 1.0f), //por que w vale 1?
+		.diff_color = vec4_create(1, 1, 1, 0), //validar con Brenda de donde sale este dato.
+		.diff_power = 0.9f, //aqui va el valor de brillo de la luz que esta en el .rt?
+		.spec_color = vec4_create(1, 1, 1, 0), //validar con Brenda de donde sale este dato.
+		.spec_power = 1.0f //validar con Brenda de donde sale este dato.
+	};
+	return (light);
 }
 
 

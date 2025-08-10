@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/10 15:47:50 by frivas            #+#    #+#             */
-/*   Updated: 2025/08/10 16:10:34 by frivas           ###   ########.fr       */
+/*   Updated: 2025/08/10 17:57:00 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ float	ft_atof(const char *str)
 {
 	float	num;
 	float	frac;
-	int	sig;
-	int	i;
+	int		sig;
+	int		i;
 
 	num = 0.0f;
 	frac = 0.0f;

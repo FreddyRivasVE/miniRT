@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:14:15 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/10 17:50:00 by frivas           ###   ########.fr       */
+/*   Updated: 2025/08/10 18:24:48 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ t_window		mrt_setup_window(void);
 void			mrt_keyfuncion(mlx_key_data_t keydata, void *data);
 //init_element
 int				mrt_init_scene(t_data *data, t_list **file);
-t_vec4 			mrt_extrac_color(const char *str);
+t_vec4			mrt_extrac_color(const char *str);
 t_vec4			mrt_extrac_vector(const char *str, float w);
 //operaciones de vectores
 t_vec4			vec4_normalize(t_vec4 v);
@@ -69,6 +69,7 @@ t_camera		*mrt_setup_camera(char **r_cam); //propuesta FR
 t_point_light	*setup_test_light(void);
 t_ambient		*setup_test_ambient(void);
 t_ambient		*mrt_setup_ambient(char **r_amb); //propuesta FR
+t_point_light	*mrt_setup_light(char **r_light);
 t_sphere		*setup_test_sphere(t_vec4 center, float radius);
 t_plane			*setup_test_plane(void);
 //render

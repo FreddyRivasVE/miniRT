@@ -6,13 +6,13 @@
 /*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/10 16:13:23 by frivas            #+#    #+#             */
-/*   Updated: 2025/08/10 17:50:39 by frivas           ###   ########.fr       */
+/*   Updated: 2025/08/10 17:57:36 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-t_vec4 mrt_extrac_color(const char *str)
+t_vec4	mrt_extrac_color(const char *str)
 {
 	t_vec4	color;
 	char	*end;
@@ -40,7 +40,7 @@ t_vec4	mrt_extrac_vector(const char *str, float w)
 {
 	t_vec4	res;
 	char	*end;
-	
+
 	res[0] = ft_atof(str);
 	end = ft_strchr(str, ',');
 	if (!end)
