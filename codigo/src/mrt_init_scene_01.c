@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 13:59:10 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/10 18:27:16 by frivas           ###   ########.fr       */
+/*   Updated: 2025/08/10 20:52:59 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,18 +73,30 @@ int	mrt_push_object(t_scene_node **lst, t_type type, void *obj, t_vec4 rgb)
 // 	return (1);
 // }
 
+int scene_lstsize(t_scene_node *lst) //borrar la funcion completa
+{
+    int count = 0;
+
+    while (lst)
+    {
+        count++;
+        lst = lst->next;
+    }
+    return (count);
+}
+
+
 int	mrt_init_scene(t_data *data, t_list **row_data)
 {
-	t_sphere	*sp1; //ir borrando
-	t_sphere	*sp2; //ir borrando
-	t_vec4		sp1_rgb; //ir borrando
-	t_vec4		sp2_rgb; //ir borrando
-	t_list	*node;
-	char	**tokens;
-	
+	t_list		*node;
+	char		**tokens;
+	t_sphere	*sp;
+	t_plane		*pl;
+	t_cylinder	*cy;
+	t_vec4		rgb;
+
 	node = *row_data;
 	ft_memset(data, 0, sizeof(t_data));
-//	data->light = setup_test_light(); //ir borrando
 	while (node)
 	{
 		tokens = ft_split(node->content, ' ');
@@ -96,16 +108,34 @@ int	mrt_init_scene(t_data *data, t_list **row_data)
 			if (!data->ambient)
 				return (0);
 		}
-		else if(tokens[0][0] == 'C')
+		else if (tokens[0][0] == 'C')
 		{
 			data->camera = mrt_setup_camera(tokens);
 			if (!data->camera)
 				return (0);
 		}
-		else if(tokens[0][0] == 'L')
+		else if (tokens[0][0] == 'L')
 		{
 			data->light = mrt_setup_light(tokens);
 			if (!data->light)
+				return (0);
+		}
+		else if (tokens[0][0] == 's' && tokens[0][1] == 'p')
+		{
+			sp = mrt_setup_sphere(tokens, &rgb);
+			if (!sp || !mrt_push_object(&data->objects, SPHERE, sp, rgb))
+				return (0);
+		}
+		else if (tokens[0][0] == 'p' && tokens[0][1] == 'l')
+		{
+			pl = mrt_setup_plane(tokens, &rgb);
+			if (!pl || !mrt_push_object(&data->objects, PLANE, pl, rgb))
+				return (0);
+		}
+		else if (tokens[0][0] == 'c' && tokens[0][1] == 'y')
+		{
+			cy = mrt_setup_cylinder(tokens, &rgb);
+			if (!cy || !mrt_push_object(&data->objects, CYLINDER, cy, rgb))
 				return (0);
 		}
 		ft_free_array(tokens);
@@ -114,13 +144,6 @@ int	mrt_init_scene(t_data *data, t_list **row_data)
 	ft_lstclear(row_data, free);
 	if (!data->camera || !data->ambient || !data->light) //ir borrando
 		return (0); //ir borrando
-	sp1 = setup_test_sphere(vec4_create(0.0f, 0.0f, -3.0f, 1.0f), (float)1.0); //ir borrando
-	sp1_rgb = vec4_create(1, 0, 0, 0); //ir borrando
-	sp2 = setup_test_sphere(vec4_create(2.0f, 0.0f, -4.0f, 1.0f), (float)1.0); //ir borrando
-	sp2_rgb = vec4_create(0.3, 0.5, 0.3, 0); //ir borrando
-	if (!mrt_push_object(&data->objects, SPHERE, sp1, sp1_rgb)) //ir borrando
-		return (0); //ir borrando
-	if (!mrt_push_object(&data->objects, SPHERE, sp2, sp2_rgb)) //ir borrando
-		return (0); //ir borrando
+	printf("Objetos cargados: %d\n", scene_lstsize(data->objects)); //borrar
 	return (1);
 }

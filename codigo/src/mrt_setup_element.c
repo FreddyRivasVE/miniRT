@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 21:24:46 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/10 18:25:52 by frivas           ###   ########.fr       */
+/*   Updated: 2025/08/10 20:48:36 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,30 @@
 // 	return (amb);
 // }
 
+// t_sphere	*setup_test_sphere(t_vec4 center, float radius)
+// {
+// 	t_sphere	*sp;
+
+// 	sp = ft_calloc(1, sizeof(t_sphere));
+// 	if (!sp)
+// 		return (NULL);
+// 	sp->center = center;
+// 	sp->radius = radius;
+// 	return (sp);
+// }
+
+// t_plane	*setup_test_plane(void)
+// {
+// 	t_plane	*pl;
+
+// 	pl = ft_calloc(1, sizeof(t_plane));
+// 	if (!pl)
+// 		return (NULL);
+// 	pl->point = vec4_create(0, -1, 0, 1);
+// 	pl->normal = vec4_create(0, 1, 0, 0);
+// 	return (pl);
+// }
+
 t_ambient	*mrt_setup_ambient(char **r_amb)
 {
 	t_ambient	*amb;
@@ -97,27 +121,43 @@ t_point_light	*mrt_setup_light(char **r_light)
 	return (light);
 }
 
-
-t_sphere	*setup_test_sphere(t_vec4 center, float radius)
+t_sphere	*mrt_setup_sphere(char **r_sphere, t_vec4 *rgb)
 {
 	t_sphere	*sp;
 
 	sp = ft_calloc(1, sizeof(t_sphere));
 	if (!sp)
 		return (NULL);
-	sp->center = center;
-	sp->radius = radius;
+	sp->center = mrt_extrac_vector(r_sphere[1], 1.0f);
+	sp->radius = ft_atof(r_sphere[2]);
+	*rgb = mrt_extrac_color(r_sphere[3]);
 	return (sp);
 }
 
-t_plane	*setup_test_plane(void)
+t_plane	*mrt_setup_plane(char **r_plane, t_vec4 *rgb)
 {
 	t_plane	*pl;
 
 	pl = ft_calloc(1, sizeof(t_plane));
 	if (!pl)
 		return (NULL);
-	pl->point = vec4_create(0, -1, 0, 1);
-	pl->normal = vec4_create(0, 1, 0, 0);
+	pl->point = mrt_extrac_vector(r_plane[1], 1.0f);
+	pl->normal = mrt_extrac_vector(r_plane[2], 0.0f);
+	*rgb = mrt_extrac_color(r_plane[3]);
 	return (pl);
+}
+
+t_cylinder	*mrt_setup_cylinder(char **r_cylinder, t_vec4 *rgb)
+{
+	t_cylinder	*cy;
+
+	cy = ft_calloc(1, sizeof(t_cylinder));
+	if (!cy)
+		return (NULL);
+	cy->center = mrt_extrac_vector(r_cylinder[1], 1.0f);
+	cy->axis = mrt_extrac_vector(r_cylinder[2], 0.0f);
+	cy->radius = ft_atof(r_cylinder[3]);
+	cy->angle = ft_atof(r_cylinder[4]);
+	*rgb = mrt_extrac_color(r_cylinder[5]);
+	return (cy);
 }

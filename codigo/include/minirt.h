@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:14:15 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/10 18:24:48 by frivas           ###   ########.fr       */
+/*   Updated: 2025/08/10 20:48:24 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,10 @@ t_ambient		*setup_test_ambient(void);
 t_ambient		*mrt_setup_ambient(char **r_amb); //propuesta FR
 t_point_light	*mrt_setup_light(char **r_light);
 t_sphere		*setup_test_sphere(t_vec4 center, float radius);
+t_sphere		*mrt_setup_sphere(char **r_sphere, t_vec4 *rgb); //propuesta FR
 t_plane			*setup_test_plane(void);
+t_plane			*mrt_setup_plane(char **r_plane, t_vec4 *rgb); //propuesta FR
+t_cylinder		*mrt_setup_cylinder(char **r_cylinder, t_vec4 *rgb); //propuesta FR
 //render
 bool			mrt_hit_sphere(t_ray ray, t_sphere sphere, float *t_hit);
 t_camera_view	mrt_compute_camera_view(t_camera *cam);
