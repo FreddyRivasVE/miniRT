@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 21:16:28 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/10 10:33:36 by frivas           ###   ########.fr       */
+/*   Updated: 2025/08/10 11:38:52 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	mrt_validator_row_data(char *content)
 		return (1);
 	else if (content[0] == 's' && content [1] == 'p' && mrt_check_sp(content))
 		return (1);
-	else if (content[0] == 'c' && content [1] == 'y') // ojo con el check
+	else if (content[0] == 'c' && content [1] == 'y' && mrt_check_cy(content))
 		return (1);
 	else
 		return (0);

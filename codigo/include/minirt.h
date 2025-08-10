@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:14:15 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/10 10:51:48 by frivas           ###   ########.fr       */
+/*   Updated: 2025/08/10 11:51:49 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int				mrt_check_light(char *light);
 int				mrt_check_sp(char *sphere);
 int				mrt_read_row_data(t_list *lst);
 int				mrt_check_pl(char *plane);
+int				mrt_check_cy(char *cylinder);
 //window
 t_window		mrt_setup_window(void);
 void			mrt_keyfuncion(mlx_key_data_t keydata, void *data);

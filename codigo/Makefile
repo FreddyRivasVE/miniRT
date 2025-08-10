@@ -33,7 +33,8 @@ SRCS 		:= 	$(SRC_DIR)main.c $(SRC_DIR)mrt_parce_data.c $(SRC_DIR)window_setup.c 
 				$(SRC_DIR)mrt_setup_element.c $(SRC_DIR)vec_utils_00.c \
 				$(SRC_DIR)vec_utils_01.c $(SRC_DIR)mrt_free_memory.c \
 				$(SRC_DIR)mrt_check_sphere.c  $(SRC_DIR)mrt_read_file.c \
-				$(SRC_DIR)mrt_init_scene_01.c $(SRC_DIR)mrt_check_plane.c
+				$(SRC_DIR)mrt_init_scene_01.c $(SRC_DIR)mrt_check_plane.c \
+				$(SRC_DIR)mrt_check_cylinder.c
 
 OBJ_DIR 	:=	obj/
 OBJS 		:=	$(addprefix $(OBJ_DIR), $(SRCS:$(SRC_DIR)%.c=%.o))
