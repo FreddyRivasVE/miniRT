@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parce_00.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 21:16:28 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/08 19:21:51 by brivera          ###   ########.fr       */
+/*   Updated: 2025/08/10 10:21:34 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	mrt_validator_row_data(char *content)
 	else if (content[0] == 'c' && content [1] == 'y') // ojo con el check
 		return (1);
 	else
-		return (printf("hola4\n"), 0);
+		return (0);
 }
 
 int	mrt_read_row_data(t_list *lst)
