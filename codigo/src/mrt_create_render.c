@@ -27,7 +27,6 @@ void	mrt_put_color(t_vec4 color, int x, int y, t_window window)
 	pixels[index + 3] = 255;
 }
 
-
 t_vec4	mrt_ray_color(t_ray ray, t_data *elements)
 {
 	t_scene_node	*current;
@@ -74,7 +73,6 @@ t_vec4	mrt_ray_color(t_ray ray, t_data *elements)
 
 	return (vec4_clamp(final_color, 0.0f, 1.0f));
 }
-
 
 
 t_ray	mrt_create_ray(t_vec4 origin, t_vec4 direction)

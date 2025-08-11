@@ -81,4 +81,8 @@ size_t		ft_strcspn(const char *s, const char *reject);
 size_t		ft_seek_lastc(char *str, char c);
 void		ft_print_error(char *msj);
 int			ft_isspace(int c);
+float		ft_atof(const char *str);
+char		**ft_split_space(char const *s);
+char		*ft_strtrim_spaces(char *s);
+
 #endif

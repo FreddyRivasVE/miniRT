@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
+#include "libft.h"
 
-static float	mrt_fractional_part(const char *str, int *i)
+static float	ft_fractional_part(const char *str, int *i)
 {
 	float	frac;
 	float	div;
@@ -57,6 +57,6 @@ float	ft_atof(const char *str)
 		num = num * 10.0f + (str[i] - '0');
 		i++;
 	}
-	frac = mrt_fractional_part(str, &i);
+	frac = ft_fractional_part(str, &i);
 	return (sig * (num + frac));
 }

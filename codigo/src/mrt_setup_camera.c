@@ -1,16 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mrt_compute_camera_view.c                          :+:      :+:    :+:   */
+/*   mrt_setup_camera.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: brivera <brivera@student.42madrid.com>     #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-08-07 15:47:26 by brivera           #+#    #+#             */
-/*   Updated: 2025-08-07 15:47:26 by brivera          ###   ########.fr       */
+/*   Created: 2025-08-11 11:52:21 by brivera           #+#    #+#             */
+/*   Updated: 2025-08-11 11:52:21 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+
+t_camera	*mrt_setup_camera(char **r_cam)
+{
+	t_camera	*cam;
+
+	cam = ft_calloc(1, sizeof(t_camera));
+	if (!cam)
+		return (NULL);
+	cam->origin = mrt_extrac_vector(r_cam[1], 0.0f);
+	cam->direction = mrt_extrac_vector(r_cam[2], 0.0f);
+	cam->fov = ft_atof(r_cam[3]);
+	return (cam);
+}
 
 t_camera_view	mrt_compute_camera_view(t_camera *cam)
 {

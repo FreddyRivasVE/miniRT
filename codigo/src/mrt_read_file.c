@@ -12,10 +12,6 @@
 
 #include "minirt.h"
 
-/*
- * Esta función lee un archivo .rt línea por línea, 
- * almacenando cada línea pero evitando líneas vacías.
-*/
 static int	mrt_upload_row_data(char *line, t_list **row_data)
 {
 	t_list	*new_node;

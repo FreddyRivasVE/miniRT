@@ -26,7 +26,7 @@ int	main(int argc, char **argv)
 	if (!mrt_init_scene(&elements, &read_file))
 	{
 		mrt_clear_scene(&elements);
-		ft_print_error("Error\nAl asignar memoria");
+		ft_print_error("Error\n");
 		return (EXIT_FAILURE);
 	}
 	window = mrt_setup_window();

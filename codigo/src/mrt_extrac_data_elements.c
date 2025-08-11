@@ -12,27 +12,20 @@
 
 #include "minirt.h"
 
-t_vec4	mrt_extrac_color(const char *str)
+t_vec4	mrt_extract_color(const char *str)
 {
+	char	**rgb;
 	t_vec4	color;
-	char	*end;
-	int		r;
-	int		g;
-	int		b;
 
-	r = ft_atoi(str);
-	end = ft_strchr(str, ',');
-	if (!end)
+	rgb = ft_split(str, ',');
+	if (!rgb || !rgb[0] || !rgb[1] || !rgb[2])
 		return (vec4_create(0, 0, 0, 0));
-	g = ft_atoi(end + 1);
-	end = ft_strchr(end + 1, ',');
-	if (!end)
-		return (vec4_create(0, 0, 0, 0));
-	b = ft_atoi(end + 1);
-	color[0] = r / 255.0f;
-	color[1] = g / 255.0f;
-	color[2] = b / 255.0f;
-	color[3] = 0.0f;
+	color = vec4_create(
+			ft_atof(rgb[0]) / 255.0f,
+			ft_atof(rgb[1]) / 255.0f,
+			ft_atof(rgb[2]) / 255.0f,
+			0);
+	ft_free_array(rgb);
 	return (color);
 }
 

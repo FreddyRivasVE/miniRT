@@ -32,8 +32,9 @@ SRC = $(SRC_DIR)/ft_isalpha.c $(SRC_DIR)/ft_isdigit.c $(SRC_DIR)/ft_isalnum.c \
 	  $(SRC_DIR)/ft_lstsize_bonus.c $(SRC_DIR)/ft_lstlast_bonus.c \
 	  $(SRC_DIR)/ft_lstadd_back_bonus.c $(SRC_DIR)/ft_lstdelone_bonus.c \
 	  $(SRC_DIR)/ft_lstclear_bonus.c $(SRC_DIR)/ft_lstiter_bonus.c \
-	  $(SRC_DIR)/ft_lstmap_bonus.c $(SRC_DIR)/ft_isspace.c
-
+	  $(SRC_DIR)/ft_lstmap_bonus.c $(SRC_DIR)/ft_isspace.c \
+	  $(SRC_DIR)/ft_atof.c $(SRC_DIR)/ft_split_space.c
+	  
 OBJ_DIR = src/obj
 OBJ = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 

@@ -42,13 +42,12 @@ int				mrt_check_sp(char *sphere);
 int				mrt_read_row_data(t_list *lst);
 int				mrt_check_pl(char *plane);
 int				mrt_check_cy(char *cylinder);
-float			ft_atof(const char *str);
 //window
 t_window		mrt_setup_window(void);
 void			mrt_keyfuncion(mlx_key_data_t keydata, void *data);
 //init_element
 int				mrt_init_scene(t_data *data, t_list **file);
-t_vec4			mrt_extrac_color(const char *str);
+t_vec4			mrt_extract_color(const char *str);
 t_vec4			mrt_extrac_vector(const char *str, float w);
 //operaciones de vectores
 t_vec4			vec4_normalize(t_vec4 v);

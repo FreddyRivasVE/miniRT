@@ -27,14 +27,14 @@ INCLUDE		:= include/
 SRC_DIR		:= 	src/
 SRCS 		:= 	$(SRC_DIR)main.c $(SRC_DIR)mrt_parce_data.c $(SRC_DIR)window_setup.c \
 				$(SRC_DIR)mrt_create_render.c $(SRC_DIR)mrt_create_render_01.c\
-				$(SRC_DIR)mrt_compute_camera_view.c $(SRC_DIR)mrt_check_ambient.c \
+				$(SRC_DIR)mrt_setup_camera.c $(SRC_DIR)mrt_check_ambient.c \
 				$(SRC_DIR)mrt_check_rgb.c $(SRC_DIR)mrt_check_camera.c \
 				$(SRC_DIR)mrt_parse_float.c $(SRC_DIR)mrt_check_light.c \
 				$(SRC_DIR)mrt_setup_element.c $(SRC_DIR)vec_utils_00.c \
 				$(SRC_DIR)vec_utils_01.c $(SRC_DIR)mrt_free_memory.c \
 				$(SRC_DIR)mrt_check_sphere.c  $(SRC_DIR)mrt_read_file.c \
 				$(SRC_DIR)mrt_init_scene_01.c $(SRC_DIR)mrt_check_plane.c \
-				$(SRC_DIR)mrt_check_cylinder.c $(SRC_DIR)ft_atof.c \
+				$(SRC_DIR)mrt_check_cylinder.c \
 				$(SRC_DIR)mrt_extrac_data_elements.c
 
 OBJ_DIR 	:=	obj/
