@@ -140,7 +140,7 @@ typedef struct s_hittable
 typedef struct s_scene_node
 {
 	t_type					type;
-	void					*object; // puede ser t_sphere*, t_plane*, etc.
+	void					*object;
 	t_hittable				*hit;
 	t_vec4					color;
 	struct s_scene_node		*next;

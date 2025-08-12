@@ -24,8 +24,8 @@
 # include "../libs/libft/libft.h"
 # include "../include/mrt_struct.h"
 
-# define WIDTH 800
-# define ASPECT_RATIO 1.7777777778
+# define WIDTH 1200
+# define ASPECT_RATIO (16.0f/9.0f)
 # define PI 3.14159265358979323846
 
 //parce
@@ -63,20 +63,14 @@ t_vec4			vec4_clamp(t_vec4 v, float min, float max);
 //liberacion de memoria
 void			mrt_clear_scene(t_data *element);
 //elements
-t_camera		*setup_test_camera(void);
-t_camera		*mrt_setup_camera(char **r_cam); //propuesta FR
-t_point_light	*setup_test_light(void);
-t_ambient		*setup_test_ambient(void);
-t_ambient		*mrt_setup_ambient(char **r_amb); //propuesta FR
+t_camera		*mrt_setup_camera(char **r_cam);
+t_ambient		*mrt_setup_ambient(char **r_amb);
 t_point_light	*mrt_setup_light(char **r_light);
-t_sphere		*setup_test_sphere(t_vec4 center, float radius);
-t_sphere		*mrt_setup_sphere(char **r_sphere, t_vec4 *rgb); //propuesta FR
-t_plane			*setup_test_plane(void);
-t_plane			*mrt_setup_plane(char **r_plane, t_vec4 *rgb); //propuesta FR
-t_cylinder		*mrt_setup_cylinder(char **r_cylinder, t_vec4 *rgb); //propuesta FR
+t_sphere		*mrt_setup_sphere(char **r_sphere, t_vec4 *rgb);
+t_plane			*mrt_setup_plane(char **r_plane, t_vec4 *rgb);
+t_cylinder		*mrt_setup_cylinder(char **r_cylinder, t_vec4 *rgb);
 //render
 bool			mrt_hit_sphere(t_ray ray, t_sphere sphere, float *t_hit);
-t_camera_view	mrt_compute_camera_view(t_camera *cam);
+t_camera_view	mrt_compute_camera_view(t_camera *cam, t_window win);
 void			mrt_draw_to_window(t_window window, t_data *elements);
-
 #endif

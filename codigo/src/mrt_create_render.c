@@ -27,21 +27,25 @@ void	mrt_put_color(t_vec4 color, int x, int y, t_window window)
 	pixels[index + 3] = 255;
 }
 
-t_vec4	mrt_ray_color(t_ray ray, t_data *elements)
+/* t_vec4 mrt_ray_color(t_ray ray, t_data *elements)
 {
 	t_scene_node	*current;
-	t_vec4			final_color = vec4_create(0, 0, 0, 0);
-	float			closest_t = INFINITY;
-	t_sphere		*hit_sphere = NULL;
+	t_vec4			final_color;
+	float			closest_t;
+	t_sphere		*hit_sphere;
 	t_vec4			hit_color;
 	float			t;
 
-	current = elements->objects;
+	final_color = vec4_create(0, 0, 0, 0);
+	closest_t = INFINITY;
+	hit_sphere = NULL;
+		current = elements->objects;
 	while (current)
 	{
 		if (current->type == SPHERE)
 		{
-			if (mrt_hit_sphere(ray, *(t_sphere *)current->object, &t) && t < closest_t)
+			if (mrt_hit_sphere(ray, *(t_sphere *)current->object, &t) && 
+				t < closest_t && t > 0.001f)
 			{
 				closest_t = t;
 				hit_sphere = (t_sphere *)current->object;
@@ -51,29 +55,68 @@ t_vec4	mrt_ray_color(t_ray ray, t_data *elements)
 		current = current->next;
 	}
 	if (!hit_sphere)
-		return (vec4_create(0, 0, 0, 0)); // fondo negro
-	// Iluminación
+		return (vec4_create(0, 0, 0, 0));
+	// Cálculos de iluminación
 	t_vec4 hit_point = vec4_add(ray.origin, vec4_scale(ray.direction, closest_t));
 	t_vec4 normal = vec4_normalize(vec4_sub(hit_point, hit_sphere->center));
+	// Asegurar que la normal apunte hacia el rayo
+	if (vec4_dot(normal, ray.direction) > 0.0f)
+		normal = vec4_scale(normal, -1.0f);
+	// Componente ambiental
+	t_vec4 ambient = vec4_scale(elements->ambient->color, elements->ambient->ratio);
+	// Componente difusa
 	t_vec4 light_dir = vec4_normalize(vec4_sub(elements->light->position, hit_point));
-	float diff_intensity = fmaxf(0.0f, vec4_dot(normal, light_dir)) * elements->light->diff_power;
-	t_vec4 diff = vec4_scale(elements->light->diff_color, diff_intensity);
-
+	float diff_intensity = fmaxf(0.0f, vec4_dot(normal, light_dir));
+	t_vec4 diffuse = vec4_scale(vec4_mul(hit_color, elements->light->diff_color), 
+			diff_intensity * elements->light->diff_power);
+	// Componente especular
 	t_vec4 view_dir = vec4_normalize(vec4_sub(ray.origin, hit_point));
 	t_vec4 reflect_dir = vec4_reflect(vec4_scale(light_dir, -1.0f), normal);
-	float shininess = 32.0f;
-	float spec_intensity = powf(fmaxf(0.0f, vec4_dot(view_dir, reflect_dir)), shininess) * elements->light->spec_power;
-	t_vec4 spec = vec4_scale(elements->light->spec_color, spec_intensity);
-
-	t_vec4 ambient = vec4_scale(elements->ambient->color, elements->ambient->ratio);
-
-	final_color = vec4_mul(hit_color, ambient);
-	final_color = vec4_add(final_color, vec4_mul(hit_color, diff));
-	final_color = vec4_add(final_color, spec);
-
+	float spec_intensity = powf(fmaxf(0.0f, vec4_dot(view_dir, reflect_dir)), 
+			32.0f) * elements->light->spec_power;
+	t_vec4 specular = vec4_scale(elements->light->spec_color, spec_intensity);
+	// Combinar componentes
+	final_color = vec4_add(ambient, vec4_add(diffuse, specular));
+	final_color = vec4_mul(final_color, hit_color);
 	return (vec4_clamp(final_color, 0.0f, 1.0f));
-}
+} */
 
+t_vec4 mrt_ray_color(t_ray ray, t_data *elements) // para ver sin luces 
+{
+	t_scene_node    *current;
+	float           closest_t;
+	t_sphere        *hit_sphere;
+	t_vec4          hit_color;
+	float           t;
+
+	// Inicialización de variables
+	closest_t = INFINITY;
+	hit_sphere = NULL;
+	current = elements->objects;
+
+	// Buscar intersección más cercana
+	while (current)
+	{
+		if (current->type == SPHERE)
+		{
+			if (mrt_hit_sphere(ray, *(t_sphere *)current->object, &t) && 
+				t < closest_t && t > 0.001f)
+			{
+				closest_t = t;
+				hit_sphere = (t_sphere *)current->object;
+				hit_color = current->color;
+			}
+		}
+		current = current->next;
+	}
+
+	// Si no hay intersección, fondo negro
+	if (!hit_sphere)
+		return (vec4_create(0, 0, 0, 0));
+
+	// Solo devolver el color base de la esfera (sin iluminación)
+	return hit_color;
+}
 
 t_ray	mrt_create_ray(t_vec4 origin, t_vec4 direction)
 {
@@ -84,19 +127,22 @@ t_ray	mrt_create_ray(t_vec4 origin, t_vec4 direction)
 	return (ray);
 }
 
-t_ray	mrt_generate_ray(t_camera_view cam, float x, float y, t_window window)
+t_ray mrt_generate_ray(t_camera_view cam, float x, float y, t_window window)
 {
-	float	normalized_x;
-	float	normalized_y;
-	t_vec4	image_point;
-	t_vec4	ray_dir;
+	float		u;
+	float		v;
+	t_vec4		direction;
+	t_vec4		horizontal_offset;
+	t_vec4		vertical_offset;
 
-	normalized_x = x / (window.width - 1);
-	normalized_y = y / (window.height - 1);
-	image_point = cam.bottom_left_corner + (normalized_x * cam.horizontal) + \
-	(normalized_y * cam.vertical);
-	ray_dir = image_point - cam.origin;
-	return (mrt_create_ray(cam.origin, ray_dir));
+	u = x / (float)(window.width - 1);
+	v = 1.0f - (y / (float)(window.height - 1)); 
+	horizontal_offset = vec4_scale(cam.horizontal, u);
+	vertical_offset = vec4_scale(cam.vertical, v);
+	direction = vec4_add(cam.bottom_left_corner, 
+						vec4_add(horizontal_offset, vertical_offset));
+	direction = vec4_normalize(vec4_sub(direction, cam.origin));
+	return (mrt_create_ray(cam.origin, direction));
 }
 
 void	mrt_draw_to_window(t_window window, t_data *elements)
@@ -108,7 +154,7 @@ void	mrt_draw_to_window(t_window window, t_data *elements)
 	t_vec4			color;
 
 	j = 0;
-	camera = mrt_compute_camera_view(elements->camera);
+	camera = mrt_compute_camera_view(elements->camera, window);
 	while (j < window.height)
 	{
 		i = 0;

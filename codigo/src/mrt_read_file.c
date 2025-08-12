@@ -17,7 +17,7 @@ static int	mrt_upload_row_data(char *line, t_list **row_data)
 	t_list	*new_node;
 	char	*content;
 
-	if (!ft_strcmp(line, "\n"))
+	if (!ft_strcmp(line, "\n") || line[0] == '#')
 		return (1);
 	content = ft_strdup(line);
 	if (!content)
