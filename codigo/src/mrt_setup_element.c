@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 21:24:46 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/14 12:40:32 by frivas           ###   ########.fr       */
+/*   Updated: 2025/08/14 12:53:09 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,8 @@ t_cylinder	*mrt_setup_cylinder(char **r_cylinder, t_vec4 *rgb)
 		return (NULL);
 	cy->center = mrt_extrac_vector(r_cylinder[1], 1.0f);
 	cy->axis = mrt_extrac_vector(r_cylinder[2], 0.0f);
-	cy->radius = ft_atof(r_cylinder[3]);
-	cy->angle = ft_atof(r_cylinder[4]);
+	cy->radius = ft_atof(r_cylinder[3]) * 0.5f;
+	cy->height = ft_atof(r_cylinder[4]);
 	*rgb = mrt_extract_color(r_cylinder[5]);
 	return (cy);
 }

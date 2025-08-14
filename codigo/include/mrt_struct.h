@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mrt_struct.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 13:43:23 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/08 19:18:45 by brivera          ###   ########.fr       */
+/*   Updated: 2025/08/14 12:52:44 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ typedef struct s_cylinder
 	t_vec4	center;		// Centro de la base
 	t_vec4	axis;		// Eje (dirección) del cilindro
 	float	radius;		// Radio
-	float	angle;
+	float	height;
 }	t_cylinder;
 
 typedef struct s_hit_record
