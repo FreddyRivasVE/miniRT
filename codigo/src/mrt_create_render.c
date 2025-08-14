@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mrt_create_render.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 13:03:36 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/06 22:02:45 by brivera          ###   ########.fr       */
+/*   Updated: 2025/08/14 10:39:50 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ t_ray	mrt_create_ray(t_vec4 origin, t_vec4 direction)
 	return (ray);
 }
 
-t_ray mrt_generate_ray(t_camera_view cam, float x, float y, t_window window)
+/*t_ray mrt_generate_ray(t_camera_view cam, float x, float y, t_window window)
 {
 	float		u;
 	float		v;
@@ -143,7 +143,27 @@ t_ray mrt_generate_ray(t_camera_view cam, float x, float y, t_window window)
 						vec4_add(horizontal_offset, vertical_offset));
 	direction = vec4_normalize(vec4_sub(direction, cam.origin));
 	return (mrt_create_ray(cam.origin, direction));
+}*/
+
+t_ray mrt_generate_ray(t_camera_view cam, float x, float y, t_window window)
+{
+    float u = (x + 0.5f) / (float)window.width;   // coordenada horizontal normalizada [0,1]
+    float v = (y + 0.5f) / (float)window.height;  // coordenada vertical normalizada [0,1]
+
+    // Importante: invertir v si el sistema de coordenadas de la imagen tiene el (0,0) arriba
+    v = 1.0f - v;
+
+    // Punto en el plano de proyección
+    t_vec4 point_on_plane = cam.bottom_left_corner;
+    point_on_plane = vec4_add(point_on_plane, vec4_scale(cam.horizontal, u));
+    point_on_plane = vec4_add(point_on_plane, vec4_scale(cam.vertical, v));
+
+    // Dirección normalizada desde el origen de la cámara hacia ese punto
+    t_vec4 direction = vec4_normalize(vec4_sub(point_on_plane, cam.origin));
+
+    return mrt_create_ray(cam.origin, direction);
 }
+
 
 void	mrt_draw_to_window(t_window window, t_data *elements)
 {
