@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mrt_create_render_01.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera <brivera@student.42madrid.com>     #+#  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-08-07 16:17:04 by brivera           #+#    #+#             */
-/*   Updated: 2025-08-07 16:17:04 by brivera          ###   ########.fr       */
+/*   Created: 2025/08/07 16:17:04 by brivera           #+#    #+#             */
+/*   Updated: 2025/08/16 15:53:12 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,21 @@ bool	mrt_hit_sphere(t_ray ray, t_sphere sphere, float *t_hit)
 		return (false);
 	*t_hit = (-b - sqrtf(discriminant)) / (2.0f * a);
 	return (*t_hit > 0);
+}
+
+bool	mrt_hit_plane(t_ray ray, t_plane plane, float *t_hit)
+{
+	float	denom;
+	float	t;
+	t_vec4	to_plane;
+
+	denom = vec4_dot(plane.normal, ray.direction);
+	if (fabs(denom) < 1e-6) // casi 0, el rayo es paralelo
+		return (false);
+	to_plane = plane.point - ray.origin;
+	t = vec4_dot(to_plane, plane.normal) / denom;
+	if (t < 0)
+		return (false); // intersección detrás del origen
+	*t_hit = t;
+	return (true);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:14:15 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/10 20:48:24 by frivas           ###   ########.fr       */
+/*   Updated: 2025/08/16 15:55:37 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,5 @@ t_cylinder		*mrt_setup_cylinder(char **r_cylinder, t_vec4 *rgb);
 bool			mrt_hit_sphere(t_ray ray, t_sphere sphere, float *t_hit);
 t_camera_view	mrt_compute_camera_view(t_camera *cam, t_window win);
 void			mrt_draw_to_window(t_window window, t_data *elements);
+bool			mrt_hit_plane(t_ray ray, t_plane plane, float *t_hit);
 #endif

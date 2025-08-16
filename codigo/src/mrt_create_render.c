@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mrt_create_render.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 13:03:36 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/14 10:39:50 by frivas           ###   ########.fr       */
+/*   Updated: 2025/08/16 16:25:37 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ t_vec4 mrt_ray_color(t_ray ray, t_data *elements) // para ver sin luces
 	t_scene_node    *current;
 	float           closest_t;
 	t_sphere        *hit_sphere;
+	t_plane			*hit_plane;
+
 	t_vec4          hit_color;
 	float           t;
 
@@ -99,11 +101,21 @@ t_vec4 mrt_ray_color(t_ray ray, t_data *elements) // para ver sin luces
 	{
 		if (current->type == SPHERE)
 		{
-			if (mrt_hit_sphere(ray, *(t_sphere *)current->object, &t) && 
-				t < closest_t && t > 0.001f)
+			if (mrt_hit_sphere(ray, *(t_sphere *)current->object, &t)
+				&& t < closest_t && t > 0.001f)
 			{
 				closest_t = t;
 				hit_sphere = (t_sphere *)current->object;
+				hit_color = current->color;
+			}
+		}
+		if (current->type == PLANE)
+		{
+			if (mrt_hit_plane(ray, *(t_plane *)current->object, &t)
+				&& t < closest_t && t > 0.001f)
+			{
+				closest_t = t;
+				hit_plane = (t_plane *)current->object;
 				hit_color = current->color;
 			}
 		}
@@ -111,8 +123,16 @@ t_vec4 mrt_ray_color(t_ray ray, t_data *elements) // para ver sin luces
 	}
 
 	// Si no hay intersección, fondo negro
-	if (!hit_sphere)
-		return (vec4_create(0, 0, 0, 0));
+	// Si no golpeó nada
+	if (closest_t == INFINITY)
+    	return vec4_create(0, 0, 0, 0);
+
+	// Devolver color del objeto más cercano (esfera o plano
+
+	// if (!hit_sphere)
+	// 	return (vec4_create(0, 0, 0, 0));
+	// if (!hit_plane)
+	// 	return (vec4_create(0, 0, 0, 0));
 
 	// Solo devolver el color base de la esfera (sin iluminación)
 	return hit_color;
@@ -147,21 +167,21 @@ t_ray	mrt_create_ray(t_vec4 origin, t_vec4 direction)
 
 t_ray mrt_generate_ray(t_camera_view cam, float x, float y, t_window window)
 {
-    float u = (x + 0.5f) / (float)window.width;   // coordenada horizontal normalizada [0,1]
-    float v = (y + 0.5f) / (float)window.height;  // coordenada vertical normalizada [0,1]
+	float u = (x + 0.5f) / (float)window.width;   // coordenada horizontal normalizada [0,1]
+	float v = (y + 0.5f) / (float)window.height;  // coordenada vertical normalizada [0,1]
 
-    // Importante: invertir v si el sistema de coordenadas de la imagen tiene el (0,0) arriba
-    v = 1.0f - v;
+	// Importante: invertir v si el sistema de coordenadas de la imagen tiene el (0,0) arriba
+	v = 1.0f - v;
 
-    // Punto en el plano de proyección
-    t_vec4 point_on_plane = cam.bottom_left_corner;
-    point_on_plane = vec4_add(point_on_plane, vec4_scale(cam.horizontal, u));
-    point_on_plane = vec4_add(point_on_plane, vec4_scale(cam.vertical, v));
+	// Punto en el plano de proyección
+	t_vec4 point_on_plane = cam.bottom_left_corner;
+	point_on_plane = vec4_add(point_on_plane, vec4_scale(cam.horizontal, u));
+	point_on_plane = vec4_add(point_on_plane, vec4_scale(cam.vertical, v));
 
-    // Dirección normalizada desde el origen de la cámara hacia ese punto
-    t_vec4 direction = vec4_normalize(vec4_sub(point_on_plane, cam.origin));
+	// Dirección normalizada desde el origen de la cámara hacia ese punto
+	t_vec4 direction = vec4_normalize(vec4_sub(point_on_plane, cam.origin));
 
-    return mrt_create_ray(cam.origin, direction);
+	return mrt_create_ray(cam.origin, direction);
 }
 
 
