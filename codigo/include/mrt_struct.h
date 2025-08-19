@@ -120,22 +120,15 @@ typedef struct s_cylinder
 	t_vec4	axis;		// Eje (dirección) del cilindro
 	float	radius;		// Radio
 	float	height;
-	t_vec4	normal;
 }	t_cylinder;
-
-typedef struct s_hit_record
-{
-	t_vec4	point;		// Punto de intersección
-	t_vec4	normal;		// Normal en el punto
-	float	t;			// Valor de t en el rayo (distancia)
-}	t_hit_record;
 
 typedef struct s_hittable
 {
-	t_ray			*ray;
 	float			t_min;
 	float			t_max;
-	t_hit_record	*rec;
+	t_vec4			point;		// Punto de intersección
+	t_vec4			normal;		// Normal en el punto
+	float			t;			// Valor de t en el rayo (distancia)
 }	t_hittable;
 
 typedef struct s_scene_node
