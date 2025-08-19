@@ -1,28 +1,26 @@
-==2077228== Memcheck, a memory error detector
-==2077228== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==2077228== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==2077228== Command: ./miniRT ejemplo.rt
-==2077228== Parent PID: 2076854
-==2077228== 
-==2077228== 
-==2077228== HEAP SUMMARY:
-==2077228==     in use at exit: 318,003 bytes in 3,107 blocks
-==2077228==   total heap usage: 94,336 allocs, 91,229 frees, 29,934,688 bytes allocated
-==2077228== 
-==2077228== LEAK SUMMARY:
-==2077228==    definitely lost: 0 bytes in 0 blocks
-==2077228==    indirectly lost: 0 bytes in 0 blocks
-==2077228==      possibly lost: 0 bytes in 0 blocks
-==2077228==    still reachable: 0 bytes in 0 blocks
-==2077228==         suppressed: 318,003 bytes in 3,107 blocks
-==2077228== 
-==2077228== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 3 from 3)
---2077228-- 
---2077228-- used_suppression:    430 <MLX42> valgrind/valgrind.sup:38 suppressed: 145,077 bytes in 518 blocks
---2077228-- used_suppression:   1768 <MLX42> valgrind/valgrind.sup:32 suppressed: 121,849 bytes in 1,770 blocks
---2077228-- used_suppression:     69 <MLX42> valgrind/valgrind.sup:20 suppressed: 50,469 bytes in 812 blocks
---2077228-- used_suppression:      4 <MLX42> valgrind/valgrind.sup:14 suppressed: 608 bytes in 7 blocks
---2077228-- used_suppression:      1 <insert_a_suppression_name_here> valgrind/valgrind.sup:63
---2077228-- used_suppression:      1 <insert_a_suppression_name_here> valgrind/valgrind.sup:44
-==2077228== 
-==2077228== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 3 from 3)
+==2121304== Memcheck, a memory error detector
+==2121304== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==2121304== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==2121304== Command: ./miniRT ejemplo.rt
+==2121304== Parent PID: 2121014
+==2121304== 
+==2121304== 
+==2121304== HEAP SUMMARY:
+==2121304==     in use at exit: 318,003 bytes in 3,107 blocks
+==2121304==   total heap usage: 94,361 allocs, 91,254 frees, 40,160,457 bytes allocated
+==2121304== 
+==2121304== LEAK SUMMARY:
+==2121304==    definitely lost: 0 bytes in 0 blocks
+==2121304==    indirectly lost: 0 bytes in 0 blocks
+==2121304==      possibly lost: 0 bytes in 0 blocks
+==2121304==    still reachable: 0 bytes in 0 blocks
+==2121304==         suppressed: 318,003 bytes in 3,107 blocks
+==2121304== 
+==2121304== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 1 from 1)
+--2121304-- 
+--2121304-- used_suppression:    430 <MLX42> valgrind/valgrind.sup:38 suppressed: 145,077 bytes in 518 blocks
+--2121304-- used_suppression:   1768 <MLX42> valgrind/valgrind.sup:32 suppressed: 121,849 bytes in 1,770 blocks
+--2121304-- used_suppression:     69 <MLX42> valgrind/valgrind.sup:20 suppressed: 50,469 bytes in 812 blocks
+--2121304-- used_suppression:      4 <MLX42> valgrind/valgrind.sup:14 suppressed: 608 bytes in 7 blocks
+==2121304== 
+==2121304== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 1 from 1)
