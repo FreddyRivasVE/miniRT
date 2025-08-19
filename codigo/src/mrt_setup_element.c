@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 21:24:46 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/14 12:53:09 by frivas           ###   ########.fr       */
+/*   Updated: 2025/08/19 22:50:05 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@ t_ambient	*mrt_setup_ambient(char **r_amb)
  * @warning No valida el rango de la intensidad difusa (debería ser [0.0, 1.0]).
  */
 
-t_point_light *mrt_setup_light(char **r_light)
+t_point_light	*mrt_setup_light(char **r_light)
 {
 	t_point_light	*light;
-	
+
 	light = ft_calloc(1, sizeof(t_point_light));
 	if (!light)
 		return (NULL);

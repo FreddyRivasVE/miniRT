@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mrt_create_render_01.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 16:17:04 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/19 14:06:57 by frivas           ###   ########.fr       */
+/*   Updated: 2025/08/19 23:28:41 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,28 +51,32 @@ bool	mrt_hit_plane(t_ray ray, t_plane plane, float *t_hit)
 // ----------------------------------
 // Intersección con el cuerpo lateral
 // ----------------------------------
-static bool mrt_hit_cylinder_body(t_ray ray, t_cylinder cylinder, float *t_body, t_vec4 *normal_body)
+static bool	mrt_hit_cylinder_body(t_ray ray, t_cylinder cylinder,
+	float *t_body, t_vec4 *normal_body)
 {
-	t_vec4 direction;
-	t_vec4 delta_p;
-	t_vec4 delta_p_perp;
-	float  a;
-	float  b;
-	float  c;
-	float  discrim;
-	float  sqrt_disc;
-	float  t0;
-	float  t1;
-	t_vec4 p;
-	float  proj;
+	t_vec4	direction;
+	t_vec4	delta_p;
+	t_vec4	delta_p_perp;
+	float	a;
+	float	b;
+	float	c;
+	float	discrim;
+	float	sqrt_disc;
+	float	t0;
+	float	t1;
+	t_vec4	p;
+	float	proj;
+	float	tmp;
 
 	*t_body = INFINITY;
-	*normal_body = (t_vec4){0,0,0,0};
+	*normal_body = (t_vec4){0, 0, 0, 0};
 	direction = vec4_sub(ray.direction,
-				vec4_scale(cylinder.axis, vec4_dot(ray.direction, cylinder.axis)));
+			vec4_scale(cylinder.axis,
+				vec4_dot(ray.direction, cylinder.axis)));
 	delta_p = vec4_sub(ray.origin, cylinder.center);
 	delta_p_perp = vec4_sub(delta_p,
-				vec4_scale(cylinder.axis, vec4_dot(delta_p, cylinder.axis)));
+			vec4_scale(cylinder.axis,
+				vec4_dot(delta_p, cylinder.axis)));
 	a = vec4_dot(direction, direction);
 	if (a < 1e-8f)
 		return (false); // rayo paralelo a axis → no hay cuerpo (pero sí podría haber tapas)
@@ -86,7 +90,7 @@ static bool mrt_hit_cylinder_body(t_ray ray, t_cylinder cylinder, float *t_body,
 	t1 = (-b + sqrt_disc) / (2.0f * a);
 	if (t0 > t1)
 	{
-		float tmp = t0; //ver
+		tmp = t0; //ver
 		t0 = t1;
 		t1 = tmp;
 	}
@@ -99,30 +103,34 @@ static bool mrt_hit_cylinder_body(t_ray ray, t_cylinder cylinder, float *t_body,
 	p = vec4_add(ray.origin, vec4_scale(ray.direction, *t_body));
 	proj = vec4_dot(vec4_sub(p, cylinder.center), cylinder.axis);
 	if (proj < -cylinder.height / 2.0f || proj > cylinder.height / 2.0f)
-    	return (false);
+		return (false);
 	*normal_body = vec4_normalize(
-		vec4_sub(p, vec4_add(cylinder.center, vec4_scale(cylinder.axis, proj))));
+			vec4_sub(p, vec4_add(cylinder.center,
+					vec4_scale(cylinder.axis, proj))));
 	return (true);
 }
 
 // ----------------------------------
 // Intersección con una tapa
 // ----------------------------------
-static bool mrt_hit_cylinder_cap(t_ray ray, t_cylinder cylinder, float *t_cap, t_vec4 *normal_cap, bool top)
+static bool	mrt_hit_cylinder_cap(t_ray ray, t_cylinder cylinder, float *t_cap,
+		t_vec4 *normal_cap, bool top)
 {
-	t_vec4 cap_center;
-	t_vec4 n;
-	float  denom;
-	float  t;
-	t_vec4 p;
-	float  dist;
+	t_vec4	cap_center;
+	t_vec4	n;
+	float	denom;
+	float	t;
+	t_vec4	p;
+	float	dist;
 
 	*t_cap = INFINITY;
-	*normal_cap = (t_vec4){0,0,0,0};
+	*normal_cap = (t_vec4){0, 0, 0, 0};
 	if (top)
-    	cap_center = vec4_add(cylinder.center, vec4_scale(cylinder.axis, cylinder.height / 2.0f));
+		cap_center = vec4_add(cylinder.center, vec4_scale(cylinder.axis,
+					cylinder.height / 2.0f));
 	else
-    	cap_center = vec4_sub(cylinder.center, vec4_scale(cylinder.axis, cylinder.height / 2.0f));
+		cap_center = vec4_sub(cylinder.center, vec4_scale(cylinder.axis,
+					cylinder.height / 2.0f));
 	n = vec4_normalize(cylinder.axis);
 	if (!top)
 		n = vec4_scale(n, -1.0f);  // normal hacia afuera en la base inferior
@@ -133,7 +141,7 @@ static bool mrt_hit_cylinder_cap(t_ray ray, t_cylinder cylinder, float *t_cap, t
 	if (t < 0)
 		return (false);
 	p = vec4_add(ray.origin, vec4_scale(ray.direction, t));
-	dist = sqrtf(vec4_dot(vec4_sub(p, cap_center),(vec4_sub(p, cap_center))));
+	dist = sqrtf(vec4_dot(vec4_sub(p, cap_center), (vec4_sub(p, cap_center))));
 	if (dist > cylinder.radius)
 		return (false);
 	*t_cap = t;
@@ -144,33 +152,31 @@ static bool mrt_hit_cylinder_cap(t_ray ray, t_cylinder cylinder, float *t_cap, t
 // ----------------------------------
 // Intersección completa cilindro
 // ----------------------------------
-bool mrt_hit_cylinder(t_ray ray, t_cylinder cylinder, t_hittable *hit)
+bool	mrt_hit_cylinder(t_ray ray, t_cylinder cylinder, t_hittable *hit)
 {
-	bool   hit_body;
-	bool   hit_cap_base;
-	bool   hit_cap_top;
-	float  t_body;
-	float  t_cap_base;
-	float  t_cap_top;
-	t_vec4 normal_body;
-	t_vec4 normal_cap_base;
-	t_vec4 normal_cap_top;
-	float  t_final;
-	t_vec4 normal_final;
+	bool	hit_body;
+	bool	hit_cap_base;
+	bool	hit_cap_top;
+	float	t_body;
+	float	t_cap_base;
+	float	t_cap_top;
+	t_vec4	normal_body;
+	t_vec4	normal_cap_base;
+	t_vec4	normal_cap_top;
+	float	t_final;
+	t_vec4	normal_final;
 
 	// 1. cuerpo
 	hit_body = mrt_hit_cylinder_body(ray, cylinder, &t_body, &normal_body);
-
 	// 2. tapa base
-	hit_cap_base = mrt_hit_cylinder_cap(ray, cylinder, &t_cap_base, &normal_cap_base, false);
-
+	hit_cap_base = mrt_hit_cylinder_cap(ray, cylinder, &t_cap_base,
+			&normal_cap_base, false);
 	// 3. tapa superior
-	hit_cap_top = mrt_hit_cylinder_cap(ray, cylinder, &t_cap_top, &normal_cap_top, true);
-
+	hit_cap_top = mrt_hit_cylinder_cap(ray, cylinder, &t_cap_top,
+			&normal_cap_top, true);
 	// Inicializar
 	t_final = INFINITY;
-	normal_final = (t_vec4){0,0,0,0};
-
+	normal_final = (t_vec4){0, 0, 0, 0};
 	// Seleccionar el menor t válido
 	if (hit_body && t_body < t_final)
 	{
@@ -251,4 +257,3 @@ bool	mrt_hit_cylinder(t_ray ray, t_cylinder cylinder, float *t_hit)
 
 	hit = mrt_hit_cylinder_body(ray, cylinder, &t1);
 } */
- 

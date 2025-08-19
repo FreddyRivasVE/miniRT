@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 21:16:28 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/14 11:48:48 by frivas           ###   ########.fr       */
+/*   Updated: 2025/08/19 23:02:02 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,7 @@ int	mrt_validator_row_data(char *content)
 		return (0);
 }
 
-int	
-mrt_read_row_data(t_list *lst)
+int	mrt_read_row_data(t_list *lst)
 {
 	t_list	*current;
 
