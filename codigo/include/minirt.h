@@ -25,7 +25,7 @@
 # include "../include/mrt_struct.h"
 
 # define WIDTH 1200
-# define ASPECT_RATIO (16.0f/9.0f)
+# define ASPECT_RATIO 1.7777777778
 # define PI 3.14159265358979323846
 
 //parce

@@ -86,11 +86,6 @@ t_ray	mrt_create_ray(t_vec4 origin, t_vec4 direction)
 	return (ray);
 }
 
-/*
-	float u; // coordenada horizontal normalizada [0,1]
-	float v; // coordenada vertical normalizada [0,1]
-*/
-
 t_ray	mrt_generate_ray(t_camera_view cam, float x, float y, t_window window)
 {
 	float	u;
@@ -98,9 +93,10 @@ t_ray	mrt_generate_ray(t_camera_view cam, float x, float y, t_window window)
 	t_vec4	point_on_plane;
 	t_vec4	direction;
 
-	u = (x + 0.5f) / (float)window.width;
-	v = (y + 0.5f) / (float)window.height;
+	u = (float)(x + 0.5f) / (float)(window.width - 1);
+	v = (float)(y + 0.5f) / (float)(window.height - 1);
 	v = 1.0f - v;
+	u = 1.0f - u;
 	point_on_plane = cam.bottom_left_corner;
 	point_on_plane = vec4_add(point_on_plane, vec4_scale(cam.horizontal, u));
 	point_on_plane = vec4_add(point_on_plane, vec4_scale(cam.vertical, v));

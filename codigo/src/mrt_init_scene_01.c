@@ -38,18 +38,6 @@ int	mrt_push_object(t_scene_node **lst, t_type type, void *obj, t_vec4 rgb)
 	return (1);
 }
 
-/* int scene_lstsize(t_scene_node *lst) //borrar la funcion completa
-{
-    int count = 0;
-
-    while (lst)
-    {
-        count++;
-        lst = lst->next;
-    }
-    return (count);
-}
- */
 int	mrt_init_scene(t_data *data, t_list **row_data)
 {
 	t_list		*node;
@@ -106,7 +94,5 @@ int	mrt_init_scene(t_data *data, t_list **row_data)
 		node = node->next;
 	}
 	ft_lstclear(row_data, free);
-	if (!data->camera || !data->ambient || !data->light) //ir borrando
-		return (0); //ir borrando
 	return (1);
 }

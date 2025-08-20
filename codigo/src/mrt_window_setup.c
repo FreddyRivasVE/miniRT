@@ -1,25 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   window_setup.c                                     :+:      :+:    :+:   */
+/*   mrt_window_setup.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
+/*   By: brivera <brivera@student.42madrid.com>     #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/28 19:59:34 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/19 23:30:33 by frivas           ###   ########.fr       */
+/*   Created: 2025-08-20 11:01:19 by brivera           #+#    #+#             */
+/*   Updated: 2025-08-20 11:01:19 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-// En window_setup.c
 t_window	mrt_setup_window(void)
 {
 	t_window	window;
 
 	window.width = WIDTH;
 	window.height = (int)(window.width / ASPECT_RATIO);
-	// Verificación adicional
 	if (window.height < 1)
 		window.height = 1;
 	window.mlx = mlx_init(window.width, window.height, "miniRT", false);
