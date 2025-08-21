@@ -43,10 +43,11 @@ static bool	mrt_hit_cylinder_body(t_ray ray, t_cylinder cylinder,
 			vec4_scale(cylinder.axis,
 				vec4_dot(delta_p, cylinder.axis)));
 	a = vec4_dot(direction, direction);
-	if (a < 1e-8f)
+	if (a < EPSILON)
 		return (false); // rayo paralelo a axis → no hay cuerpo (pero sí podría haber tapas)
 	b = 2.0f * vec4_dot(direction, delta_p_perp);
-	c = vec4_dot(delta_p_perp, delta_p_perp) - (cylinder.radius * cylinder.radius);
+	c = vec4_dot(delta_p_perp, delta_p_perp)
+		- (cylinder.radius * cylinder.radius);
 	discrim = b * b - 4 * a * c;
 	if (discrim < 0)
 		return (false);
@@ -67,7 +68,9 @@ static bool	mrt_hit_cylinder_body(t_ray ray, t_cylinder cylinder,
 		return (false);
 	p = vec4_add(ray.origin, vec4_scale(ray.direction, *t_body));
 	proj = vec4_dot(vec4_sub(p, cylinder.center), cylinder.axis);
-	if (proj < -cylinder.height / 2.0f || proj > cylinder.height / 2.0f)
+// Si el height es muy grande en comparación con radius, los errores de punto
+// flotante podrían hacer fallar el test de altura. se agrega EPSILON 
+	if (proj < -cylinder.height / 2.0f - EPSILON || proj > cylinder.height / 2.0f + EPSILON)
 		return (false);
 	*normal_body = vec4_normalize(
 			vec4_sub(p, vec4_add(cylinder.center,

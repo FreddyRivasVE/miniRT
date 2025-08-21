@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:14:15 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/19 22:49:06 by frivas           ###   ########.fr       */
+/*   Updated: 2025/08/21 13:44:41 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,10 @@
 # include "../libs/libft/libft.h"
 # include "../include/mrt_struct.h"
 
-# define WIDTH 1200
+# define WIDTH 1920
 # define ASPECT_RATIO 1.7777777778
 # define PI 3.14159265358979323846
+# define EPSILON 1e-6f
 
 //parce
 t_list			*mrt_read_file(char *file);
@@ -35,7 +36,7 @@ int				mrt_check_rgb(char **ptr);
 int				mrt_check_camera(char *camera);
 int				mrt_parse_float(char **str, double *out);
 void			mrt_skip_spaces(char **str);
-int				mrt_parse_vector(char **str, double min, double max);
+int				mrt_parse_vector(char **str, double min, double max, int flag);
 int				mrt_is_view_in_range(double val, double min, double max);
 int				mrt_check_light(char *light);
 int				mrt_check_sp(char *sphere);

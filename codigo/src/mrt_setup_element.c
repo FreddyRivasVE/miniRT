@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mrt_setup_element.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 21:24:46 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/19 22:50:05 by frivas           ###   ########.fr       */
+/*   Updated: 2025/08/21 13:56:22 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ t_plane	*mrt_setup_plane(char **r_plane, t_vec4 *rgb)
 	if (!pl)
 		return (NULL);
 	pl->point = mrt_extrac_vector(r_plane[1], 1.0f);
-	pl->normal = mrt_extrac_vector(r_plane[2], 0.0f);
+	pl->normal = vec4_normalize(mrt_extrac_vector(r_plane[2], 0.0f));
 	*rgb = mrt_extract_color(r_plane[3]);
 	return (pl);
 }
@@ -91,7 +91,7 @@ t_cylinder	*mrt_setup_cylinder(char **r_cylinder, t_vec4 *rgb)
 	if (!cy)
 		return (NULL);
 	cy->center = mrt_extrac_vector(r_cylinder[1], 1.0f);
-	cy->axis = mrt_extrac_vector(r_cylinder[2], 0.0f);
+	cy->axis = vec4_normalize(mrt_extrac_vector(r_cylinder[2], 0.0f));
 	cy->radius = ft_atof(r_cylinder[3]) * 0.5f;
 	cy->height = ft_atof(r_cylinder[4]);
 	*rgb = mrt_extract_color(r_cylinder[5]);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mrt_setup_camera.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 11:52:21 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/19 23:29:46 by frivas           ###   ########.fr       */
+/*   Updated: 2025/08/21 13:54:33 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_camera	*mrt_setup_camera(char **r_cam)
 	if (!cam)
 		return (NULL);
 	cam->origin = mrt_extrac_vector(r_cam[1], 0.0f);
-	cam->direction = mrt_extrac_vector(r_cam[2], 0.0f);
+	cam->direction = vec4_normalize(mrt_extrac_vector(r_cam[2], 0.0f));
 	cam->fov = ft_atof(r_cam[3]);
 	return (cam);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mrt_read_file.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 14:18:57 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/08 19:24:36 by brivera          ###   ########.fr       */
+/*   Updated: 2025/08/21 13:03:19 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,6 @@ t_list	*mrt_read_file(char *file)
 		ft_free_ptr((void *)&content);
 	}
 	if (!mrt_read_row_data(row_data))
-		return (ft_print_error("Error\nArgumentos errados!"), NULL);
+		return (NULL);
 	return (close(fd), row_data);
 }
