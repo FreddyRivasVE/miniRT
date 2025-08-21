@@ -1,13 +1,12 @@
-
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   mrt_hit_cylinder.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera <brivera@student.42madrid.com>     #+#  +:+       +#+        */
+/*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-08-20 11:18:43 by brivera           #+#    #+#             */
-/*   Updated: 2025-08-20 11:18:43 by brivera          ###   ########.fr       */
+/*   Created: 2025/08/20 11:18:43 by brivera           #+#    #+#             */
+/*   Updated: 2025/08/21 23:06:23 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +100,7 @@ static bool	mrt_hit_cylinder_cap(t_ray ray, t_cylinder cylinder, float *t_cap,
 					cylinder.height / 2.0f));
 	n = vec4_normalize(cylinder.axis);
 	if (!top)
-		n = vec4_scale(n, -1.0f);  // normal hacia afuera en la base inferior
+		n = vec4_scale(n, -1.0f); // normal hacia afuera en la base inferior
 	denom = vec4_dot(ray.direction, n);
 	if (fabs(denom) < 1e-6f) // paralelo al plano
 		return (false);

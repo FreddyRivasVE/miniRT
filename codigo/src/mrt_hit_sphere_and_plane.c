@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mrt_hit_sphere_and_plane.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera <brivera@student.42madrid.com>     #+#  +:+       +#+        */
+/*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-08-20 10:50:01 by brivera           #+#    #+#             */
-/*   Updated: 2025-08-20 10:50:01 by brivera          ###   ########.fr       */
+/*   Created: 2025/08/20 10:50:01 by brivera           #+#    #+#             */
+/*   Updated: 2025/08/21 23:04:08 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,3 @@ bool	mrt_hit_plane(t_ray ray, t_plane plane, float *t_hit)
 	*t_hit = t;
 	return (true);
 }
-

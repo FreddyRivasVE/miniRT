@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mrt_check_camera.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 11:51:10 by frivas            #+#    #+#             */
-/*   Updated: 2025/08/21 14:07:29 by frivas           ###   ########.fr       */
+/*   Updated: 2025/08/21 22:29:20 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,41 +23,45 @@ int	mrt_is_view_in_range(double val, double min, double max)
 	return (val >= min && val <= max);
 }
 
+int	mrt_parse_vector_raw(char **str, double min, double max, double out[3])
+{
+	double	val;
+
+	if (!mrt_parse_float(str, &val))
+		return (0);
+	if (!mrt_is_view_in_range(val, min, max))
+		return (0);
+	out[0] = val;
+	if (**str != ',')
+		return (0);
+	(*str)++;
+	if (!mrt_parse_float(str, &val))
+		return (0);
+	if (!mrt_is_view_in_range(val, min, max))
+		return (0);
+	out[1] = val;
+	if (**str != ',')
+		return (0);
+	(*str)++;
+	if (!mrt_parse_float(str, &val))
+		return (0);
+	if (!mrt_is_view_in_range(val, min, max))
+		return (0);
+	out[2] = val;
+	return (1);
+}
+
 int	mrt_parse_vector(char **str, double min, double max, int flag)
 {
-	int		i;
-	double	val;
-	double	x;
-	double	y;
-	double	z;
+	double	v[3];
+	double	len;
 
-	i = 0;
-	while (i < 3)
-	{
-		if (!mrt_parse_float(str, &val))
-			return (0);
-		if (flag)
-		{
-			if (i == 0)
-				x = val;
-			else if (i == 1)
-				y = val;
-			else
-				z = val;
-		}
-		if (!mrt_is_view_in_range(val, min, max))
-			return (0);
-		if (i < 2)
-		{
-			if (**str != ',')
-				return (0);
-			(*str)++;
-		}
-		i++;
-	}
+	if (!mrt_parse_vector_raw(str, min, max, v))
+		return (0);
 	if (flag)
 	{
-		if (fabs(sqrt((x * x) + (y * y) + (z * z)) - 1.0) > EPSILON)
+		len = sqrt((v[0] * v[0]) + (v[1] * v[1]) + (v[2] * v[2]));
+		if (fabs(len - 1.0) > EPSILON)
 			return (0);
 	}
 	return (1);
