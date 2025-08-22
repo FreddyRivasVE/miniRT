@@ -32,8 +32,6 @@ t_vec4	mrt_ray_color(t_ray ray, t_data *elements)
 	t_scene_node	*current;
 	float			closest_t;
 	t_vec4			hit_color;
-	float			t;
-	t_hittable		temp_hit;
 
 	hit_color[0] = 0.0f; // borrar
 	hit_color[1] = 0.0f; //borrar
@@ -45,28 +43,28 @@ t_vec4	mrt_ray_color(t_ray ray, t_data *elements)
 	{
 		if (current->type == SPHERE)
 		{
-			if (mrt_hit_sphere(ray, *(t_sphere *)current->object, &t)
-				&& t < closest_t && t > 0.001f)
+			if (mrt_hit_sphere(ray, *(t_sphere *)current->object, &current->hit)
+				&& current->hit->t < closest_t && current->hit->t > EPSILON)
 			{
-				closest_t = t;
+				closest_t = current->hit->t;
 				hit_color = current->hit->material->base_color;
 			}
 		}
 		if (current->type == PLANE)
 		{
-			if (mrt_hit_plane(ray, *(t_plane *)current->object, &t)
-				&& t < closest_t && t > 0.001f)
+			if (mrt_hit_plane(ray, *(t_plane *)current->object, &current->hit)
+				&& current->hit->t < closest_t && current->hit->t > EPSILON)
 			{
-				closest_t = t;
+				closest_t = current->hit->t;
 				hit_color = current->hit->material->base_color;
 			}
 		}
 		if (current->type == CYLINDER)
 		{
-			if (mrt_hit_cylinder(ray, *(t_cylinder *)current->object, &temp_hit)
-				&& temp_hit.t < closest_t && temp_hit.t > 0.001f)
+			if (mrt_hit_cylinder(ray, *(t_cylinder *)current->object, &current->hit)
+				&& current->hit->t < closest_t && current->hit->t > 0.001f)
 			{
-				closest_t = temp_hit.t;
+				closest_t = current->hit->t;
 				hit_color = current->hit->material->base_color;
 			}
 		}

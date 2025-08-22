@@ -118,7 +118,7 @@ static bool	mrt_hit_cylinder_cap(t_ray ray, t_cylinder cylinder, float *t_cap,t_
 // ----------------------------------
 // Intersección completa cilindro
 // ----------------------------------
-bool	mrt_hit_cylinder(t_ray ray, t_cylinder cylinder, t_hittable *hit)
+bool	mrt_hit_cylinder(t_ray ray, t_cylinder cylinder, t_hittable **hit)
 {
 	bool	hit_body;
 	bool	hit_cap_base;
@@ -162,9 +162,9 @@ bool	mrt_hit_cylinder(t_ray ray, t_cylinder cylinder, t_hittable *hit)
 	if (t_final == INFINITY)
 		return (false);
 	// llenar hittable
-	hit->t = t_final;
-	hit->point = vec4_add(ray.origin, vec4_scale(ray.direction, t_final));
-	hit->normal = normal_final;
+	(*hit)->t = t_final;
+	(*hit)->point = vec4_add(ray.origin, vec4_scale(ray.direction, t_final));
+	(*hit)->normal = normal_final;
 	return (true);
 }
 

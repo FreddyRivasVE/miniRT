@@ -1,4 +1,16 @@
 
+
+## Ejemplos de shading
+
+Flat shading: un solo color por cara → se ve todo plano.
+
+Gouraud shading: interpola colores en los vértices → se ve suavizado.
+
+Phong shading (renderizado clásico): interpola normales y calcula color por pixel.
+
+Phong reflection model (lo que implementás en raytracing): calcula ambiente + difuso + especular en el punto de impacto.
+
+
 ## 💡 MODELO COMPLETO DE PHONG
 
 El modelo de iluminación de **Phong** simula cómo se comporta la luz cuando choca con una superficie. Tiene **tres componentes**:
