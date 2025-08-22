@@ -80,8 +80,7 @@ static bool	mrt_hit_cylinder_body(t_ray ray, t_cylinder cylinder,
 // ----------------------------------
 // Intersección con una tapa
 // ----------------------------------
-static bool	mrt_hit_cylinder_cap(t_ray ray, t_cylinder cylinder, float *t_cap,
-		t_vec4 *normal_cap, bool top)
+static bool	mrt_hit_cylinder_cap(t_ray ray, t_cylinder cylinder, float *t_cap,t_vec4 *normal_cap, bool top)
 {
 	t_vec4	cap_center;
 	t_vec4	n;

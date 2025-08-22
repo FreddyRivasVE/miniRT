@@ -35,7 +35,6 @@ int				mrt_check_ambient(char *r_data);
 int				mrt_check_rgb(char **ptr);
 int				mrt_check_camera(char *camera);
 int				mrt_parse_float(char **str, double *out);
-void			mrt_skip_spaces(char **str);
 int				mrt_parse_vector(char **str, double min, double max, int flag);
 int				mrt_is_view_in_range(double val, double min, double max);
 int				mrt_check_light(char *light);
@@ -43,6 +42,7 @@ int				mrt_check_sp(char *sphere);
 int				mrt_read_row_data(t_list *lst);
 int				mrt_check_pl(char *plane);
 int				mrt_check_cy(char *cylinder);
+void			mrt_skip_spaces(char **str);
 //window
 t_window		mrt_setup_window(void);
 void			mrt_keyfuncion(mlx_key_data_t keydata, void *data);
@@ -66,7 +66,7 @@ void			mrt_clear_scene(t_data *element);
 //elements
 t_camera		*mrt_setup_camera(char **r_cam);
 t_ambient		*mrt_setup_ambient(char **r_amb);
-t_point_light	*mrt_setup_light(char **r_light);
+t_light			*mrt_setup_light(char **r_light);
 t_sphere		*mrt_setup_sphere(char **r_sphere, t_vec4 *rgb);
 t_plane			*mrt_setup_plane(char **r_plane, t_vec4 *rgb);
 t_cylinder		*mrt_setup_cylinder(char **r_cylinder, t_vec4 *rgb);

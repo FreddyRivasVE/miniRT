@@ -23,6 +23,8 @@ static void	mrt_free_scene_nodes(t_scene_node **lst)
 	while (current)
 	{
 		next = current->next;
+		ft_free_ptr((void **)&current->hit->material);
+		ft_free_ptr((void **)&current->hit);
 		ft_free_ptr((void **)&current->object);
 		ft_free_ptr((void **)&current);
 		current = next;

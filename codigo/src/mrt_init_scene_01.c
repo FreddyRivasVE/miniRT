@@ -12,19 +12,32 @@
 
 #include "minirt.h"
 
+static int	mrt_reserve_memory_node(t_scene_node **new)
+{
+	*new = ft_calloc(1, sizeof(t_scene_node));
+	if (!*new)
+		return (0);
+	(*new)->hit = ft_calloc(1, sizeof(t_hittable));
+	if (!(*new)->hit)
+		return (0);
+	(*new)->hit->material = ft_calloc(1, sizeof(t_material));
+	if (!(*new)->hit->material)
+		return (0);
+	return (1);
+}
+
 int	mrt_push_object(t_scene_node **lst, t_type type, void *obj, t_vec4 rgb)
 {
 	t_scene_node	*new;
 	t_scene_node	*last;
-
-	if (!obj)
+	
+	if (!obj || !lst)
 		return (0);
-	new = ft_calloc(1, sizeof(t_scene_node));
-	if (!new)
+	if (!mrt_reserve_memory_node(&new))
 		return (0);
 	new->type = type;
 	new->object = obj;
-	new->color = rgb;
+	new->hit->material->base_color = rgb;
 	new->next = NULL;
 	if (!*lst)
 	{

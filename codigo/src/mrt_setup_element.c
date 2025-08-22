@@ -24,36 +24,19 @@ t_ambient	*mrt_setup_ambient(char **r_amb)
 	return (amb);
 }
 
-/**
- * @param r_light
- * Array de strings con los parámetros de la luz en este orden:
- *    - r_light[0]: Identificador (no usado, debe ser "L").
- *    - r_light[1]: Coordenadas de posición en formato "x,y,z".
- *    - r_light[2]: Intensidad difusa (brightness) en rango [0.0, 1.0].
- *    - r_light[3]: (Opcional) Color RGB en formato "R,G,B" (0-255).
- *       Si es NULL, se usa blanco (1,1,1).
-* Configura los siguientes valores por defecto:
- *   - Color especular: Igual al color difuso (o blanco si no se especifica).
- *   - Intensidad especular (spec_power): 1.0 (valor básico para brillo suave).
- *   - Alpha (w) de colores: 0 (sin transparencia).
- * @warning No valida el rango de la intensidad difusa (debería ser [0.0, 1.0]).
- */
-
-t_point_light	*mrt_setup_light(char **r_light)
+t_light		*mrt_setup_light(char **r_light)
 {
-	t_point_light	*light;
+	t_light	*light;
 
-	light = ft_calloc(1, sizeof(t_point_light));
+	light = ft_calloc(1, sizeof(t_light));
 	if (!light)
 		return (NULL);
 	light->position = mrt_extrac_vector(r_light[1], 1.0f);
+	light->brightness_r = ft_atof(r_light[2]);
 	if (r_light[3])
-		light->diff_color = mrt_extract_color(r_light[3]);
+		light->color = mrt_extract_color(r_light[3]);
 	else
-		light->diff_color = vec4_create(1, 1, 1, 0);
-	light->diff_power = ft_atof(r_light[2]);
-	light->spec_color = light->diff_color;
-	light->spec_power = 1.0f;
+		light->color = vec4_create(1, 1, 1, 0);
 	return (light);
 }
 

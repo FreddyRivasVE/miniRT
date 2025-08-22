@@ -50,20 +50,6 @@ typedef struct s_ambient
 | `1.0`           | Todo iluminado por igual, sin sombras     |
 */
 
-/*
- * Usamos `t_camara` para guardar los datos crudos del archivo .rt:
- *   - Posición de la cámara
- *   - Dirección hacia dónde mira
- *   - Campo de visión (fov)
- *
- * Luego convertimos eso en una `t_cam`, que contiene:
- *   - origen (orig)
- *   - vectores horizontal y vertical del viewport
- *   - esquina inferior izquierda del plano de proyección
- *
- * Esto nos permite lanzar rayos desde la cámara hacia cada píxel de la imagen.
- */
-
 typedef struct s_camera
 {
 	t_vec4	origin;
@@ -79,14 +65,13 @@ typedef struct s_camera_view
 	t_vec4	bottom_left_corner;
 }	t_camera_view;
 
-typedef struct s_point_light
+typedef struct s_light
 {
-	t_vec4	position;		// Posición 3D de la luz
-	t_vec4	diff_color;		// Color de la luz difusa
-	float	diff_power;		// Intensidad de la luz difusa
-	t_vec4	spec_color;		// Color de la luz especular
-	float	spec_power;		// Intensidad de la luz especular
-}	t_point_light;
+	t_vec4	position;
+	t_vec4	color;
+	float	brightness_r;
+}	t_light;
+
 /*
 | Brightness Ratio | Efecto Visual                           |
 | ---------------- | --------------------------------------- |
@@ -98,45 +83,52 @@ typedef struct s_point_light
 */
 typedef struct s_ray
 {
-	t_vec4	origin;		// Punto de origen del rayo
-	t_vec4	direction;	// Dirección normalizada del rayo
+	t_vec4	origin;
+	t_vec4	direction;
 }	t_ray;
+
+typedef struct s_material
+{
+	t_vec4	base_color;
+	float	ambient_coeff;		// Coeficiente de iluminación ambiente
+	float	diffuse_coeff;		// Coeficiente de iluminación difusa
+	float	specular_coeff;		// Coeficiente de iluminación especular
+	float	shininess;			// Exponente especular (controla el brillo)
+}	t_material;
+
+typedef struct s_hittable
+{
+	t_vec4			point;
+	t_vec4			normal;
+	t_material		*material;
+	float			t;
+}	t_hittable;
 
 typedef struct s_sphere
 {
-	t_vec4	center;		// Centro de la esfera
-	float	radius;		// Radio de la esfera
+	t_vec4	center;
+	float	radius;
 }	t_sphere;
 
 typedef struct s_plane
 {
-	t_vec4	point;		// Un punto sobre el plano
-	t_vec4	normal;		// Vector normal al plano
+	t_vec4	point;
+	t_vec4	normal;
 }	t_plane;
 
 typedef struct s_cylinder
 {
-	t_vec4	center;		// Centro de la base
-	t_vec4	axis;		// Eje (dirección) del cilindro
-	float	radius;		// Radio
+	t_vec4	center;
+	t_vec4	axis;
+	float	radius;
 	float	height;
 }	t_cylinder;
-
-typedef struct s_hittable
-{
-	float			t_min;
-	float			t_max;
-	t_vec4			point;		// Punto de intersección
-	t_vec4			normal;		// Normal en el punto
-	float			t;			// Valor de t en el rayo (distancia)
-}	t_hittable;
 
 typedef struct s_scene_node
 {
 	t_type					type;
 	void					*object;
 	t_hittable				*hit;
-	t_vec4					color;
 	struct s_scene_node		*next;
 }	t_scene_node;
 
@@ -144,7 +136,7 @@ typedef struct s_data
 {
 	t_ambient		*ambient;
 	t_camera		*camera;
-	t_point_light	*light;
+	t_light			*light;
 	t_scene_node	*objects;
 }	t_data;
 

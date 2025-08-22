@@ -49,7 +49,7 @@ t_vec4	mrt_ray_color(t_ray ray, t_data *elements)
 				&& t < closest_t && t > 0.001f)
 			{
 				closest_t = t;
-				hit_color = current->color;
+				hit_color = current->hit->material->base_color;
 			}
 		}
 		if (current->type == PLANE)
@@ -58,7 +58,7 @@ t_vec4	mrt_ray_color(t_ray ray, t_data *elements)
 				&& t < closest_t && t > 0.001f)
 			{
 				closest_t = t;
-				hit_color = current->color;
+				hit_color = current->hit->material->base_color;
 			}
 		}
 		if (current->type == CYLINDER)
@@ -67,7 +67,7 @@ t_vec4	mrt_ray_color(t_ray ray, t_data *elements)
 				&& temp_hit.t < closest_t && temp_hit.t > 0.001f)
 			{
 				closest_t = temp_hit.t;
-				hit_color = current->color;
+				hit_color = current->hit->material->base_color;
 			}
 		}
 		current = current->next;
