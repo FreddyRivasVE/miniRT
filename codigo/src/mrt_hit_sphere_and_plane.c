@@ -19,6 +19,8 @@ bool	mrt_hit_sphere(t_ray ray, t_sphere sphere, t_hittable **hit)
 	float	b;
 	float	c;
 	float	discriminant;
+	float	t0;
+	float	t1;
 
 	ray_to_center = vec4_sub(ray.origin, sphere.center);
 	a = vec4_dot(ray.direction, ray.direction);
@@ -28,8 +30,13 @@ bool	mrt_hit_sphere(t_ray ray, t_sphere sphere, t_hittable **hit)
 	discriminant = b * b - 4 * a * c;
 	if (discriminant < 0)
 		return (false);
-	(*hit)->t = (-b - sqrtf(discriminant)) / (2.0f * a);
-	if ((*hit)->t < 0)
+	t0 = (-b - sqrtf(discriminant)) / (2.0f * a);
+	t1 = (-b + sqrtf(discriminant)) / (2.0f * a);
+	if (t0 > EPSILON)
+		(*hit)->t = t0;
+	else if (t1 > EPSILON)
+		(*hit)->t = t1;
+	else
 		return (false);
 	(*hit)->point = vec4_add(ray.origin, vec4_scale(ray.direction, (*hit)->t));
 	(*hit)->normal = vec4_normalize(vec4_sub((*hit)->point, sphere.center));
@@ -40,13 +47,13 @@ bool	mrt_hit_sphere(t_ray ray, t_sphere sphere, t_hittable **hit)
 
 bool	mrt_hit_plane(t_ray ray, t_plane plane, t_hittable **hit)
 {
-	float	denom;
 	t_vec4	to_plane;
+	float	denom;
 
 	denom = vec4_dot(plane.normal, ray.direction);
 	if (fabs(denom) < EPSILON)
 		return (false);
-	to_plane = plane.point - ray.origin;
+	to_plane = vec4_sub(plane.point, ray.origin);
 	(*hit)->t = vec4_dot(to_plane, plane.normal) / denom;
 	if ((*hit)->t < 0)
 		return (false);
