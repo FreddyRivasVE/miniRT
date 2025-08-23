@@ -27,7 +27,7 @@ void	mrt_put_color(t_vec4 color, int x, int y, t_window window)
 	pixels[index + 3] = 255;
 }
 
-t_vec4	mrt_ray_color(t_ray ray, t_data *elements)
+t_vec4	mrt_ray_color(t_ray *ray, t_data *elements)
 {
 	t_scene_node	*current;
 	float			closest_t;
@@ -47,31 +47,31 @@ t_vec4	mrt_ray_color(t_ray ray, t_data *elements)
 				&& current->hit->t < closest_t && current->hit->t > EPSILON)
 			{
 				closest_t = current->hit->t;
-				hit_color = current->hit->material->base_color;
+				hit_color = mrt_light_color(elements, current->hit, ray);
 			}
 		}
-		if (current->type == PLANE)
-		{
-			if (mrt_hit_plane(ray, *(t_plane *)current->object, &current->hit)
-				&& current->hit->t < closest_t && current->hit->t > EPSILON)
-			{
-				closest_t = current->hit->t;
-				hit_color = current->hit->material->base_color;
-			}
-		}
-		if (current->type == CYLINDER)
-		{
-			if (mrt_hit_cylinder(ray, *(t_cylinder *)current->object, &current->hit)
-				&& current->hit->t < closest_t && current->hit->t > 0.001f)
-			{
-				closest_t = current->hit->t;
-				hit_color = current->hit->material->base_color;
-			}
-		}
+		// if (current->type == PLANE)
+		// {
+		// 	if (mrt_hit_plane(ray, *(t_plane *)current->object, &current->hit)
+		// 		&& current->hit->t < closest_t && current->hit->t > EPSILON)
+		// 	{
+		// 		closest_t = current->hit->t;
+		// 		hit_color = current->hit->material->base_color;
+		// 	}
+		// }
+		// if (current->type == CYLINDER)
+		// {
+		// 	if (mrt_hit_cylinder(ray, *(t_cylinder *)current->object, &current->hit)
+		// 		&& current->hit->t < closest_t && current->hit->t > 0.001f)
+		// 	{
+		// 		closest_t = current->hit->t;
+		// 		hit_color = current->hit->material->base_color;
+		// 	}
+		// }
 		current = current->next;
 	}
 	if (closest_t == INFINITY)
-		return (vec4_create(0, 0, 0, 0));
+		return (vec4_create(1, 1, 1, 0));
 	return (hit_color);
 }
 
@@ -118,7 +118,7 @@ void	mrt_draw_to_window(t_window window, t_data *elements)
 		while (i < window.width)
 		{
 			ray = mrt_generate_ray(camera, (float)i, (float)j, window);
-			color = mrt_ray_color(ray, elements);
+			color = mrt_ray_color(&ray, elements);
 			mrt_put_color(color, i, j, window);
 			i++;
 		}

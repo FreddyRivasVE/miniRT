@@ -72,8 +72,9 @@ t_plane			*mrt_setup_plane(char **r_plane, t_vec4 *rgb);
 t_cylinder		*mrt_setup_cylinder(char **r_cylinder, t_vec4 *rgb);
 //render
 t_camera_view	mrt_compute_camera_view(t_camera *cam, t_window win);
-bool			mrt_hit_sphere(t_ray ray, t_sphere sphere, t_hittable **hit);
+bool			mrt_hit_sphere(t_ray *ray, t_sphere sphere, t_hittable **hit);
 void			mrt_draw_to_window(t_window window, t_data *elements);
 bool			mrt_hit_plane(t_ray ray, t_plane plane, t_hittable **hit);
 bool			mrt_hit_cylinder(t_ray ray, t_cylinder cyl, t_hittable **hit);
+t_vec4			mrt_light_color(t_data *elements, t_hittable *hit, t_ray *ray);
 #endif

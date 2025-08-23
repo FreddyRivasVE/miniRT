@@ -12,7 +12,7 @@
 
 #include "minirt.h"
 
-bool	mrt_hit_sphere(t_ray ray, t_sphere sphere, t_hittable **hit)
+bool	mrt_hit_sphere(t_ray *ray, t_sphere sphere, t_hittable **hit)
 {
 	t_vec4	ray_to_center;
 	float	a;
@@ -22,9 +22,9 @@ bool	mrt_hit_sphere(t_ray ray, t_sphere sphere, t_hittable **hit)
 	float	t0;
 	float	t1;
 
-	ray_to_center = vec4_sub(ray.origin, sphere.center);
-	a = vec4_dot(ray.direction, ray.direction);
-	b = 2.0f * vec4_dot(ray_to_center, ray.direction);
+	ray_to_center = vec4_sub(ray->origin, sphere.center);
+	a = vec4_dot(ray->direction, ray->direction);
+	b = 2.0f * vec4_dot(ray_to_center, ray->direction);
 	c = vec4_dot(ray_to_center, ray_to_center)
 		- (sphere.radius * sphere.radius);
 	discriminant = b * b - 4 * a * c;
@@ -38,9 +38,9 @@ bool	mrt_hit_sphere(t_ray ray, t_sphere sphere, t_hittable **hit)
 		(*hit)->t = t1;
 	else
 		return (false);
-	(*hit)->point = vec4_add(ray.origin, vec4_scale(ray.direction, (*hit)->t));
+	(*hit)->point = vec4_add(ray->origin, vec4_scale(ray->direction, (*hit)->t));
 	(*hit)->normal = vec4_normalize(vec4_sub((*hit)->point, sphere.center));
-	if (vec4_dot(ray.direction, (*hit)->normal) > 0)
+	if (vec4_dot(ray->direction, (*hit)->normal) > 0)
 		(*hit)->normal = vec4_scale((*hit)->normal, -1);
 	return (true);
 }
