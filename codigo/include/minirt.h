@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:14:15 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/21 13:44:41 by frivas           ###   ########.fr       */
+/*   Updated: 2025/08/23 20:33:01 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # include "../libs/libft/libft.h"
 # include "../include/mrt_struct.h"
 
-# define WIDTH 1920
+# define WIDTH 800
 # define ASPECT_RATIO 1.7777777778
 # define PI 3.14159265358979323846
 # define EPSILON 1e-6f
