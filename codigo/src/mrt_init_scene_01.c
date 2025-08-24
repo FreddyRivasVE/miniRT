@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 13:59:10 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/10 20:52:59 by frivas           ###   ########.fr       */
+/*   Updated: 2025/08/24 10:37:01 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	mrt_push_object(t_scene_node **lst, t_type type, void *obj, t_vec4 rgb)
 {
 	t_scene_node	*new;
 	t_scene_node	*last;
-	
+
 	if (!obj || !lst)
 		return (0);
 	if (!mrt_reserve_memory_node(&new))

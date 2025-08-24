@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mrt_light_render.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 12:46:37 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/23 20:51:08 by brivera          ###   ########.fr       */
+/*   Updated: 2025/08/24 10:41:45 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ bool	mrt_intersect_scene(t_data *elements, t_ray *ray, t_hittable *shadow_hit)
 		if (current->type == SPHERE)
 		{
 			temp_ptr = &temp_hit;
-
 			if (mrt_hit_sphere(ray, *(t_sphere *)current->object, &temp_ptr)
 				&& temp_ptr->t > EPSILON && temp_ptr->t < closest_t)
 			{
@@ -96,21 +95,21 @@ float	vect4_length(t_vec4 v)
 	return (r);
 }
 
-t_vec4  mrt_light_color(t_data *elements, t_hittable *hit, t_ray *ray)
+t_vec4	mrt_light_color(t_data *elements, t_hittable *hit, t_ray *ray)
 {
-	t_vec4  hit_color;
-	t_vec4  light_dir;
-	t_vec4  diff;
-	t_vec4  view_dir;
-	t_vec4  reflect_dir;
-	t_vec4  spec;
-	t_vec4	ambient;
-	t_ray	shadow_ray;
-	t_hittable shadow_hit;
-	float   diff_intensity;
-	float   spec_intensity;
-	float   shininess;
-	float	light_dist;
+	t_vec4		hit_color;
+	t_vec4		light_dir;
+	t_vec4		diff;
+	t_vec4		view_dir;
+	t_vec4		reflect_dir;
+	t_vec4		spec;
+	t_vec4		ambient;
+	t_ray		shadow_ray;
+	t_hittable	shadow_hit;
+	float		diff_intensity;
+	float		spec_intensity;
+	float		shininess;
+	float		light_dist;
 
 	//shadow_hit = ft_calloc(1, sizeof(t_hittable));
 	light_dist = vect4_length(vec4_sub(elements->light->position, hit->point));

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mrt_setup_element.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 21:24:46 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/21 13:56:22 by frivas           ###   ########.fr       */
+/*   Updated: 2025/08/24 10:37:25 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_ambient	*mrt_setup_ambient(char **r_amb)
 	return (amb);
 }
 
-t_light		*mrt_setup_light(char **r_light)
+t_light	*mrt_setup_light(char **r_light)
 {
 	t_light	*light;
 
