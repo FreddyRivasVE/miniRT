@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
+/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:14:15 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/24 10:27:57 by frivas           ###   ########.fr       */
+/*   Updated: 2025/08/25 20:59:19 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # define ASPECT_RATIO	1.7777777778
 # define PI				3.14159265358979323846
 # define EPSILON		1e-6f
-# define E_LIGHT		1e-3f
+# define E_LIGHT		1e-4f
 
 //parce
 t_list			*mrt_read_file(char *file);
@@ -74,7 +74,8 @@ t_plane			*mrt_setup_plane(char **r_plane, t_vec4 *rgb);
 t_cylinder		*mrt_setup_cylinder(char **r_cylinder, t_vec4 *rgb);
 //render
 t_camera_view	mrt_compute_camera_view(t_camera *cam, t_window win);
-t_ray			mtr_create_ray(t_vec4 origen, t_vec4 direction);
+t_ray			mrt_create_ray(t_vec4 origen, t_vec4 direction);
+t_vec4			mrt_ray_color(t_ray *ray, t_data *elements);
 t_vec4			mrt_light_color(t_data *elements, t_hit *hit, t_ray *ray);
 bool			mrt_hit_sphere(t_ray *ray, t_sphere sphere, t_hit **hit);
 bool			mrt_hit_plane(t_ray *ray, t_plane plane, t_hit **hit);

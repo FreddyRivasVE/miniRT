@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mrt_light_render.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
+/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 12:46:37 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/24 10:41:45 by frivas           ###   ########.fr       */
+/*   Updated: 2025/08/25 20:29:23 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ t_vec4	mrt_light_color(t_data *elements, t_hit *hit, t_ray *ray)
 	shadow_hit.t = INFINITY;
 	elements->light->dist = vect4_length(vec4_sub(elements->light->position, hit->point));
 	elements->light->dir = vec4_normalize(vec4_sub(elements->light->position, hit->point));
-	shadow_ray = mtr_create_ray(vec4_add(hit->point, vec4_scale(hit->normal, E_LIGHT)), elements->light->dir);
+	shadow_ray = mrt_create_ray(vec4_add(hit->point, vec4_scale(hit->normal, E_LIGHT)), elements->light->dir);
 	hit->material->ambient = vec4_scale(elements->ambient->color, elements->ambient->ratio);
 	if (!mrt_intersect_scene(elements, &shadow_ray, &shadow_hit)
 		|| shadow_hit.t >= elements->light->dist - E_LIGHT)

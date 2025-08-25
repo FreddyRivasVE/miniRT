@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mrt_render.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera <brivera@student.42madrid.com>     #+#  +:+       +#+        */
+/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-08-25 12:28:11 by brivera           #+#    #+#             */
-/*   Updated: 2025-08-25 12:28:11 by brivera          ###   ########.fr       */
+/*   Created: 2025/08/25 12:28:11 by brivera           #+#    #+#             */
+/*   Updated: 2025/08/25 20:29:46 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,50 +27,7 @@ void	mrt_put_color(t_vec4 color, int x, int y, t_window window)
 	pixels[index + 3] = 255;
 }
 
-t_vec4	mrt_ray_color(t_ray *ray, t_data *elements)
-{
-	t_scene_node	*current;
-	t_vec4			hit_color;
-	float			t_final;
-
-	hit_color = (t_vec4){0, 0, 0, 0};
-	t_final = INFINITY;
-	current = elements->objects;
-	while (current)
-	{
-		if (current->type == SPHERE)
-		{
-			if (mrt_hit_sphere(ray, *(t_sphere *)current->object, &current->hit)
-				&& current->hit->t < t_final && current->hit->t > EPSILON)
-			{
-				t_final = current->hit->t;
-				hit_color = mrt_light_color(elements, current->hit, ray);
-			}
-		}
-		if (current->type == PLANE)
-		{
-			if (mrt_hit_plane(ray, *(t_plane *)current->object, &current->hit)
-				&& current->hit->t < t_final && current->hit->t > EPSILON)
-			{
-				t_final = current->hit->t;
-				hit_color = mrt_light_color(elements, current->hit, ray);
-			}
-		}
-		if (current->type == CYLINDER)
-		{
-			if (mrt_hit_cylinder(ray, *(t_cylinder *)current->object, &current->hit)
-				&& current->hit->t < t_final && current->hit->t > EPSILON)
-			{
-				t_final = current->hit->t;
-				hit_color = mrt_light_color(elements, current->hit, ray);
-			}
-		}
-		current = current->next;
-	}
-	return (hit_color);
-}
-
-t_ray	mtr_create_ray(t_vec4 origen, t_vec4 direction)
+t_ray	mrt_create_ray(t_vec4 origen, t_vec4 direction)
 {
 	t_ray	ray;
 
@@ -94,7 +51,7 @@ t_ray	mrt_generate_ray(t_camera_view cam, float x, float y, t_window window)
 	point_on_plane = vec4_add(point_on_plane, vec4_scale(cam.horizontal, u));
 	point_on_plane = vec4_add(point_on_plane, vec4_scale(cam.vertical, v));
 	direction = vec4_normalize(vec4_sub(point_on_plane, cam.origin));
-	return (mtr_create_ray(cam.origin, direction));
+	return (mrt_create_ray(cam.origin, direction));
 }
 
 void	mrt_draw_to_window(t_window window, t_data *elements)

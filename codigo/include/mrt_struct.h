@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mrt_struct.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 13:43:23 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/18 13:23:17 by frivas           ###   ########.fr       */
+/*   Updated: 2025/08/25 21:00:36 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,12 +100,26 @@ typedef struct s_material
 	float	shininess;
 }	t_material;
 
+typedef struct s_cylinder_hits
+{
+	t_vec4	normal_body;
+	t_vec4	normal_cap_base;
+	t_vec4	normal_cap_top;
+	float	t_body;
+	float	t_cap_base;
+	float	t_cap_top;
+	bool	hit_body;
+	bool	hit_cap_base;
+	bool	hit_cap_top;
+}	t_cylinder_hits;
+
 typedef struct s_hit
 {
 	t_vec4			point;
 	t_vec4			normal;
 	t_material		*material;
 	float			t;
+	float			t_closest;
 }	t_hit;
 
 typedef struct s_sphere
@@ -143,5 +157,13 @@ typedef struct s_data
 	t_light			*light;
 	t_scene_node	*objects;
 }	t_data;
+
+typedef struct s_hit_context
+{
+	t_ray		*ray;
+	t_data		*elements;
+	t_vec4		*h_color;
+	float		*t_closest;
+}	t_hit_context;
 
 #endif
