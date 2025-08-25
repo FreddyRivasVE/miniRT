@@ -96,7 +96,7 @@ typedef struct s_material
 	t_vec4	diffuse;
 	t_vec4	specular;
 	float	diff_intensity;
-	float		spec_intensity;
+	float	spec_intensity;
 	float	shininess;
 }	t_material;
 
