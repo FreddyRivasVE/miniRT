@@ -12,7 +12,6 @@
 
 #include "minirt.h"
 
-// Forzamos w = 0
 t_vec4	vec4_clamp(t_vec4 v, float min, float max)
 {
 	t_vec4	result;
@@ -35,6 +34,14 @@ t_vec4	vec4_mul(t_vec4 a, t_vec4 b)
 	return (result);
 }
 
+float	vect4_length(t_vec4 v)
+{
+	float	r;
+
+	r = sqrtf(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
+	return (r);
+}
+
 /* 
  * Normaliza un vector
  * Devuelve un nuevo vector con la misma dirección que 'v' pero de longitud 1.
@@ -52,7 +59,7 @@ t_vec4	vec4_normalize(t_vec4 v)
 {
 	float	len;
 
-	len = sqrtf(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
+	len = vect4_length(v);
 	if (len == 0.0f)
 		return ((t_vec4){0, 0, 0, 0});
 	return ((t_vec4){v[0] / len, v[1] / len, v[2] / len, v[3]});

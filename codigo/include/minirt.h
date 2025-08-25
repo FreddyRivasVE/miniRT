@@ -24,10 +24,11 @@
 # include "../libs/libft/libft.h"
 # include "../include/mrt_struct.h"
 
-# define WIDTH 1920
-# define ASPECT_RATIO 1.7777777778
-# define PI 3.14159265358979323846
-# define EPSILON 1e-6f
+# define WIDTH			1920
+# define ASPECT_RATIO	1.7777777778
+# define PI				3.14159265358979323846
+# define EPSILON		1e-6f
+# define E_LIGHT		1e-3f
 
 //parce
 t_list			*mrt_read_file(char *file);
@@ -47,20 +48,21 @@ void			mrt_skip_spaces(char **str);
 t_window		mrt_setup_window(void);
 void			mrt_keyfuncion(mlx_key_data_t keydata, void *data);
 //init_element
-int				mrt_init_scene(t_data *data, t_list **file);
 t_vec4			mrt_extract_color(const char *str);
 t_vec4			mrt_extrac_vector(const char *str, float w);
+int				mrt_init_scene(t_data *data, t_list **file);
 //operaciones de vectores
 t_vec4			vec4_normalize(t_vec4 v);
 t_vec4			vec4_add(t_vec4 a, t_vec4 b);
 t_vec4			vec4_scale(t_vec4 v, float s);
-float			vec4_dot(t_vec4 a, t_vec4 b);
 t_vec4			vec4_sub(t_vec4 a, t_vec4 b);
 t_vec4			vec4_reflect(t_vec4 v, t_vec4 n);
 t_vec4			vec4_create(float x, float y, float z, float w);
 t_vec4			vec4_cross(t_vec4 a, t_vec4 b);
 t_vec4			vec4_mul(t_vec4 a, t_vec4 b);
 t_vec4			vec4_clamp(t_vec4 v, float min, float max);
+float			vec4_dot(t_vec4 a, t_vec4 b);
+float			vect4_length(t_vec4 v);
 //liberacion de memoria
 void			mrt_clear_scene(t_data *element);
 //elements
@@ -72,9 +74,10 @@ t_plane			*mrt_setup_plane(char **r_plane, t_vec4 *rgb);
 t_cylinder		*mrt_setup_cylinder(char **r_cylinder, t_vec4 *rgb);
 //render
 t_camera_view	mrt_compute_camera_view(t_camera *cam, t_window win);
-bool			mrt_hit_sphere(t_ray *ray, t_sphere sphere, t_hittable **hit);
+t_ray			mtr_create_ray(t_vec4 origen, t_vec4 direction);
+t_vec4			mrt_light_color(t_data *elements, t_hit *hit, t_ray *ray);
+bool			mrt_hit_sphere(t_ray *ray, t_sphere sphere, t_hit **hit);
+bool			mrt_hit_plane(t_ray *ray, t_plane plane, t_hit **hit);
+bool			mrt_hit_cylinder(t_ray *ray, t_cylinder cyl, t_hit **hit);
 void			mrt_draw_to_window(t_window window, t_data *elements);
-bool			mrt_hit_plane(t_ray ray, t_plane plane, t_hittable **hit);
-bool			mrt_hit_cylinder(t_ray ray, t_cylinder cyl, t_hittable **hit);
-t_vec4			mrt_light_color(t_data *elements, t_hittable *hit, t_ray *ray);
 #endif

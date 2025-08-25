@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mrt_create_render.c                                :+:      :+:    :+:   */
+/*   mrt_render.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
+/*   By: brivera <brivera@student.42madrid.com>     #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/05 13:03:36 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/19 23:08:35 by frivas           ###   ########.fr       */
+/*   Created: 2025-08-25 12:28:11 by brivera           #+#    #+#             */
+/*   Updated: 2025-08-25 12:28:11 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,66 +30,61 @@ void	mrt_put_color(t_vec4 color, int x, int y, t_window window)
 t_vec4	mrt_ray_color(t_ray *ray, t_data *elements)
 {
 	t_scene_node	*current;
-	float			closest_t;
 	t_vec4			hit_color;
+	float			t_final;
 
-	hit_color[0] = 0.0f; // borrar
-	hit_color[1] = 0.0f; //borrar
-	hit_color[2] = 0.0f; //borrar
-	hit_color[3] = 0.0f; //borrar. en mi pc no compila sin inicializar antes de usar.
-	closest_t = INFINITY;
+	hit_color = (t_vec4){0, 0, 0, 0};
+	t_final = INFINITY;
 	current = elements->objects;
 	while (current)
 	{
 		if (current->type == SPHERE)
 		{
 			if (mrt_hit_sphere(ray, *(t_sphere *)current->object, &current->hit)
-				&& current->hit->t < closest_t && current->hit->t > EPSILON)
+				&& current->hit->t < t_final && current->hit->t > EPSILON)
 			{
-				closest_t = current->hit->t;
+				t_final = current->hit->t;
 				hit_color = mrt_light_color(elements, current->hit, ray);
 			}
 		}
-		// if (current->type == PLANE)
-		// {
-		// 	if (mrt_hit_plane(ray, *(t_plane *)current->object, &current->hit)
-		// 		&& current->hit->t < closest_t && current->hit->t > EPSILON)
-		// 	{
-		// 		closest_t = current->hit->t;
-		// 		hit_color = current->hit->material->base_color;
-		// 	}
-		// }
-		// if (current->type == CYLINDER)
-		// {
-		// 	if (mrt_hit_cylinder(ray, *(t_cylinder *)current->object, &current->hit)
-		// 		&& current->hit->t < closest_t && current->hit->t > 0.001f)
-		// 	{
-		// 		closest_t = current->hit->t;
-		// 		hit_color = current->hit->material->base_color;
-		// 	}
-		// }
+		if (current->type == PLANE)
+		{
+			if (mrt_hit_plane(ray, *(t_plane *)current->object, &current->hit)
+				&& current->hit->t < t_final && current->hit->t > EPSILON)
+			{
+				t_final = current->hit->t;
+				hit_color = mrt_light_color(elements, current->hit, ray);
+			}
+		}
+		if (current->type == CYLINDER)
+		{
+			if (mrt_hit_cylinder(ray, *(t_cylinder *)current->object, &current->hit)
+				&& current->hit->t < t_final && current->hit->t > EPSILON)
+			{
+				t_final = current->hit->t;
+				hit_color = mrt_light_color(elements, current->hit, ray);
+			}
+		}
 		current = current->next;
 	}
-	if (closest_t == INFINITY)
-		return (vec4_create(1, 1, 1, 0));
 	return (hit_color);
 }
 
-t_ray	mrt_create_ray(t_vec4 origin, t_vec4 direction)
+t_ray	mtr_create_ray(t_vec4 origen, t_vec4 direction)
 {
 	t_ray	ray;
 
-	ray.origin = origin;
 	ray.direction = direction;
+	ray.origin = origen;
 	return (ray);
 }
 
 t_ray	mrt_generate_ray(t_camera_view cam, float x, float y, t_window window)
 {
-	float	u;
-	float	v;
 	t_vec4	point_on_plane;
 	t_vec4	direction;
+	float	u;
+	float	v;
 
 	u = (float)(x + 0.5f) / (float)(window.width - 1);
 	v = (float)(y + 0.5f) / (float)(window.height - 1);
@@ -99,7 +94,7 @@ t_ray	mrt_generate_ray(t_camera_view cam, float x, float y, t_window window)
 	point_on_plane = vec4_add(point_on_plane, vec4_scale(cam.horizontal, u));
 	point_on_plane = vec4_add(point_on_plane, vec4_scale(cam.vertical, v));
 	direction = vec4_normalize(vec4_sub(point_on_plane, cam.origin));
-	return (mrt_create_ray(cam.origin, direction));
+	return (mtr_create_ray(cam.origin, direction));
 }
 
 void	mrt_draw_to_window(t_window window, t_data *elements)

@@ -40,7 +40,7 @@ SRCS 		:= 	$(SRC_DIR)main.c \
 				$(SRC_DIR)mrt_window_setup.c \
 				$(SRC_DIR)mrt_setup_element.c \
 				$(SRC_DIR)mrt_setup_camera.c \
-				$(SRC_DIR)mrt_create_render.c \
+				$(SRC_DIR)mrt_render.c \
 				$(SRC_DIR)mrt_hit_sphere_and_plane.c \
 				$(SRC_DIR)mrt_hit_cylinder.c \
 				$(SRC_DIR)mrt_light_render.c \

@@ -12,7 +12,7 @@
 
 #include "minirt.h"
 
-bool	mrt_hit_sphere(t_ray *ray, t_sphere sphere, t_hittable **hit)
+bool	mrt_hit_sphere(t_ray *ray, t_sphere sphere, t_hit **hit)
 {
 	t_vec4	ray_to_center;
 	float	a;
@@ -45,21 +45,21 @@ bool	mrt_hit_sphere(t_ray *ray, t_sphere sphere, t_hittable **hit)
 	return (true);
 }
 
-bool	mrt_hit_plane(t_ray ray, t_plane plane, t_hittable **hit)
+bool	mrt_hit_plane(t_ray *ray, t_plane plane, t_hit **hit)
 {
 	t_vec4	to_plane;
 	float	denom;
 
-	denom = vec4_dot(plane.normal, ray.direction);
+	denom = vec4_dot(plane.normal, ray->direction);
 	if (fabs(denom) < EPSILON)
 		return (false);
-	to_plane = vec4_sub(plane.point, ray.origin);
+	to_plane = vec4_sub(plane.point, ray->origin);
 	(*hit)->t = vec4_dot(to_plane, plane.normal) / denom;
 	if ((*hit)->t < 0)
 		return (false);
-	(*hit)->point = vec4_add(ray.origin, vec4_scale(ray.direction, (*hit)->t));
+	(*hit)->point = vec4_add(ray->origin, vec4_scale(ray->direction, (*hit)->t));
 	(*hit)->normal = plane.normal;
-	if (vec4_dot(ray.direction, (*hit)->normal) > 0)
+	if (vec4_dot(ray->direction, (*hit)->normal) > 0)
 		(*hit)->normal = vec4_scale((*hit)->normal, -1);
 	return (true);
 }

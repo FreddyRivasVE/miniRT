@@ -15,7 +15,7 @@
 // ----------------------------------
 // Intersección con el cuerpo lateral
 // ----------------------------------
-static bool	mrt_hit_cylinder_body(t_ray ray, t_cylinder cylinder,
+static bool	mrt_hit_cylinder_body(t_ray *ray, t_cylinder cylinder,
 	float *t_body, t_vec4 *normal_body)
 {
 	t_vec4	direction;
@@ -34,10 +34,10 @@ static bool	mrt_hit_cylinder_body(t_ray ray, t_cylinder cylinder,
 
 	*t_body = INFINITY;
 	*normal_body = (t_vec4){0, 0, 0, 0};
-	direction = vec4_sub(ray.direction,
+	direction = vec4_sub(ray->direction,
 			vec4_scale(cylinder.axis,
-				vec4_dot(ray.direction, cylinder.axis)));
-	delta_p = vec4_sub(ray.origin, cylinder.center);
+				vec4_dot(ray->direction, cylinder.axis)));
+	delta_p = vec4_sub(ray->origin, cylinder.center);
 	delta_p_perp = vec4_sub(delta_p,
 			vec4_scale(cylinder.axis,
 				vec4_dot(delta_p, cylinder.axis)));
@@ -65,7 +65,7 @@ static bool	mrt_hit_cylinder_body(t_ray ray, t_cylinder cylinder,
 		*t_body = t1;
 	else
 		return (false);
-	p = vec4_add(ray.origin, vec4_scale(ray.direction, *t_body));
+	p = vec4_add(ray->origin, vec4_scale(ray->direction, *t_body));
 	proj = vec4_dot(vec4_sub(p, cylinder.center), cylinder.axis);
 // Si el height es muy grande en comparación con radius, los errores de punto
 // flotante podrían hacer fallar el test de altura. se agrega EPSILON 
@@ -80,7 +80,7 @@ static bool	mrt_hit_cylinder_body(t_ray ray, t_cylinder cylinder,
 // ----------------------------------
 // Intersección con una tapa
 // ----------------------------------
-static bool	mrt_hit_cylinder_cap(t_ray ray, t_cylinder cylinder, float *t_cap,t_vec4 *normal_cap, bool top)
+static bool	mrt_hit_cylinder_cap(t_ray *ray, t_cylinder cylinder, float *t_cap,t_vec4 *normal_cap, bool top)
 {
 	t_vec4	cap_center;
 	t_vec4	n;
@@ -100,13 +100,13 @@ static bool	mrt_hit_cylinder_cap(t_ray ray, t_cylinder cylinder, float *t_cap,t_
 	n = vec4_normalize(cylinder.axis);
 	if (!top)
 		n = vec4_scale(n, -1.0f); // normal hacia afuera en la base inferior
-	denom = vec4_dot(ray.direction, n);
+	denom = vec4_dot(ray->direction, n);
 	if (fabs(denom) < 1e-6f) // paralelo al plano
 		return (false);
-	t = vec4_dot(vec4_sub(cap_center, ray.origin), n) / denom;
+	t = vec4_dot(vec4_sub(cap_center, ray->origin), n) / denom;
 	if (t < 0)
 		return (false);
-	p = vec4_add(ray.origin, vec4_scale(ray.direction, t));
+	p = vec4_add(ray->origin, vec4_scale(ray->direction, t));
 	dist = sqrtf(vec4_dot(vec4_sub(p, cap_center), (vec4_sub(p, cap_center))));
 	if (dist > cylinder.radius)
 		return (false);
@@ -118,7 +118,7 @@ static bool	mrt_hit_cylinder_cap(t_ray ray, t_cylinder cylinder, float *t_cap,t_
 // ----------------------------------
 // Intersección completa cilindro
 // ----------------------------------
-bool	mrt_hit_cylinder(t_ray ray, t_cylinder cylinder, t_hittable **hit)
+bool	mrt_hit_cylinder(t_ray *ray, t_cylinder cylinder, t_hit **hit)
 {
 	bool	hit_body;
 	bool	hit_cap_base;
@@ -132,12 +132,9 @@ bool	mrt_hit_cylinder(t_ray ray, t_cylinder cylinder, t_hittable **hit)
 	float	t_final;
 	t_vec4	normal_final;
 
-	// 1. cuerpo
 	hit_body = mrt_hit_cylinder_body(ray, cylinder, &t_body, &normal_body);
-	// 2. tapa base
 	hit_cap_base = mrt_hit_cylinder_cap(ray, cylinder, &t_cap_base,
 			&normal_cap_base, false);
-	// 3. tapa superior
 	hit_cap_top = mrt_hit_cylinder_cap(ray, cylinder, &t_cap_top,
 			&normal_cap_top, true);
 	// Inicializar
@@ -163,7 +160,7 @@ bool	mrt_hit_cylinder(t_ray ray, t_cylinder cylinder, t_hittable **hit)
 		return (false);
 	// llenar hittable
 	(*hit)->t = t_final;
-	(*hit)->point = vec4_add(ray.origin, vec4_scale(ray.direction, t_final));
+	(*hit)->point = vec4_add(ray->origin, vec4_scale(ray->direction, t_final));
 	(*hit)->normal = normal_final;
 	return (true);
 }

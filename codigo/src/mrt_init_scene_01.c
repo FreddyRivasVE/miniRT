@@ -17,7 +17,7 @@ static int	mrt_reserve_memory_node(t_scene_node **new)
 	*new = ft_calloc(1, sizeof(t_scene_node));
 	if (!*new)
 		return (0);
-	(*new)->hit = ft_calloc(1, sizeof(t_hittable));
+	(*new)->hit = ft_calloc(1, sizeof(t_hit));
 	if (!(*new)->hit)
 		return (0);
 	(*new)->hit->material = ft_calloc(1, sizeof(t_material));

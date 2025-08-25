@@ -69,6 +69,8 @@ typedef struct s_light
 {
 	t_vec4	position;
 	t_vec4	color;
+	t_vec4	dir;
+	float	dist;
 	float	brightness_r;
 }	t_light;
 
@@ -90,19 +92,21 @@ typedef struct s_ray
 typedef struct s_material
 {
 	t_vec4	base_color;
-	float	ambient_coeff;		// Coeficiente de iluminación ambiente
-	float	diffuse_coeff;		// Coeficiente de iluminación difusa
-	float	specular_coeff;		// Coeficiente de iluminación especular
-	float	shininess;			// Exponente especular (controla el brillo)
+	t_vec4	ambient;
+	t_vec4	diffuse;
+	t_vec4	specular;
+	float	diff_intensity;
+	float		spec_intensity;
+	float	shininess;
 }	t_material;
 
-typedef struct s_hittable
+typedef struct s_hit
 {
 	t_vec4			point;
 	t_vec4			normal;
 	t_material		*material;
 	float			t;
-}	t_hittable;
+}	t_hit;
 
 typedef struct s_sphere
 {
@@ -126,10 +130,10 @@ typedef struct s_cylinder
 
 typedef struct s_scene_node
 {
-	t_type					type;
-	void					*object;
-	t_hittable				*hit;
-	struct s_scene_node		*next;
+	t_type				type;
+	void				*object;
+	t_hit				*hit;
+	struct s_scene_node	*next;
 }	t_scene_node;
 
 typedef struct s_data
