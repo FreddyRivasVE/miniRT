@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:14:15 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/26 12:56:09 by frivas           ###   ########.fr       */
+/*   Updated: 2025/08/26 19:24:46 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # define PI				3.14159265358979323846
 # define EPSILON		1e-6f
 # define E_LIGHT		1e-3f
-# define FOCAL_LENGHT	1.0f
+# define FOCAL_LENGTH	1.0f
 
 //parce
 t_list			*mrt_read_file(char *file);

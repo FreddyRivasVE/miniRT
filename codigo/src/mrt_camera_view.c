@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mrt_camera_view.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera <brivera@student.42madrid.com>     #+#  +:+       +#+        */
+/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-08-26 13:38:01 by brivera           #+#    #+#             */
-/*   Updated: 2025-08-26 13:38:01 by brivera          ###   ########.fr       */
+/*   Created: 2025/08/26 13:38:01 by brivera           #+#    #+#             */
+/*   Updated: 2025/08/26 19:24:48 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	mrt_compute_viewport(t_camera *cam, t_window win, float *height,
 	*width = aspect_ratio * (*height);
 }
 
-t_vec4	mtr_word_right(t_camera *cam, float viewport_width)
+static void	mrt_compute_camera_basis(t_camera *cam, t_camera_view *view)
 {
 	t_vec4	world_up;
 	t_vec4	forward;
@@ -35,21 +35,8 @@ t_vec4	mtr_word_right(t_camera *cam, float viewport_width)
 	world_up = vec4_create(0.0f, 1.0f, 0.0f, 0.0f);
 	forward = vec4_normalize(cam->direction);
 	right = vec4_normalize(vec4_cross(forward, world_up));
-	return (vec4_scale(right, viewport_width));
-}
-
-t_vec4	mtr_word_up(t_camera *cam, float viewport_height)
-{
-	t_vec4	world_up;
-	t_vec4	forward;
-	t_vec4	up_cam;
-	t_vec4	right;
-
-	world_up = vec4_create(0.0f, 1.0f, 0.0f, 0.0f);
-	forward = vec4_normalize(cam->direction);
-	right = vec4_normalize(vec4_cross(forward, world_up));
-	up_cam = vec4_cross(right, forward);
-	return (vec4_scale(up_cam, viewport_height));
+	view->horizontal = right;
+	view->vertical = vec4_cross(right, forward);
 }
 
 t_camera_view	mrt_compute_camera_view(t_camera *cam, t_window win)
@@ -62,14 +49,15 @@ t_camera_view	mrt_compute_camera_view(t_camera *cam, t_window win)
 
 	mrt_compute_viewport(cam, win, &viewport_height, &viewport_width);
 	view.origin = cam->origin;
-	view.horizontal = mtr_word_right(cam, viewport_width);
-	view.vertical = mtr_word_up(cam, viewport_height);
+	mrt_compute_camera_basis(cam, &view);
+	view.horizontal = vec4_scale(view.horizontal, viewport_width);
+	view.vertical = vec4_scale(view.vertical, viewport_height);
 	horiz_offset = vec4_scale(view.horizontal, 0.5f);
 	vert_offset = vec4_scale(view.vertical, 0.5f);
 	view.bottom_left_corner = view.origin;
 	view.bottom_left_corner = vec4_sub(view.bottom_left_corner, horiz_offset);
 	view.bottom_left_corner = vec4_sub(view.bottom_left_corner, vert_offset);
 	view.bottom_left_corner = vec4_add(view.bottom_left_corner,
-			vec4_scale(vec4_normalize(cam->direction), FOCAL_LENGHT));
+			vec4_scale(vec4_normalize(cam->direction), FOCAL_LENGTH));
 	return (view);
 }
