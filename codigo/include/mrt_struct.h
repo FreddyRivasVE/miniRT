@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mrt_struct.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 13:43:23 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/26 19:43:54 by brivera          ###   ########.fr       */
+/*   Updated: 2025/08/26 20:47:30 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@
 // ========================================================================
 
 typedef float	t_vec4 __attribute__((vector_size(16)));
-typedef struct s_data t_data;
+typedef struct s_data
+{
+}	t_data;
 
 typedef enum s_type
 {
