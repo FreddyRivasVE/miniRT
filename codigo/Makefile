@@ -44,6 +44,7 @@ SRCS 		:= 	$(SRC_DIR)main.c \
 				$(SRC_DIR)mrt_ray_color.c \
 				$(SRC_DIR)mrt_hit_sphere_and_plane.c \
 				$(SRC_DIR)mrt_hit_cylinder.c \
+				$(SRC_DIR)mrt_hit_cylinder_caps.c \
 				$(SRC_DIR)mrt_light_render.c \
 				$(SRC_DIR)mrt_extrac_data_elements.c \
 				$(SRC_DIR)ft_vec_utils_00.c \

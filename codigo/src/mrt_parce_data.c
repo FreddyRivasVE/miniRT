@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mrt_parce_data.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42madrid.com>       +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 21:16:28 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/19 23:02:02 by frivas           ###   ########.fr       */
+/*   Updated: 2025/08/26 14:02:30 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,40 @@ int	mrt_validator_row_data(char *content)
 		return (0);
 }
 
+bool	mrt_object_count(t_list *lst)
+{
+	int		count[3];
+	t_list	*current;
+
+	ft_memset(count, 0, sizeof(count));
+	current = lst;
+	if (!current)
+		return (0);
+	while (current)
+	{
+		if (((char *)current->content)[0] == 'A' && count[0] == 0)
+			count[0] = 1;
+		else if (((char *)current->content)[0] == 'C' && count[1] == 0)
+			count[1] = 1;
+		else if (((char *)current->content)[0] == 'L')
+			count[2] = 1;
+		current = current->next;
+	}
+	if (count[0] == 0 || count[1] == 0 || count[2] == 0)
+		return (false);
+	return (true);
+}
+
 int	mrt_read_row_data(t_list *lst)
 {
 	t_list	*current;
 
+	if (!mrt_object_count(lst))
+	{
+		ft_print_error("Error\n Se requiere por lo menos una A, una L y una C");
+		ft_lstclear(&lst, free);
+		return (0);
+	}
 	current = lst;
 	if (!current)
 		return (0);

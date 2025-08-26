@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:14:15 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/25 20:59:19 by brivera          ###   ########.fr       */
+/*   Updated: 2025/08/26 12:56:09 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,5 +80,9 @@ t_vec4			mrt_light_color(t_data *elements, t_hit *hit, t_ray *ray);
 bool			mrt_hit_sphere(t_ray *ray, t_sphere sphere, t_hit **hit);
 bool			mrt_hit_plane(t_ray *ray, t_plane plane, t_hit **hit);
 bool			mrt_hit_cylinder(t_ray *ray, t_cylinder cyl, t_hit **hit);
+bool			mrt_hit_cylinder_cap(t_ray *ray, t_cylinder cylinder,
+					t_cylinder_hits *hits, bool top);
+bool			mrt_hit_cylinder_body(t_ray *ray, t_cylinder cylinder,
+					float *t_body, t_vec4 *normal_body);
 void			mrt_draw_to_window(t_window window, t_data *elements);
 #endif
