@@ -14,9 +14,9 @@
 
 void	mrt_put_color(t_vec4 color, int x, int y, t_window window)
 {
-	int			index;
-	uint8_t		*pixels;
 	t_vec4		clamped;
+	uint8_t		*pixels;
+	int			index;
 
 	clamped = vec4_clamp(color, 0.0f, 0.999f);
 	index = (y * window.width + x) * 4;
@@ -56,11 +56,11 @@ t_ray	mrt_generate_ray(t_camera_view cam, float x, float y, t_window window)
 
 void	mrt_draw_to_window(t_window window, t_data *elements)
 {
-	int				j;
-	int				i;
 	t_camera_view	camera;
 	t_ray			ray;
 	t_vec4			color;
+	int				j;
+	int				i;
 
 	j = 0;
 	camera = mrt_compute_camera_view(elements->camera, window);

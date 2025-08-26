@@ -60,7 +60,7 @@ int	mrt_read_row_data(t_list *lst)
 
 	if (!mrt_object_count(lst))
 	{
-		ft_print_error("Error\n Se requiere por lo menos una A, una L y una C");
+		ft_print_error("Error\nSe requiere por lo menos una A, una L y una C");
 		ft_lstclear(&lst, free);
 		return (0);
 	}

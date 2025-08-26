@@ -64,7 +64,7 @@ int	mrt_init_scene(t_data *data, t_list **row_data)
 	ft_memset(data, 0, sizeof(t_data));
 	while (node)
 	{
-		tokens = ft_split(node->content, ' ');
+		tokens = ft_split_space(node->content);
 		if (!tokens)
 			return (0);
 		if (tokens[0][0] == 'A')

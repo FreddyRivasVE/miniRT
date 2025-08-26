@@ -40,43 +40,15 @@ t_light	*mrt_setup_light(char **r_light)
 	return (light);
 }
 
-t_sphere	*mrt_setup_sphere(char **r_sphere, t_vec4 *rgb)
+t_camera	*mrt_setup_camera(char **r_cam)
 {
-	t_sphere	*sp;
+	t_camera	*cam;
 
-	sp = ft_calloc(1, sizeof(t_sphere));
-	if (!sp)
+	cam = ft_calloc(1, sizeof(t_camera));
+	if (!cam)
 		return (NULL);
-	sp->center = mrt_extrac_vector(r_sphere[1], 1.0f);
-	sp->radius = ft_atof(r_sphere[2]) * 0.5f;
-	*rgb = mrt_extract_color(r_sphere[3]);
-	return (sp);
-}
-
-t_plane	*mrt_setup_plane(char **r_plane, t_vec4 *rgb)
-{
-	t_plane	*pl;
-
-	pl = ft_calloc(1, sizeof(t_plane));
-	if (!pl)
-		return (NULL);
-	pl->point = mrt_extrac_vector(r_plane[1], 1.0f);
-	pl->normal = vec4_normalize(mrt_extrac_vector(r_plane[2], 0.0f));
-	*rgb = mrt_extract_color(r_plane[3]);
-	return (pl);
-}
-
-t_cylinder	*mrt_setup_cylinder(char **r_cylinder, t_vec4 *rgb)
-{
-	t_cylinder	*cy;
-
-	cy = ft_calloc(1, sizeof(t_cylinder));
-	if (!cy)
-		return (NULL);
-	cy->center = mrt_extrac_vector(r_cylinder[1], 1.0f);
-	cy->axis = vec4_normalize(mrt_extrac_vector(r_cylinder[2], 0.0f));
-	cy->radius = ft_atof(r_cylinder[3]) * 0.5f;
-	cy->height = ft_atof(r_cylinder[4]);
-	*rgb = mrt_extract_color(r_cylinder[5]);
-	return (cy);
+	cam->origin = mrt_extrac_vector(r_cam[1], 0.0f);
+	cam->direction = vec4_normalize(mrt_extrac_vector(r_cam[2], 0.0f));
+	cam->fov = ft_atof(r_cam[3]);
+	return (cam);
 }

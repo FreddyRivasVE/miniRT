@@ -20,7 +20,6 @@
 # include <math.h>
 # include <stddef.h>
 
-//libs42
 # include "../libs/libft/libft.h"
 # include "../include/mrt_struct.h"
 
@@ -28,7 +27,8 @@
 # define ASPECT_RATIO	1.7777777778
 # define PI				3.14159265358979323846
 # define EPSILON		1e-6f
-# define E_LIGHT		1e-4f
+# define E_LIGHT		1e-3f
+# define FOCAL_LENGHT	1.0f
 
 //parce
 t_list			*mrt_read_file(char *file);

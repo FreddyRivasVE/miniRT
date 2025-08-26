@@ -39,7 +39,8 @@ SRCS 		:= 	$(SRC_DIR)main.c \
 				$(SRC_DIR)mrt_init_scene_01.c \
 				$(SRC_DIR)mrt_window_setup.c \
 				$(SRC_DIR)mrt_setup_element.c \
-				$(SRC_DIR)mrt_setup_camera.c \
+				$(SRC_DIR)mrt_setup_objects.c\
+				$(SRC_DIR)mrt_camera_view.c  \
 				$(SRC_DIR)mrt_render.c \
 				$(SRC_DIR)mrt_ray_color.c \
 				$(SRC_DIR)mrt_hit_sphere_and_plane.c \

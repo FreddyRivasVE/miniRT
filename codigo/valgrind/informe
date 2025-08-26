@@ -1,14 +1,26 @@
-==1069385== Memcheck, a memory error detector
-==1069385== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==1069385== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==1069385== Command: ./miniRT ejemplo.rt
-==1069385== Parent PID: 1069091
-==1069385== 
-==1069385== 
-==1069385== HEAP SUMMARY:
-==1069385==     in use at exit: 0 bytes in 0 blocks
-==1069385==   total heap usage: 467 allocs, 467 frees, 14,632,964 bytes allocated
-==1069385== 
-==1069385== All heap blocks were freed -- no leaks are possible
-==1069385== 
-==1069385== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==1596344== Memcheck, a memory error detector
+==1596344== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==1596344== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==1596344== Command: ./miniRT ejemplo.rt
+==1596344== Parent PID: 1596011
+==1596344== 
+==1596344== 
+==1596344== HEAP SUMMARY:
+==1596344==     in use at exit: 318,003 bytes in 3,107 blocks
+==1596344==   total heap usage: 90,040 allocs, 86,933 frees, 48,870,513 bytes allocated
+==1596344== 
+==1596344== LEAK SUMMARY:
+==1596344==    definitely lost: 0 bytes in 0 blocks
+==1596344==    indirectly lost: 0 bytes in 0 blocks
+==1596344==      possibly lost: 0 bytes in 0 blocks
+==1596344==    still reachable: 0 bytes in 0 blocks
+==1596344==         suppressed: 318,003 bytes in 3,107 blocks
+==1596344== 
+==1596344== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 1 from 1)
+--1596344-- 
+--1596344-- used_suppression:    430 <MLX42> valgrind/valgrind.sup:38 suppressed: 145,077 bytes in 518 blocks
+--1596344-- used_suppression:   1768 <MLX42> valgrind/valgrind.sup:32 suppressed: 121,849 bytes in 1,770 blocks
+--1596344-- used_suppression:     69 <MLX42> valgrind/valgrind.sup:20 suppressed: 50,469 bytes in 812 blocks
+--1596344-- used_suppression:      4 <MLX42> valgrind/valgrind.sup:14 suppressed: 608 bytes in 7 blocks
+==1596344== 
+==1596344== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 1 from 1)
