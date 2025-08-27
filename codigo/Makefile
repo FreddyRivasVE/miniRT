@@ -13,7 +13,7 @@
 NAME		:= miniRT
 
 CC 			:= cc
-CFLAGS		:= -O3 -Wall -Wextra -Werror -g3 #-fsanitize=address
+CFLAGS		:= -Wall -Wextra -Werror -g3 #-fsanitize=address
 
 MLX42_DIR	:=	libs/MLX42
 MLX42 		:= 	$(MLX42_DIR)/build/libmlx42.a
@@ -36,7 +36,7 @@ SRCS 		:= 	$(SRC_DIR)main.c \
 				$(SRC_DIR)mrt_check_cylinder.c \
 				$(SRC_DIR)mrt_check_rgb.c \
 				$(SRC_DIR)mrt_parse_float.c \
-				$(SRC_DIR)mrt_init_scene_01.c \
+				$(SRC_DIR)mrt_init_scene.c \
 				$(SRC_DIR)mrt_window_setup.c \
 				$(SRC_DIR)mrt_setup_element.c \
 				$(SRC_DIR)mrt_setup_objects.c\
@@ -44,7 +44,7 @@ SRCS 		:= 	$(SRC_DIR)main.c \
 				$(SRC_DIR)mrt_render.c \
 				$(SRC_DIR)mrt_ray_color.c \
 				$(SRC_DIR)mrt_hit_sphere_and_plane.c \
-				$(SRC_DIR)mrt_hit_cylinder.c \
+				$(SRC_DIR)mrt_hit_cylinder_body.c \
 				$(SRC_DIR)mrt_hit_cylinder_caps.c \
 				$(SRC_DIR)mrt_light_render.c \
 				$(SRC_DIR)mrt_intersect_scene_light.c \

@@ -38,9 +38,9 @@ static int	mrt_check_file_type(char *file)
 
 	len = ft_strlen(file);
 	if (len < 3)
-		return (ft_print_error("Error\n Solo archivos .rt"), false);
+		return (false);
 	if (ft_strncmp(&file[len - 3], ".rt", 3))
-		return (ft_print_error("Error\nSolo archivos .rt"), false);
+		return (false);
 	return (true);
 }
 
@@ -49,10 +49,10 @@ static int	mrt_check_file(char *file)
 	int	fd;
 
 	if (!mrt_check_file_type(file))
-		return (false);
+		return (ft_print_error("Error\nSolo archivos .rt"), false);
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
-		return (perror("Error\nArchivo"), false);
+		return (perror("Error\nAl abrir el archivo"), false);
 	return (fd);
 }
 
