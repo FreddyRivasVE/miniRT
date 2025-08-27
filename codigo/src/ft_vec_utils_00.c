@@ -3,41 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_vec_utils_00.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera <brivera@student.42madrid.com>     #+#  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-08-20 11:02:03 by brivera           #+#    #+#             */
-/*   Updated: 2025-08-20 11:02:03 by brivera          ###   ########.fr       */
+/*   Created: 2025/08/20 11:02:03 by brivera           #+#    #+#             */
+/*   Updated: 2025/08/27 11:58:28 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-
-/**
- * Calcula el vector reflejado de un vector incidente respecto
- * a una normal.
- * Ambos vectores se normalizan antes de calcular la reflexión
- * para asegurar
- * que el resultado sea correcto.
- *
- * @param v Vector incidente (t_vec4)
- * @param n Vector normal de la superficie (t_vec4)
- * @return Vector reflejado (t_vec4)
- */
-t_vec4	vec4_reflect(t_vec4 v, t_vec4 n)
-{
-	t_vec4	v_norm;
-	t_vec4	n_norm;
-	float	dot;
-	t_vec4	scaled_normal;
-	t_vec4	reflected;
-
-	v_norm = vec4_normalize(v);
-	n_norm = vec4_normalize(n);
-	dot = vec4_dot(v_norm, n_norm);
-	scaled_normal = vec4_scale(n_norm, 2.0f * dot);
-	reflected = vec4_sub(v_norm, scaled_normal);
-	return (reflected);
-}
 
 /**
  * Calcula el producto escalar (dot product) entre dos vectores 3D.
@@ -100,4 +73,36 @@ t_vec4	vec4_add(t_vec4 a, t_vec4 b)
 t_vec4	vec4_sub(t_vec4 a, t_vec4 b)
 {
 	return ((t_vec4){a[0] - b[0], a[1] - b[1], a[2] - b[2], a[3] - b[3]});
+}
+
+/**
+ * Calcula el producto vectorial (cross product) entre dos vectores 3D.
+ *
+ * El producto vectorial de dos vectores a y b da como resultado un nuevo vector 
+ * perpendicular a ambos
+ * Es útil en gráficos 3D para obtener normales a superficies, calcular 
+ * orientaciones y rotaciones.
+ *
+ * Fórmula
+ * Para dos vectores a = (a_x, a_y, a_z) y b = (b_x, b_y, b_z),
+ * el producto vectorial es:
+ * 
+ *      a × b = (a_y * b_z - a_z * b_y,
+ *               a_z * b_x - a_x * b_z,
+ *               a_x * b_y - a_y * b_x)
+ *
+ * Nota: La componente w se fija en 0, ya que el resultado
+ * es un vector direccional.
+ *
+ * @param a Primer vector (t_vec4) con componentes x, y, z, w
+ * @param b Segundo vector (t_vec4) con componentes x, y, z, w
+ * @return Vector resultante (t_vec4) perpendicular a a y b
+ */
+
+t_vec4	vec4_cross(t_vec4 a, t_vec4 b)
+{
+	return (vec4_create(a[1] * b[2] - a[2] * b[1],
+			a[2] * b[0] - a[0] * b[2],
+			a[0] * b[1] - a[1] * b[0],
+			0.0f));
 }

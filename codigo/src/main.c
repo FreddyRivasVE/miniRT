@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:34:00 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/07 11:49:07 by frivas           ###   ########.fr       */
+/*   Updated: 2025/08/27 11:35:36 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	main(int argc, char **argv)
 	t_list		*read_file;
 
 	if (argc != 2)
-		return (ft_print_error("Error\nEjemplo:./miniRT file.rt"), 1);
+		return (ft_print_error("Error\n Incluya un archivo .rt valido"), 1);
 	read_file = mrt_read_file(argv[1]);
 	if (!read_file)
 		return (EXIT_FAILURE);

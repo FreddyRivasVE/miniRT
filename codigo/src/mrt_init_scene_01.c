@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 13:59:10 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/26 11:26:22 by frivas           ###   ########.fr       */
+/*   Updated: 2025/08/27 12:15:08 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,59 +51,51 @@ int	mrt_push_object(t_scene_node **lst, t_type type, void *obj, t_vec4 rgb)
 	return (1);
 }
 
+int	mrt_dispatch_token(t_data *data, char **tokens)
+{
+	t_vec4	rgb;
+
+	if (tokens[0][0] == 'A')
+		return ((data->ambient = mrt_setup_ambient(tokens)) != NULL);
+	if (tokens[0][0] == 'C')
+		return ((data->camera = mrt_setup_camera(tokens)) != NULL);
+	if (tokens[0][0] == 'L')
+		return ((data->light = mrt_setup_light(tokens)) != NULL);
+	if (tokens[0][0] == 's' && tokens[0][1] == 'p')
+		return (mrt_push_object(&data->objects, SPHERE,
+				mrt_setup_sphere(tokens, &rgb), rgb));
+	if (tokens[0][0] == 'p' && tokens[0][1] == 'l')
+		return (mrt_push_object(&data->objects, PLANE,
+				mrt_setup_plane(tokens, &rgb), rgb));
+	if (tokens[0][0] == 'c' && tokens[0][1] == 'y')
+		return (mrt_push_object(&data->objects, CYLINDER,
+				mrt_setup_cylinder(tokens, &rgb), rgb));
+	return (0);
+}
+
+int	mrt_process_line(t_data *data, char *line)
+{
+	char	**tokens;
+	int		result;
+
+	tokens = ft_split_space(line);
+	if (!tokens)
+		return (0);
+	result = mrt_dispatch_token(data, tokens);
+	ft_free_array(tokens);
+	return (result);
+}
+
 int	mrt_init_scene(t_data *data, t_list **row_data)
 {
-	t_list		*node;
-	char		**tokens;
-	t_sphere	*sp;
-	t_plane		*pl;
-	t_cylinder	*cy;
-	t_vec4		rgb;
+	t_list	*node;
 
-	node = *row_data;
 	ft_memset(data, 0, sizeof(t_data));
+	node = *row_data;
 	while (node)
 	{
-		tokens = ft_split_space(node->content);
-		if (!tokens)
-			return (0);
-		if (tokens[0][0] == 'A')
-		{
-			data->ambient = mrt_setup_ambient(tokens);
-			if (!data->ambient)
-				return (0);
-		}
-		else if (tokens[0][0] == 'C')
-		{
-			data->camera = mrt_setup_camera(tokens);
-			if (!data->camera)
-				return (0);
-		}
-		else if (tokens[0][0] == 'L')
-		{
-			data->light = mrt_setup_light(tokens);
-			if (!data->light)
-				return (0);
-		}
-		else if (tokens[0][0] == 's' && tokens[0][1] == 'p')
-		{
-			sp = mrt_setup_sphere(tokens, &rgb);
-			if (!sp || !mrt_push_object(&data->objects, SPHERE, sp, rgb))
-				return (0);
-		}
-		else if (tokens[0][0] == 'p' && tokens[0][1] == 'l')
-		{
-			pl = mrt_setup_plane(tokens, &rgb);
-			if (!pl || !mrt_push_object(&data->objects, PLANE, pl, rgb))
-				return (0);
-		}
-		else if (tokens[0][0] == 'c' && tokens[0][1] == 'y')
-		{
-			cy = mrt_setup_cylinder(tokens, &rgb);
-			if (!cy || !mrt_push_object(&data->objects, CYLINDER, cy, rgb))
-				return (0);
-		}
-		ft_free_array(tokens);
+		if (!mrt_process_line(data, node->content))
+			return (ft_lstclear(row_data, free), 0);
 		node = node->next;
 	}
 	ft_lstclear(row_data, free);

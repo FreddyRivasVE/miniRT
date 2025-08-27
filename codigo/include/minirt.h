@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:14:15 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/26 19:24:46 by brivera          ###   ########.fr       */
+/*   Updated: 2025/08/27 14:06:36 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ t_camera_view	mrt_compute_camera_view(t_camera *cam, t_window win);
 t_ray			mrt_create_ray(t_vec4 origen, t_vec4 direction);
 t_vec4			mrt_ray_color(t_ray *ray, t_data *elements);
 t_vec4			mrt_light_color(t_data *elements, t_hit *hit, t_ray *ray);
+bool			mrt_intersect_scene(t_data *elements, t_ray *ray,
+					t_hit *shadow_hit);
 bool			mrt_hit_sphere(t_ray *ray, t_sphere sphere, t_hit **hit);
 bool			mrt_hit_plane(t_ray *ray, t_plane plane, t_hit **hit);
 bool			mrt_hit_cylinder(t_ray *ray, t_cylinder cyl, t_hit **hit);
