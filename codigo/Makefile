@@ -43,7 +43,7 @@ SRCS 		:= 	$(SRC_DIR)main.c \
 				$(SRC_DIR)mrt_camera_view.c  \
 				$(SRC_DIR)mrt_render.c \
 				$(SRC_DIR)mrt_ray_color.c \
-				$(SRC_DIR)mrt_hit_sphere_and_plane.c \
+				$(SRC_DIR)mrt_hit_scene_render.c \
 				$(SRC_DIR)mrt_hit_cylinder_body.c \
 				$(SRC_DIR)mrt_hit_cylinder_caps.c \
 				$(SRC_DIR)mrt_light_render.c \

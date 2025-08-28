@@ -6,7 +6,7 @@
 /*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/25 20:26:59 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/25 20:27:10 by brivera          ###   ########.fr       */
+/*   Updated: 2025/08/28 15:10:25 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,9 @@ static void	mrt_check_object_hit(t_scene_node *node, t_hit_context *ctx)
 t_vec4	mrt_ray_color(t_ray *ray, t_data *elements)
 {
 	t_scene_node	*current;
+	t_hit_context	ctx;
 	t_vec4			hit_color;
 	float			t_final;
-	t_hit_context	ctx;
 
 	hit_color = (t_vec4){0, 0, 0, 0};
 	t_final = INFINITY;

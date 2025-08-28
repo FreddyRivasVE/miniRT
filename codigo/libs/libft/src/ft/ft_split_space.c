@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_space.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera <brivera@student.42madrid.com>     #+#  +:+       +#+        */
+/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-08-11 11:19:05 by brivera           #+#    #+#             */
-/*   Updated: 2025-08-11 11:19:05 by brivera          ###   ########.fr       */
+/*   Created: 2025/08/11 11:19:05 by brivera           #+#    #+#             */
+/*   Updated: 2025/08/28 15:37:10 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,3 @@ char	**ft_split_space(char const *s)
 		return (NULL);
 	return (strs);
 }
-
