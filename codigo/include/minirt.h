@@ -6,7 +6,7 @@
 /*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:14:15 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/28 15:34:41 by brivera          ###   ########.fr       */
+/*   Updated: 2025/08/28 16:49:04 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,10 @@
 # include "../libs/libft/libft.h"
 # include "../include/mrt_struct.h"
 
+// ========================================================================
+// CONSTANTS AND DEFINITIONS
+// ========================================================================
+
 # define WIDTH			1920
 # define ASPECT_RATIO	1.7777777778
 # define PI				3.14159265358979323846
@@ -30,7 +34,53 @@
 # define E_LIGHT		1e-3f
 # define FOCAL_LENGTH	1.0f
 
-//parce
+// ========================================================================
+// MATERIAL SYSTEM
+// ========================================================================
+
+# define MATERIAL_MATTE		1
+# define MATERIAL_PLASTIC	2
+# define MATERIAL_WOOD		3
+# define MATERIAL_SHINY		4
+
+// Default material if not specified
+# ifndef MATERIAL_TYPE
+#  define MATERIAL_TYPE MATERIAL_PLASTIC
+# endif
+
+// Material properties based on type
+# if MATERIAL_TYPE == MATERIAL_MATTE
+#  define SHININESS_ACTIVE	5.0f
+#  define REFLECTION_INTENSITY	0.1f
+# elif MATERIAL_TYPE == MATERIAL_PLASTIC
+#  define SHININESS_ACTIVE	32.0f
+#  define REFLECTION_INTENSITY	0.8f
+# elif MATERIAL_TYPE == MATERIAL_WOOD
+#  define SHININESS_ACTIVE	8.0f
+#  define REFLECTION_INTENSITY	0.3f
+# elif MATERIAL_TYPE == MATERIAL_SHINY
+#  define SHININESS_ACTIVE	256.0f
+#  define REFLECTION_INTENSITY	1.5f
+# endif
+
+// ========================================================================
+// ANTIALIASING SYSTEM
+// ========================================================================
+
+// Default antialiasing setting
+# ifndef ANTIALIASING
+#  define ANTIALIASING 0
+# endif
+
+// MSAA 4x configuration
+# if ANTIALIASING == 1
+#  define MSAA_SAMPLES 4
+# endif
+
+// ========================================================================
+// PARSING FUNCTIONS
+// ========================================================================
+
 t_list			*mrt_read_file(char *file);
 int				mrt_check_ambient(char *r_data);
 int				mrt_check_rgb(char **ptr);
@@ -44,14 +94,27 @@ int				mrt_read_row_data(t_list *lst);
 int				mrt_check_pl(char *plane);
 int				mrt_check_cy(char *cylinder);
 void			mrt_skip_spaces(char **str);
-//window
+
+// ========================================================================
+// WINDOW AND UI FUNCTIONS
+// ========================================================================
+
 t_window		mrt_setup_window(void);
 void			mrt_keyfuncion(mlx_key_data_t keydata, void *data);
-//init_element
+
+// ========================================================================
+// INITIALIZATION FUNCTIONS AND MEMORY MANAGEMENT
+// ========================================================================
+
 t_vec4			mrt_extract_color(const char *str);
 t_vec4			mrt_extrac_vector(const char *str, float w);
 int				mrt_init_scene(t_data *data, t_list **file);
-//operaciones de vectores
+void			mrt_clear_scene(t_data *element);
+
+// ========================================================================
+// VECTOR OPERATIONS
+// ========================================================================
+
 t_vec4			vec4_normalize(t_vec4 v);
 t_vec4			vec4_add(t_vec4 a, t_vec4 b);
 t_vec4			vec4_scale(t_vec4 v, float s);
@@ -63,16 +126,22 @@ t_vec4			vec4_mul(t_vec4 a, t_vec4 b);
 t_vec4			vec4_clamp(t_vec4 v, float min, float max);
 float			vec4_dot(t_vec4 a, t_vec4 b);
 float			vect4_length(t_vec4 v);
-//liberacion de memoria
-void			mrt_clear_scene(t_data *element);
-//elements
+
+// ========================================================================
+// SCENE ELEMENT SETUP
+// ========================================================================
+
 t_camera		*mrt_setup_camera(char **r_cam);
 t_ambient		*mrt_setup_ambient(char **r_amb);
 t_light			*mrt_setup_light(char **r_light);
 t_sphere		*mrt_setup_sphere(char **r_sphere, t_vec4 *rgb);
 t_plane			*mrt_setup_plane(char **r_plane, t_vec4 *rgb);
 t_cylinder		*mrt_setup_cylinder(char **r_cylinder, t_vec4 *rgb);
-//render
+
+// ========================================================================
+// RENDERING FUNCTIONS
+// ========================================================================
+
 t_camera_view	mrt_compute_camera_view(t_camera *cam, t_window win);
 t_ray			mrt_create_ray(t_vec4 origen, t_vec4 direction);
 t_vec4			mrt_ray_color(t_ray *ray, t_data *elements);

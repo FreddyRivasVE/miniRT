@@ -6,7 +6,7 @@
 /*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/25 12:28:11 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/25 20:29:46 by brivera          ###   ########.fr       */
+/*   Updated: 2025/08/28 17:04:10 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,26 +54,59 @@ t_ray	mrt_generate_ray(t_camera_view cam, float x, float y, t_window window)
 	return (mrt_create_ray(cam.origin, direction));
 }
 
+static t_vec4	mrt_render_with_msaa(t_camera_view cam, int coords[2],
+					t_window window, t_data *elements)
+{
+	t_vec4	color;
+	t_ray	ray;
+	float	offsets[4][2];
+	int		sample;
+
+	offsets[0][0] = 0.25f;
+	offsets[0][1] = 0.25f;
+	offsets[1][0] = 0.75f;
+	offsets[1][1] = 0.25f;
+	offsets[2][0] = 0.25f;
+	offsets[2][1] = 0.75f;
+	offsets[3][0] = 0.75f;
+	offsets[3][1] = 0.75f;
+	color = (t_vec4){0.0f, 0.0f, 0.0f, 0.0f};
+	sample = 0;
+	while (sample < 4)
+	{
+		ray = mrt_generate_ray(cam, (float)coords[0] + offsets[sample][0],
+				(float)coords[1] + offsets[sample][1], window);
+		color = vec4_add(color, mrt_ray_color(&ray, elements));
+		sample++;
+	}
+	return (vec4_scale(color, 0.25f));
+}
+
 void	mrt_draw_to_window(t_window window, t_data *elements)
 {
 	t_camera_view	camera;
 	t_ray			ray;
 	t_vec4			color;
-	int				j;
-	int				i;
+	int				coords[2];
 
-	j = 0;
+	coords[1] = 0;
 	camera = mrt_compute_camera_view(elements->camera, window);
-	while (j < window.height)
+	while (coords[1] < window.height)
 	{
-		i = 0;
-		while (i < window.width)
+		coords[0] = 0;
+		while (coords[0] < window.width)
 		{
-			ray = mrt_generate_ray(camera, (float)i, (float)j, window);
-			color = mrt_ray_color(&ray, elements);
-			mrt_put_color(color, i, j, window);
-			i++;
+			if (ANTIALIASING == 1)
+				color = mrt_render_with_msaa(camera, coords, window, elements);
+			else
+			{
+				ray = mrt_generate_ray(camera, (float)coords[0],
+						(float)coords[1], window);
+				color = mrt_ray_color(&ray, elements);
+			}
+			mrt_put_color(color, coords[0], coords[1], window);
+			coords[0]++;
 		}
-		j++;
+		coords[1]++;
 	}
 }

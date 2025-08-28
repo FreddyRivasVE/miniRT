@@ -51,6 +51,7 @@ SRCS 		:= 	$(SRC_DIR)main.c \
 				$(SRC_DIR)mrt_extrac_data_elements.c \
 				$(SRC_DIR)ft_vec_utils_00.c \
 				$(SRC_DIR)ft_vec_utils_01.c \
+				$(SRC_DIR)ft_vec_utils_02.c \
 				$(SRC_DIR)ft_free_memory.c
 
 OBJ_DIR 	:=	obj/
@@ -85,7 +86,7 @@ $(MLX42):
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c $(INCLUDE)
 	@mkdir -p $(OBJ_DIR)
-	@$(CC) $(CFLAGS) -Iinclude -I$(MLX42_INC) -c $< -o $@
+	@$(CC) $(CFLAGS) $(MATERIAL_FLAGS) -Iinclude -I$(MLX42_INC) -c $< -o $@
 
 clean:
 	@$(RM) $(OBJS)
@@ -115,4 +116,28 @@ valgrind: re
 norminette:
 	@norminette $(SRCS) $(INCLUDE)
 
-.PHONY: all clean fclean re norminette valgrind
+norminette_all:
+	@norminette $(SRCS) $(INCLUDE) $(LIBFT_DIR)/src/ft/*.c $(LIBFT_DIR)/*.h
+
+# Material targets
+matte: fclean
+	@$(MAKE) all MATERIAL_FLAGS="-DMATERIAL_TYPE=1"
+	@echo "$(CYAN)✨ Compilado con material MATE$(CLEAR_COLOR)"
+
+plastic: fclean
+	@$(MAKE) all MATERIAL_FLAGS="-DMATERIAL_TYPE=2"
+	@echo "$(CYAN)✨ Compilado con material PLÁSTICO$(CLEAR_COLOR)"
+
+wood: fclean
+	@$(MAKE) all MATERIAL_FLAGS="-DMATERIAL_TYPE=3"
+	@echo "$(CYAN)✨ Compilado con material MADERA$(CLEAR_COLOR)"
+
+shiny: fclean
+	@$(MAKE) all MATERIAL_FLAGS="-DMATERIAL_TYPE=4"
+	@echo "$(CYAN)✨ Compilado con material BRILLANTE$(CLEAR_COLOR)"
+
+anti: fclean
+	@$(MAKE) all MATERIAL_FLAGS="-DANTIALIASING=1"
+	@echo "$(CYAN)🎯 Compilado con ANTIALIASING 4x$(CLEAR_COLOR)"
+
+.PHONY: all clean fclean re norminette norminette_all valgrind matte plastic wood shiny anti

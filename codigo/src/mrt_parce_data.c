@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mrt_parce_data.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 21:16:28 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/26 14:02:30 by frivas           ###   ########.fr       */
+/*   Updated: 2025/08/28 16:30:30 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,51 +30,65 @@ int	mrt_validator_row_data(char *content)
 		return (0);
 }
 
-bool	mrt_object_count(t_list *lst)
+static bool	mrt_validate_and_count(t_list *lst, int *count)
 {
-	int		count[3];
 	t_list	*current;
 
-	ft_memset(count, 0, sizeof(count));
+	ft_memset(count, 0, 3 * sizeof(int));
 	current = lst;
-	if (!current)
-		return (0);
 	while (current)
 	{
-		if (((char *)current->content)[0] == 'A' && count[0] == 0)
-			count[0] = 1;
-		else if (((char *)current->content)[0] == 'C' && count[1] == 0)
-			count[1] = 1;
+		if (!mrt_validator_row_data(current->content))
+			return (false);
+		if (((char *)current->content)[0] == 'A')
+			count[0]++;
+		else if (((char *)current->content)[0] == 'C')
+			count[1]++;
 		else if (((char *)current->content)[0] == 'L')
-			count[2] = 1;
+			count[2]++;
 		current = current->next;
 	}
-	if (count[0] == 0 || count[1] == 0 || count[2] == 0)
+	return (true);
+}
+
+static bool	mrt_check_mandatory_elements(int *count)
+{
+	if (count[0] != 1)
+	{
+		ft_print_error("Error\nDebe haber exactamente un ambiente (A)");
 		return (false);
+	}
+	if (count[1] != 1)
+	{
+		ft_print_error("Error\nDebe haber exactamente una cámara (C)");
+		return (false);
+	}
+	if (count[2] < 1)
+	{
+		ft_print_error("Error\nDebe haber al menos una luz (L)");
+		return (false);
+	}
 	return (true);
 }
 
 int	mrt_read_row_data(t_list *lst)
 {
-	t_list	*current;
+	int	count[3];
 
-	if (!mrt_object_count(lst))
+	if (!lst)
 	{
-		ft_print_error("Error\nSe requiere por lo menos una A, una L y una C");
+		ft_print_error("Error\nArchivo vacío o sin contenido válido");
+		return (0);
+	}
+	if (!mrt_validate_and_count(lst, count))
+	{
 		ft_lstclear(&lst, free);
 		return (0);
 	}
-	current = lst;
-	if (!current)
-		return (0);
-	while (current)
+	if (!mrt_check_mandatory_elements(count))
 	{
-		if (!mrt_validator_row_data(current->content))
-		{
-			ft_lstclear(&lst, free);
-			return (0);
-		}
-		current = current->next;
+		ft_lstclear(&lst, free);
+		return (0);
 	}
 	return (1);
 }
