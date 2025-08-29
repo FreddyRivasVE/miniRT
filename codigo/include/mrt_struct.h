@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mrt_struct.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 13:43:23 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/27 11:55:38 by frivas           ###   ########.fr       */
+/*   Updated: 2025/08/29 20:43:44 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,9 +95,7 @@ typedef struct s_light
 {
 	t_vec4	position;
 	t_vec4	color;
-	t_vec4	dir;
 	float	brightness_r;
-	float	dist;
 }	t_light;
 
 typedef struct s_material
@@ -133,7 +131,6 @@ typedef struct s_hit
 	t_vec4		normal;
 	t_material	*material;
 	float		t;
-	float		t_closest;
 }	t_hit;
 
 typedef struct s_cylinder_hits
