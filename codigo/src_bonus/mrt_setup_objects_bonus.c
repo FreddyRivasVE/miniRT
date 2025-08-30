@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 13:35:23 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/30 13:15:29 by frivas           ###   ########.fr       */
+/*   Updated: 2025/08/30 14:44:33 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,19 @@ t_cylinder	*mrt_setup_cylinder(char **r_cylinder, t_vec4 *rgb)
 	cy->height = ft_atof(r_cylinder[4]);
 	*rgb = mrt_extract_color(r_cylinder[5]);
 	return (cy);
+}
+
+t_cone	*mrt_setup_cone(char **r_cone, t_vec4 *rgb)
+{
+	t_cone	*cn;
+
+	cn = ft_calloc(1, sizeof(t_cone));
+	if (!cn)
+		return (NULL);
+	cn->origin = mrt_extrac_vector(r_cone[1], 1.0f);
+	cn->axis = vec4_normalize(mrt_extrac_vector(r_cone[2], 0.0f));
+	cn->radius = ft_atof(r_cone[3]) * 0.5f;
+	cn->height = ft_atof(r_cone[4]);
+	*rgb = mrt_extract_color(r_cone[5]);
+	return (cn);
 }

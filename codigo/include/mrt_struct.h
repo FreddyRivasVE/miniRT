@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mrt_struct.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 13:43:23 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/29 20:43:44 by brivera          ###   ########.fr       */
+/*   Updated: 2025/08/30 14:23:37 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ typedef enum s_type
 	CYLINDER,
 	AMBIENT,
 	LIGHT,
-	CAMERA
+	CAMERA,
+	CONE
 }	t_type;
 
 // ========================================================================
@@ -62,6 +63,14 @@ typedef struct s_cylinder
 	float	height;
 }	t_cylinder;
 
+typedef struct s_cone
+{
+	t_vec4	origin;
+	t_vec4	axis;
+	float	radius;
+	float	height;
+}	t_cone;
+
 // ========================================================================
 // CAMERA STRUCTURES
 // ========================================================================
@@ -93,9 +102,10 @@ typedef struct s_ambient
 
 typedef struct s_light
 {
-	t_vec4	position;
-	t_vec4	color;
-	float	brightness_r;
+	t_vec4			position;
+	t_vec4			color;
+	float			brightness_r;
+	struct s_light	*next;
 }	t_light;
 
 typedef struct s_material

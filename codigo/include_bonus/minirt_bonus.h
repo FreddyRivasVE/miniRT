@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:14:15 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/30 11:52:30 by frivas           ###   ########.fr       */
+/*   Updated: 2025/08/30 17:03:13 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ int				mrt_check_sp(char *sphere);
 int				mrt_read_row_data(t_list *lst);
 int				mrt_check_pl(char *plane);
 int				mrt_check_cy(char *cylinder);
+int				mrt_check_cn(char *cone);
 void			mrt_skip_spaces(char **str);
 
 // ========================================================================
@@ -138,6 +139,8 @@ t_light			*mrt_setup_light(char **r_light);
 t_sphere		*mrt_setup_sphere(char **r_sphere, t_vec4 *rgb);
 t_plane			*mrt_setup_plane(char **r_plane, t_vec4 *rgb);
 t_cylinder		*mrt_setup_cylinder(char **r_cylinder, t_vec4 *rgb);
+t_cone			*mrt_setup_cone(char **r_cone, t_vec4 *rgb);
+int				mrt_push_light(t_light **light, t_light *new_node);
 
 // ========================================================================
 // RENDERING FUNCTIONS
@@ -157,4 +160,7 @@ bool			mrt_hit_cylinder_cap(t_ray *ray, t_cylinder cylinder,
 bool			mrt_hit_cylinder_body(t_ray *ray, t_cylinder cylinder,
 					float *t_body, t_vec4 *normal_body);
 void			mrt_draw_to_window(t_window window, t_data *elements);
+void			mrt_set_ambient(t_data *el, t_hit *hit, t_vec4 *accum);
+void			mrt_setup_lighting_vectors(t_light *l, t_hit *hit,
+					t_vec4 *light_dir, float *light_dist);
 #endif

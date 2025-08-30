@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 14:28:56 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/30 13:14:59 by frivas           ###   ########.fr       */
+/*   Updated: 2025/08/30 16:02:27 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ static int	mrt_reserve_memory_node(t_scene_node **new)
 	return (1);
 }
 
-int	mrt_push_object(t_scene_node **lst, t_type type, void *obj, t_vec4 rgb)
+static int	mrt_push_object(t_scene_node **lst, t_type type, void *obj,
+			t_vec4 rgb)
 {
 	t_scene_node	*new;
 	t_scene_node	*last;
@@ -51,7 +52,7 @@ int	mrt_push_object(t_scene_node **lst, t_type type, void *obj, t_vec4 rgb)
 	return (1);
 }
 
-int	mrt_dispatch_token(t_data *data, char **tokens)
+static int	mrt_dispatch_token(t_data *data, char **tokens)
 {
 	t_vec4	rgb;
 
@@ -60,7 +61,8 @@ int	mrt_dispatch_token(t_data *data, char **tokens)
 	if (tokens[0][0] == 'C')
 		return ((data->camera = mrt_setup_camera(tokens)) != NULL);
 	if (tokens[0][0] == 'L')
-		return ((data->light = mrt_setup_light(tokens)) != NULL);
+		return (mrt_push_light(&data->light,
+				mrt_setup_light(tokens)));
 	if (tokens[0][0] == 's' && tokens[0][1] == 'p')
 		return (mrt_push_object(&data->objects, SPHERE,
 				mrt_setup_sphere(tokens, &rgb), rgb));
@@ -70,6 +72,9 @@ int	mrt_dispatch_token(t_data *data, char **tokens)
 	if (tokens[0][0] == 'c' && tokens[0][1] == 'y')
 		return (mrt_push_object(&data->objects, CYLINDER,
 				mrt_setup_cylinder(tokens, &rgb), rgb));
+	if (tokens[0][0] == 'c' && tokens[0][1] == 'n')
+		return (mrt_push_object(&data->objects, CONE,
+				mrt_setup_cone(tokens, &rgb), rgb));
 	return (0);
 }
 

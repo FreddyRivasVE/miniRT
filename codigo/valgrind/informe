@@ -1,26 +1,26 @@
-==1155260== Memcheck, a memory error detector
-==1155260== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==1155260== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==1155260== Command: ./miniRT ejemplo.rt
-==1155260== Parent PID: 1154929
-==1155260== 
-==1155260== 
-==1155260== HEAP SUMMARY:
-==1155260==     in use at exit: 318,003 bytes in 3,107 blocks
-==1155260==   total heap usage: 153,567 allocs, 150,460 frees, 56,898,190 bytes allocated
-==1155260== 
-==1155260== LEAK SUMMARY:
-==1155260==    definitely lost: 0 bytes in 0 blocks
-==1155260==    indirectly lost: 0 bytes in 0 blocks
-==1155260==      possibly lost: 0 bytes in 0 blocks
-==1155260==    still reachable: 0 bytes in 0 blocks
-==1155260==         suppressed: 318,003 bytes in 3,107 blocks
-==1155260== 
-==1155260== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 1 from 1)
---1155260-- 
---1155260-- used_suppression:    430 <MLX42> valgrind/valgrind.sup:38 suppressed: 145,077 bytes in 518 blocks
---1155260-- used_suppression:   1768 <MLX42> valgrind/valgrind.sup:32 suppressed: 121,849 bytes in 1,770 blocks
---1155260-- used_suppression:     69 <MLX42> valgrind/valgrind.sup:20 suppressed: 50,469 bytes in 812 blocks
---1155260-- used_suppression:      4 <MLX42> valgrind/valgrind.sup:14 suppressed: 608 bytes in 7 blocks
-==1155260== 
-==1155260== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 1 from 1)
+==301633== Memcheck, a memory error detector
+==301633== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==301633== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==301633== Command: ./miniRT_bonus scenes/ejemplo.rt
+==301633== Parent PID: 301631
+==301633== 
+==301633== 
+==301633== HEAP SUMMARY:
+==301633==     in use at exit: 318,003 bytes in 3,107 blocks
+==301633==   total heap usage: 130,795 allocs, 127,688 frees, 51,075,835 bytes allocated
+==301633== 
+==301633== LEAK SUMMARY:
+==301633==    definitely lost: 0 bytes in 0 blocks
+==301633==    indirectly lost: 0 bytes in 0 blocks
+==301633==      possibly lost: 0 bytes in 0 blocks
+==301633==    still reachable: 0 bytes in 0 blocks
+==301633==         suppressed: 318,003 bytes in 3,107 blocks
+==301633== 
+==301633== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 1 from 1)
+--301633-- 
+--301633-- used_suppression:    430 <MLX42> valgrind/valgrind.sup:38 suppressed: 145,077 bytes in 518 blocks
+--301633-- used_suppression:   1768 <MLX42> valgrind/valgrind.sup:32 suppressed: 121,849 bytes in 1,770 blocks
+--301633-- used_suppression:     69 <MLX42> valgrind/valgrind.sup:20 suppressed: 50,469 bytes in 812 blocks
+--301633-- used_suppression:      4 <MLX42> valgrind/valgrind.sup:14 suppressed: 608 bytes in 7 blocks
+==301633== 
+==301633== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 1 from 1)

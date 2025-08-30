@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mrt_parce_data.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
+/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 21:16:28 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/28 16:30:30 by brivera          ###   ########.fr       */
+/*   Updated: 2025/08/30 14:27:54 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,9 @@ static bool	mrt_check_mandatory_elements(int *count)
 		ft_print_error("Error\nDebe haber exactamente una cámara (C)");
 		return (false);
 	}
-	if (count[2] < 1)
+	if (count[2] != 1)
 	{
-		ft_print_error("Error\nDebe haber al menos una luz (L)");
+		ft_print_error("Error\nDebe haber solo una luz (L)");
 		return (false);
 	}
 	return (true);

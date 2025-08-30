@@ -68,6 +68,7 @@ SRCS_BONUS	:= 	$(SRC_DIR_BONUS)main_bonus.c \
 				$(SRC_DIR_BONUS)mrt_check_sphere_bonus.c \
 				$(SRC_DIR_BONUS)mrt_check_plane_bonus.c \
 				$(SRC_DIR_BONUS)mrt_check_cylinder_bonus.c \
+				$(SRC_DIR_BONUS)mrt_check_cone_bonus.c \
 				$(SRC_DIR_BONUS)mrt_check_rgb_bonus.c \
 				$(SRC_DIR_BONUS)mrt_parse_float_bonus.c \
 				$(SRC_DIR_BONUS)mrt_init_scene_bonus.c \
@@ -75,6 +76,7 @@ SRCS_BONUS	:= 	$(SRC_DIR_BONUS)main_bonus.c \
 				$(SRC_DIR_BONUS)mrt_setup_element_bonus.c \
 				$(SRC_DIR_BONUS)mrt_setup_objects_bonus.c\
 				$(SRC_DIR_BONUS)mrt_camera_view_bonus.c \
+				$(SRC_DIR_BONUS)mrt_push_light_bonus.c \
 				$(SRC_DIR_BONUS)mrt_render_bonus.c \
 				$(SRC_DIR_BONUS)mrt_ray_color_bonus.c \
 				$(SRC_DIR_BONUS)mrt_hit_scene_render_bonus.c \
@@ -149,7 +151,7 @@ fclean: clean
 
 re: fclean all
 
-valgrind: re
+valgrind: 
 	valgrind -s \
 		--tool=memcheck \
 		--leak-check=full \
@@ -158,7 +160,7 @@ valgrind: re
 		--track-origins=yes \
 		--suppressions=valgrind/valgrind.sup \
 		--log-file=valgrind/informe \
-		./$(NAME) ejemplo.rt
+		./$(NAME_BONUS) scenes/ejemplo.rt
 
 norminette:
 	@norminette $(SRCS) $(INCLUDE) $(SRCS_BONUS) $(INCLUDE_BONUS)
@@ -168,23 +170,23 @@ norminette_all:
 
 # Material targets
 matte: fclean
-	@$(MAKE) all MATERIAL_FLAGS="-DMATERIAL_TYPE=1"
+	@$(MAKE) all bonus MATERIAL_FLAGS="-DMATERIAL_TYPE=1"
 	@echo "$(CYAN)✨ Compilado con material MATE$(CLEAR_COLOR)"
 
 plastic: fclean
-	@$(MAKE) all MATERIAL_FLAGS="-DMATERIAL_TYPE=2"
+	@$(MAKE) all bonus MATERIAL_FLAGS="-DMATERIAL_TYPE=2"
 	@echo "$(CYAN)✨ Compilado con material PLÁSTICO$(CLEAR_COLOR)"
 
 wood: fclean
-	@$(MAKE) all MATERIAL_FLAGS="-DMATERIAL_TYPE=3"
+	@$(MAKE) all bonus MATERIAL_FLAGS="-DMATERIAL_TYPE=3"
 	@echo "$(CYAN)✨ Compilado con material MADERA$(CLEAR_COLOR)"
 
 shiny: fclean
-	@$(MAKE) all MATERIAL_FLAGS="-DMATERIAL_TYPE=4"
+	@$(MAKE) all bonus MATERIAL_FLAGS="-DMATERIAL_TYPE=4"
 	@echo "$(CYAN)✨ Compilado con material BRILLANTE$(CLEAR_COLOR)"
 
 anti: fclean
-	@$(MAKE) all MATERIAL_FLAGS="-DANTIALIASING=1"
+	@$(MAKE) all bonus MATERIAL_FLAGS="-DANTIALIASING=1"
 	@echo "$(CYAN)🎯 Compilado con ANTIALIASING 4x$(CLEAR_COLOR)"
 
 .PHONY: all bonus clean fclean re norminette norminette_all valgrind matte plastic wood shiny anti 
