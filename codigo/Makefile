@@ -11,6 +11,7 @@
 # ************************************************************************** #
 
 NAME		:= miniRT
+NAME_BONUS	:= miniRT_bonus
 
 CC 			:= cc
 CFLAGS		:= -Wall -Wextra -Werror -g3 #-fsanitize=address
@@ -23,8 +24,10 @@ LIBFT_DIR	:= 	libs/libft
 LIBFTA		:= 	$(LIBFT_DIR)/libft.a
 
 INCLUDE		:= include/
+INCLUDE_BONUS	:= include_bonus/
 
 SRC_DIR		:= 	src/
+
 SRCS 		:= 	$(SRC_DIR)main.c \
 				$(SRC_DIR)mrt_read_file.c \
 				$(SRC_DIR)mrt_parce_data.c \
@@ -54,8 +57,42 @@ SRCS 		:= 	$(SRC_DIR)main.c \
 				$(SRC_DIR)ft_vec_utils_02.c \
 				$(SRC_DIR)ft_free_memory.c
 
-OBJ_DIR 	:=	obj/
-OBJS 		:=	$(addprefix $(OBJ_DIR), $(SRCS:$(SRC_DIR)%.c=%.o))
+SRC_DIR_BONUS := src_bonus/
+
+SRCS_BONUS	:= 	$(SRC_DIR_BONUS)main_bonus.c \
+				$(SRC_DIR_BONUS)mrt_read_file_bonus.c \
+				$(SRC_DIR_BONUS)mrt_parce_data_bonus.c \
+				$(SRC_DIR_BONUS)mrt_check_ambient_bonus.c \
+				$(SRC_DIR_BONUS)mrt_check_light_bonus.c \
+				$(SRC_DIR_BONUS)mrt_check_camera_bonus.c \
+				$(SRC_DIR_BONUS)mrt_check_sphere_bonus.c \
+				$(SRC_DIR_BONUS)mrt_check_plane_bonus.c \
+				$(SRC_DIR_BONUS)mrt_check_cylinder_bonus.c \
+				$(SRC_DIR_BONUS)mrt_check_rgb_bonus.c \
+				$(SRC_DIR_BONUS)mrt_parse_float_bonus.c \
+				$(SRC_DIR_BONUS)mrt_init_scene_bonus.c \
+				$(SRC_DIR_BONUS)mrt_window_setup_bonus.c \
+				$(SRC_DIR_BONUS)mrt_setup_element_bonus.c \
+				$(SRC_DIR_BONUS)mrt_setup_objects_bonus.c\
+				$(SRC_DIR_BONUS)mrt_camera_view_bonus.c \
+				$(SRC_DIR_BONUS)mrt_render_bonus.c \
+				$(SRC_DIR_BONUS)mrt_ray_color_bonus.c \
+				$(SRC_DIR_BONUS)mrt_hit_scene_render_bonus.c \
+				$(SRC_DIR_BONUS)mrt_hit_cylinder_body_bonus.c \
+				$(SRC_DIR_BONUS)mrt_hit_cylinder_caps_bonus.c \
+				$(SRC_DIR_BONUS)mrt_light_render_bonus.c \
+				$(SRC_DIR_BONUS)mrt_intersect_scene_light_bonus.c \
+				$(SRC_DIR_BONUS)mrt_extrac_data_elements_bonus.c \
+				$(SRC_DIR_BONUS)ft_vec_utils_00_bonus.c \
+				$(SRC_DIR_BONUS)ft_vec_utils_01_bonus.c \
+				$(SRC_DIR_BONUS)ft_vec_utils_02_bonus.c \
+				$(SRC_DIR_BONUS)ft_free_memory_bonus.c
+
+OBJ_DIR      := obj/
+OBJ_DIR_BONUS := obj_bonus/
+
+OBJS        := $(addprefix $(OBJ_DIR), $(SRCS:$(SRC_DIR)%.c=%.o))
+OBJS_BONUS := $(addprefix $(OBJ_DIR_BONUS), $(notdir $(SRCS_BONUS:.c=.o)))
 
 RED			:=	\033[91;1m
 GREEN		:=	\033[92;1m
@@ -70,10 +107,15 @@ else
 endif
 
 all:	$(NAME)
+bonus:	$(NAME_BONUS)
 
 $(NAME): $(LIBFTA) $(MLX42) $(OBJS)
 	@$(CC) $(CFLAGS) $(OBJS) $(LIBFTA) $(MLX42) $(MLX_FLAGS) -I$(MLX42_INC) -o $(NAME)
 	@echo "$(CYAN)✅ Compilado miniRT\n$(CLEAR_COLOR)"
+
+$(NAME_BONUS): $(LIBFTA) $(MLX42) $(OBJS_BONUS)
+	@$(CC) $(CFLAGS) $(OBJS_BONUS) $(LIBFTA) $(MLX42) $(MLX_FLAGS) -I$(MLX42_INC) -o $(NAME_BONUS)
+	@echo "$(CYAN)✅ Compilado miniRT Bonus\n$(CLEAR_COLOR)"
 						 
 $(LIBFTA):
 	@make -C $(LIBFT_DIR)
@@ -88,14 +130,19 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c $(INCLUDE)
 	@mkdir -p $(OBJ_DIR)
 	@$(CC) $(CFLAGS) $(MATERIAL_FLAGS) -Iinclude -I$(MLX42_INC) -c $< -o $@
 
+$(OBJ_DIR_BONUS)%.o:
+	@mkdir -p $(OBJ_DIR_BONUS)
+	@$(CC) $(CFLAGS) $(MATERIAL_FLAGS) -I$(INCLUDE_BONUS) -I$(MLX42_INC) -c src_bonus/$*.c -o $@
+
+
 clean:
-	@$(RM) $(OBJS)
-	@rm -rf $(OBJ_DIR)
+	@$(RM) $(OBJS) $(OBJS_BONUS)
+	@rm -rf $(OBJ_DIR) $(OBJ_DIR_BONUS)
 	@make clean -C $(LIBFT_DIR)
 	@echo "$(RED)⛔ Limpieza de archivos objeto.$(CLEAR_COLOR)"
 
 fclean: clean
-	@$(RM) $(NAME)
+	@$(RM) $(NAME) $(NAME_BONUS)
 	@rm -rf $(MLX42_DIR)/build
 	@make fclean -C $(LIBFT_DIR)
 	@echo "$(RED)⛔ Limpieza total (ejecutables y librerías).$(CLEAR_COLOR)"
@@ -114,10 +161,10 @@ valgrind: re
 		./$(NAME) ejemplo.rt
 
 norminette:
-	@norminette $(SRCS) $(INCLUDE)
+	@norminette $(SRCS) $(INCLUDE) $(SRCS_BONUS) $(INCLUDE_BONUS)
 
 norminette_all:
-	@norminette $(SRCS) $(INCLUDE) $(LIBFT_DIR)/src/ft/*.c $(LIBFT_DIR)/*.h
+	@norminette $(SRCS) $(INCLUDE) $(SRCS_BONUS) $(INCLUDE_BONUS) $(LIBFT_DIR)/src/ft/*.c $(LIBFT_DIR)/*.h
 
 # Material targets
 matte: fclean
@@ -140,4 +187,4 @@ anti: fclean
 	@$(MAKE) all MATERIAL_FLAGS="-DANTIALIASING=1"
 	@echo "$(CYAN)🎯 Compilado con ANTIALIASING 4x$(CLEAR_COLOR)"
 
-.PHONY: all clean fclean re norminette norminette_all valgrind matte plastic wood shiny anti
+.PHONY: all bonus clean fclean re norminette norminette_all valgrind matte plastic wood shiny anti 
