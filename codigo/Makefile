@@ -90,11 +90,11 @@ SRCS_BONUS	:= 	$(SRC_DIR_BONUS)main_bonus.c \
 				$(SRC_DIR_BONUS)ft_vec_utils_02_bonus.c \
 				$(SRC_DIR_BONUS)ft_free_memory_bonus.c
 
-OBJ_DIR      := obj/
-OBJ_DIR_BONUS := obj_bonus/
+OBJ_DIR      	:= obj/
+OBJ_DIR_BONUS 	:= obj_bonus/
 
 OBJS        := $(addprefix $(OBJ_DIR), $(SRCS:$(SRC_DIR)%.c=%.o))
-OBJS_BONUS := $(addprefix $(OBJ_DIR_BONUS), $(notdir $(SRCS_BONUS:.c=.o)))
+OBJS_BONUS 	:= $(addprefix $(OBJ_DIR_BONUS), $(notdir $(SRCS_BONUS:.c=.o)))
 
 RED			:=	\033[91;1m
 GREEN		:=	\033[92;1m
@@ -169,23 +169,23 @@ norminette_all:
 	@norminette $(SRCS) $(INCLUDE) $(SRCS_BONUS) $(INCLUDE_BONUS) $(LIBFT_DIR)/src/ft/*.c $(LIBFT_DIR)/*.h
 
 # Material targets
-matte: fclean
+matte: clean
 	@$(MAKE) all bonus MATERIAL_FLAGS="-DMATERIAL_TYPE=1"
 	@echo "$(CYAN)✨ Compilado con material MATE$(CLEAR_COLOR)"
 
-plastic: fclean
+plastic: clean
 	@$(MAKE) all bonus MATERIAL_FLAGS="-DMATERIAL_TYPE=2"
 	@echo "$(CYAN)✨ Compilado con material PLÁSTICO$(CLEAR_COLOR)"
 
-wood: fclean
+wood: clean
 	@$(MAKE) all bonus MATERIAL_FLAGS="-DMATERIAL_TYPE=3"
 	@echo "$(CYAN)✨ Compilado con material MADERA$(CLEAR_COLOR)"
 
-shiny: fclean
+shiny: clean
 	@$(MAKE) all bonus MATERIAL_FLAGS="-DMATERIAL_TYPE=4"
 	@echo "$(CYAN)✨ Compilado con material BRILLANTE$(CLEAR_COLOR)"
 
-anti: fclean
+anti: clean
 	@$(MAKE) all bonus MATERIAL_FLAGS="-DANTIALIASING=1"
 	@echo "$(CYAN)🎯 Compilado con ANTIALIASING 4x$(CLEAR_COLOR)"
 
