@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mrt_light_render_bonus.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 12:46:37 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/30 17:01:44 by frivas           ###   ########.fr       */
+/*   Updated: 2025/08/30 19:49:27 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void	mrt_calculate_specular(t_light *light, t_hit *hit, t_ray *ray,
 }
 
 t_vec4	mrt_one_light_color(t_data *elements, t_hit *hit, t_ray *ray,
-		t_light *l)
+		t_light *light)
 {
 	t_vec4		light_dir;
 	t_vec4		hit_color;
@@ -56,15 +56,14 @@ t_vec4	mrt_one_light_color(t_data *elements, t_hit *hit, t_ray *ray,
 
 	hit_color = (t_vec4){0, 0, 0, 0};
 	shadow_hit.t = INFINITY;
-	mrt_setup_lighting_vectors(l, hit, &light_dir, &light_dist);
+	mrt_setup_lighting_vectors(light, hit, &light_dir, &light_dist);
 	shadow_ray = mrt_create_shadow_ray(hit, light_dir);
 	if (!mrt_intersect_scene(elements, &shadow_ray, &shadow_hit)
 		|| shadow_hit.t >= light_dist - E_LIGHT)
 	{
-		mrt_calculate_diffuse(l, hit, light_dir);
-		mrt_calculate_specular(l, hit, ray, light_dir);
-		hit_color = vec4_add(hit->material->ambient,
-				vec4_add(hit->material->diffuse, hit->material->specular));
+		mrt_calculate_diffuse(light, hit, light_dir);
+		mrt_calculate_specular(light, hit, ray, light_dir);
+		hit_color = vec4_add(hit->material->diffuse, hit->material->specular);
 	}
 	return (hit_color);
 }
@@ -74,15 +73,15 @@ t_vec4	mrt_light_color(t_data *elements, t_hit *hit, t_ray *ray)
 	t_vec4		sum;
 	t_vec4		contrib;
 	t_light		*node;
-	t_light		*l;
+	t_light		*light;
 
 	sum = (t_vec4){0, 0, 0, 0};
 	mrt_set_ambient(elements, hit, &sum);
 	node = elements->light;
 	while (node)
 	{
-		l = (t_light *)node;
-		contrib = mrt_one_light_color(elements, hit, ray, l);
+		light = (t_light *)node;
+		contrib = mrt_one_light_color(elements, hit, ray, light);
 		sum = vec4_add(sum, contrib);
 		node = node->next;
 	}
