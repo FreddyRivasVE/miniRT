@@ -1,5 +1,6 @@
 *.o
 libft.a
 miniRT
+miniRT_bonus
 vscode/settings.json
 codigo/vscode/settings.json
