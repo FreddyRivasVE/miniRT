@@ -6,7 +6,7 @@
 /*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 14:04:51 by frivas            #+#    #+#             */
-/*   Updated: 2025/09/01 16:02:54 by brivera          ###   ########.fr       */
+/*   Updated: 2025/09/01 18:40:05 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ static bool	mrt_hit_cone_light(t_ray *ray, t_scene_node *object, float *t,
 	return (false);
 }
 
-static bool	mrt_object_hit_light(t_scene_node *current, float *t,
+bool	mrt_object_hit_light(t_scene_node *current, float *t,
 		t_hit *shadow_hit, t_ray *ray)
 {
 	if (mrt_hit_sp_light(ray, current, t, shadow_hit))
@@ -104,25 +104,4 @@ static bool	mrt_object_hit_light(t_scene_node *current, float *t,
 	if (mrt_hit_cone_light(ray, current, t, shadow_hit))
 		return (true);
 	return (false);
-}
-
-
-bool	mrt_intersect_scene(t_data *elements, t_ray *ray, t_hit *shadow_hit)
-{
-	t_scene_node	*current;
-	float			closest_t;
-	bool			hit_any;
-
-	current = elements->objects;
-	closest_t = INFINITY;
-	hit_any = false;
-	while (current)
-	{
-		if (mrt_object_hit_light(current, &closest_t, shadow_hit, ray))
-			hit_any = true;
-		current = current->next;
-	}
-	if (hit_any)
-		shadow_hit->t = closest_t;
-	return (hit_any);
 }

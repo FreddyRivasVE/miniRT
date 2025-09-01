@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mrt_push_light_bonus.c                             :+:      :+:    :+:   */
+/*   mrt_light_utils_bonus.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 16:02:03 by frivas            #+#    #+#             */
-/*   Updated: 2025/08/30 17:03:33 by frivas           ###   ########.fr       */
+/*   Updated: 2025/09/01 18:40:44 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,24 @@ void	mrt_setup_lighting_vectors(t_light *l, t_hit *hit,
 	light_to_point = vec4_sub(l->position, hit->point);
 	*light_dist = vect4_length(light_to_point);
 	*light_dir = vec4_normalize(light_to_point);
+}
+
+bool	mrt_intersect_scene(t_data *elements, t_ray *ray, t_hit *shadow_hit)
+{
+	t_scene_node	*current;
+	float			closest_t;
+	bool			hit_any;
+
+	current = elements->objects;
+	closest_t = INFINITY;
+	hit_any = false;
+	while (current)
+	{
+		if (mrt_object_hit_light(current, &closest_t, shadow_hit, ray))
+			hit_any = true;
+		current = current->next;
+	}
+	if (hit_any)
+		shadow_hit->t = closest_t;
+	return (hit_any);
 }

@@ -80,7 +80,7 @@ SRCS_BONUS	:= 	$(SRC_DIR_BONUS)main_bonus.c \
 				$(SRC_DIR_BONUS)mrt_setup_element_bonus.c \
 				$(SRC_DIR_BONUS)mrt_setup_objects_bonus.c\
 				$(SRC_DIR_BONUS)mrt_camera_view_bonus.c \
-				$(SRC_DIR_BONUS)mrt_push_light_bonus.c \
+				$(SRC_DIR_BONUS)mrt_light_utils_bonus.c \
 				$(SRC_DIR_BONUS)mrt_render_bonus.c \
 				$(SRC_DIR_BONUS)mrt_ray_color_bonus.c \
 				$(SRC_DIR_BONUS)mrt_hit_objects_bonus.c \
@@ -88,6 +88,8 @@ SRCS_BONUS	:= 	$(SRC_DIR_BONUS)main_bonus.c \
 				$(SRC_DIR_BONUS)mrt_hit_cylinder_body_bonus.c \
 				$(SRC_DIR_BONUS)mrt_hit_cylinder_caps_bonus.c \
 				$(SRC_DIR_BONUS)mrt_hit_cone_bonus.c \
+				$(SRC_DIR_BONUS)mrt_hit_cone_math_bonus.c \
+				$(SRC_DIR_BONUS)mrt_hit_cone_base_bonus.c \
 				$(SRC_DIR_BONUS)mrt_utils_bonus.c \
 				$(SRC_DIR_BONUS)mrt_light_render_bonus.c \
 				$(SRC_DIR_BONUS)mrt_intersect_scene_light_bonus.c \

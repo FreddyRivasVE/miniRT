@@ -6,7 +6,7 @@
 /*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 14:28:18 by brivera           #+#    #+#             */
-/*   Updated: 2025/09/01 15:10:30 by brivera          ###   ########.fr       */
+/*   Updated: 2025/09/01 18:37:18 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ static void	mrt_calculate_cylinder_vectors(t_ray *ray,
 			vec4_scale(cylinder.axis,
 				vec4_dot(delta_p, cylinder.axis)));
 }
-
 
 static bool	mrt_solve_quadratic_cylinder(t_vec4 direction, t_vec4 delta_p_perp,
 			float radius, float *t_body)
