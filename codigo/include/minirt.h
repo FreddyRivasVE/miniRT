@@ -6,7 +6,7 @@
 /*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:14:15 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/30 19:49:29 by brivera          ###   ########.fr       */
+/*   Updated: 2025/09/01 18:21:32 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 # define PI				3.14159265358979323846
 # define EPSILON		1e-6f
 # define E_LIGHT		1e-3f
-# define E_NORMAL		1e-5f
+# define E_NORMAL		1e-4f
 # define FOCAL_LENGTH	1.0f
 
 // ========================================================================
