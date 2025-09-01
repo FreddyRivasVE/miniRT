@@ -6,7 +6,7 @@
 /*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:34:00 by brivera           #+#    #+#             */
-/*   Updated: 2025/09/01 14:17:41 by brivera          ###   ########.fr       */
+/*   Updated: 2025/09/01 19:53:51 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int	main(int argc, char **argv)
 {
-	t_window	window;
-	t_data		elements;
-	t_list		*read_file;
+	t_app_context	app;
+	t_data			elements;
+	t_list			*read_file;
 
 	if (argc != 2)
 		return (ft_print_error("Error\n Incluya un archivo .rt valido"), 1);
@@ -24,19 +24,19 @@ int	main(int argc, char **argv)
 	if (!read_file)
 		return (EXIT_FAILURE);
 	if (!mrt_init_scene(&elements, &read_file))
-	{
-		mrt_clear_scene(&elements);
-		ft_print_error("Error\n");
-		return (EXIT_FAILURE);
-	}
-	window = mrt_setup_window();
+		return (mrt_clear_scene(&elements),
+			ft_print_error("Error\n"), EXIT_FAILURE);
+	elements.checkerboard = false;
+	app.window = mrt_setup_window();
+	app.elements = &elements;
 	ft_putendl_fd("Renderizando escena...", 1);
-	mrt_draw_to_window(window, &elements);
+	mrt_draw_to_window(app.window, app.elements);
 	ft_putendl_fd("Render completado. Abriendo ventana...", 1);
-	mlx_image_to_window(window.mlx, window.image, 0, 0);
-	mlx_key_hook(window.mlx, &mrt_keyfuncion, window.mlx);
-	mlx_loop(window.mlx);
+	ft_putendl_fd("Presiona 'P' para alternar patron tablero de ajedrez", 1);
+	mlx_image_to_window(app.window.mlx, app.window.image, 0, 0);
+	mlx_key_hook(app.window.mlx, &mrt_keyfuncion, &app);
+	mlx_loop(app.window.mlx);
 	mrt_clear_scene(&elements);
-	mlx_terminate(window.mlx);
+	mlx_terminate(app.window.mlx);
 	return (EXIT_SUCCESS);
 }

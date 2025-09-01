@@ -6,7 +6,7 @@
 /*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:14:15 by brivera           #+#    #+#             */
-/*   Updated: 2025/09/01 18:39:40 by brivera          ###   ########.fr       */
+/*   Updated: 2025/09/01 19:37:12 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 # define E_LIGHT		1e-2f
 # define E_NORMAL		1e-4f
 # define FOCAL_LENGTH	1.0f
+# define CHECKERBOARD_SCALE	1.0f
 
 // ========================================================================
 // MATERIAL SYSTEM
@@ -149,10 +150,25 @@ int				mrt_push_light(t_light **light, t_light *new_node);
 t_camera_view	mrt_compute_camera_view(t_camera *cam, t_window win);
 t_ray			mrt_create_ray(t_vec4 origen, t_vec4 direction);
 t_vec4			mrt_ray_color(t_ray *ray, t_data *elements);
+void			mrt_draw_to_window(t_window window, t_data *elements);
+
+// ========================================================================
+// LIGHTING FUNCTIONS
+// ========================================================================
+
 t_vec4			mrt_light_color(t_data *elements, t_hit *hit, t_ray *ray);
-t_vec4			mrt_cone_normal_at_point(t_cone cone, t_vec4 point);
+void			mrt_set_ambient(t_data *el, t_hit *hit, t_vec4 *accum);
+void			mrt_setup_lighting_vectors(t_light *l, t_hit *hit,
+					t_vec4 *light_dir, float *light_dist);
 bool			mrt_intersect_scene(t_data *elements, t_ray *ray,
 					t_hit *shadow_hit);
+bool			mrt_object_hit_light(t_scene_node *current, float *t,
+					t_hit *shadow_hit, t_ray *ray);
+
+// ========================================================================
+// GEOMETRIC INTERSECTION FUNCTIONS
+// ========================================================================
+
 bool			mrt_hit_sphere(t_ray *ray, t_sphere sphere, t_hit **hit);
 bool			mrt_hit_plane(t_ray *ray, t_plane plane, t_hit **hit);
 bool			mrt_hit_cylinder(t_ray *ray, t_cylinder cyl, t_hit **hit);
@@ -160,7 +176,14 @@ bool			mrt_hit_cylinder_cap(t_ray *ray, t_cylinder cylinder,
 					t_cylinder_hits *hits, bool top);
 bool			mrt_hit_cylinder_body(t_ray *ray, t_cylinder cylinder,
 					float *t_body, t_vec4 *normal_body);
+void			mrt_check_object_hit(t_scene_node *node, t_hit_context *ctx);
+
+// ========================================================================
+// CONE INTERSECTION FUNCTIONS
+// ========================================================================
+
 bool			mrt_hit_cone(t_ray *ray, t_cone cone, t_hit **hit);
+t_vec4			mrt_cone_normal_at_point(t_cone cone, t_vec4 point);
 float			mrt_calc_cone_slope_factors(t_cone cone, float *sin_alpha);
 void			mrt_calc_cone_coefficients(t_ray *ray, t_cone cone, float *abc);
 bool			mrt_hit_infinite_cone(t_ray *ray, t_cone cone, float *t_out);
@@ -168,13 +191,6 @@ bool			mrt_intersect_base_plane(t_ray *ray, t_cone cone, float *t);
 bool			mrt_point_in_base_circle(t_ray *ray, t_cone cone, float t);
 bool			mrt_hit_cone_base(t_ray *ray, t_cone cone, float *t_out);
 t_cone			mrt_create_adjusted_cone(t_cone cone);
-void			mrt_draw_to_window(t_window window, t_data *elements);
-void			mrt_set_ambient(t_data *el, t_hit *hit, t_vec4 *accum);
-void			mrt_setup_lighting_vectors(t_light *l, t_hit *hit,
-					t_vec4 *light_dir, float *light_dist);
-bool			mrt_object_hit_light(t_scene_node *current, float *t,
-					t_hit *shadow_hit, t_ray *ray);
-void			mrt_check_object_hit(t_scene_node *node, t_hit_context *ctx);
 
 // ========================================================================
 // UTILITY FUNCTIONS
@@ -182,4 +198,11 @@ void			mrt_check_object_hit(t_scene_node *node, t_hit_context *ctx);
 
 bool			mrt_get_valid_t(float a, float b, float sqrt_disc,
 					float *t_out);
+
+// ========================================================================
+// PATTERN FUNCTIONS
+// ========================================================================
+
+t_vec4			mrt_apply_checkerboard_pattern(t_data *data, t_vec4 base_color,
+					t_hit *hit, t_scene_node *current);
 #endif

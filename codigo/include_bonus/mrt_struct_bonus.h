@@ -6,7 +6,7 @@
 /*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 13:43:23 by brivera           #+#    #+#             */
-/*   Updated: 2025/09/01 16:47:54 by brivera          ###   ########.fr       */
+/*   Updated: 2025/09/01 19:52:34 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,12 @@ typedef struct s_window
 	int			height;
 }	t_window;
 
+typedef struct s_app_context
+{
+	t_window	window;
+	t_data		*elements;
+}	t_app_context;
+
 // ========================================================================
 // HIT DETECTION STRUCTURES
 // ========================================================================
@@ -191,6 +197,7 @@ typedef struct s_data
 	t_camera		*camera;
 	t_light			*light;
 	t_scene_node	*objects;
+	bool			checkerboard;
 }	t_data;
 
 #endif

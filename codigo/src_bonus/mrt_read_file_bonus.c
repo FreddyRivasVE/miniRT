@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mrt_read_file_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 14:18:57 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/30 13:15:21 by frivas           ###   ########.fr       */
+/*   Updated: 2025/09/01 19:38:25 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	mrt_upload_row_data(char *line, t_list **row_data)
 	t_list	*new_node;
 	char	*content;
 
-	if (!ft_strcmp(line, "\n") || line[0] == '#')
+	if (!ft_strcmp(line, "\n") || line[0] == '#' || ft_isspace(line[0]))
 		return (1);
 	content = ft_strdup(line);
 	if (!content)

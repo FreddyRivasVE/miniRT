@@ -97,7 +97,8 @@ SRCS_BONUS	:= 	$(SRC_DIR_BONUS)main_bonus.c \
 				$(SRC_DIR_BONUS)ft_vec_utils_00_bonus.c \
 				$(SRC_DIR_BONUS)ft_vec_utils_01_bonus.c \
 				$(SRC_DIR_BONUS)ft_vec_utils_02_bonus.c \
-				$(SRC_DIR_BONUS)ft_free_memory_bonus.c
+				$(SRC_DIR_BONUS)ft_free_memory_bonus.c \
+				$(SRC_DIR_BONUS)mrt_pattern_bonus.c
 
 OBJ_DIR      	:= obj/
 OBJ_DIR_BONUS 	:= obj_bonus/

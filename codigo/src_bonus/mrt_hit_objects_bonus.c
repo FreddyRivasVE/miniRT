@@ -6,7 +6,7 @@
 /*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 14:26:18 by brivera           #+#    #+#             */
-/*   Updated: 2025/09/01 14:26:28 by brivera          ###   ########.fr       */
+/*   Updated: 2025/09/01 19:13:57 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,17 @@ static bool	mrt_check_sphere_hit(t_scene_node *node, t_hit_context *ctx)
 
 static bool	mrt_check_plane_hit(t_scene_node *node, t_hit_context *ctx)
 {
+	t_vec4	base_color;
+
 	if (node->type == PLANE)
 	{
 		if (mrt_hit_plane(ctx->ray, *(t_plane *)node->object, &node->hit)
 			&& node->hit->t < *ctx->t_closest && node->hit->t > EPSILON)
 		{
 			*ctx->t_closest = node->hit->t;
-			*ctx->h_color = mrt_light_color(ctx->elements, node->hit, ctx->ray);
+			base_color = mrt_light_color(ctx->elements, node->hit, ctx->ray);
+			*ctx->h_color = mrt_apply_checkerboard_pattern(ctx->elements,
+					base_color, node->hit, node);
 			return (true);
 		}
 	}
