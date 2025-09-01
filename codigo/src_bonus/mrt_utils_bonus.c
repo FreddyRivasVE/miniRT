@@ -1,35 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mrt_ray_color_bonus.c                              :+:      :+:    :+:   */
+/*   mrt_utils_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/25 20:26:59 by brivera           #+#    #+#             */
-/*   Updated: 2025/09/01 14:24:25 by brivera          ###   ########.fr       */
+/*   Created: 2025/09/01 15:00:00 by brivera           #+#    #+#             */
+/*   Updated: 2025/09/01 15:13:11 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt_bonus.h"
 
-t_vec4	mrt_ray_color(t_ray *ray, t_data *elements)
+bool	mrt_get_valid_t(float a, float b, float sqrt_disc, float *t_out)
 {
-	t_scene_node	*current;
-	t_hit_context	ctx;
-	t_vec4			hit_color;
-	float			t_final;
+	float	t1;
+	float	t2;
 
-	hit_color = (t_vec4){0, 0, 0, 0};
-	t_final = INFINITY;
-	ctx.ray = ray;
-	ctx.elements = elements;
-	ctx.h_color = &hit_color;
-	ctx.t_closest = &t_final;
-	current = elements->objects;
-	while (current)
+	if (fabs(a) < EPSILON)
 	{
-		mrt_check_object_hit(current, &ctx);
-		current = current->next;
+		if (fabs(b) < EPSILON)
+			return (false);
+		*t_out = -sqrt_disc / b;
+		return (*t_out > EPSILON);
 	}
-	return (hit_color);
+	t1 = (-b - sqrt_disc) / (2.0f * a);
+	t2 = (-b + sqrt_disc) / (2.0f * a);
+	if (t1 > EPSILON)
+		*t_out = t1;
+	else if (t2 > EPSILON)
+		*t_out = t2;
+	else
+		return (false);
+	return (true);
 }

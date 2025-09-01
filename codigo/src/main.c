@@ -6,7 +6,7 @@
 /*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:34:00 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/29 20:41:09 by brivera          ###   ########.fr       */
+/*   Updated: 2025/09/01 14:17:50 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	main(int argc, char **argv)
 	window = mrt_setup_window();
 	ft_putendl_fd("Renderizando escena...", 1);
 	mrt_draw_to_window(window, &elements);
-	ft_putendl_fd("Render completado.Abriendo ventana...", 1);
+	ft_putendl_fd("Render completado. Abriendo ventana...", 1);
 	mlx_image_to_window(window.mlx, window.image, 0, 0);
 	mlx_key_hook(window.mlx, &mrt_keyfuncion, window.mlx);
 	mlx_loop(window.mlx);

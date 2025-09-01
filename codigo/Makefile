@@ -26,6 +26,10 @@ LIBFTA		:= 	$(LIBFT_DIR)/libft.a
 INCLUDE		:= include/
 INCLUDE_BONUS	:= include_bonus/
 
+# Header files dependencies
+HEADERS		:= $(INCLUDE)minirt.h $(INCLUDE)mrt_struct.h
+HEADERS_BONUS	:= $(INCLUDE_BONUS)minirt_bonus.h $(INCLUDE_BONUS)mrt_struct_bonus.h
+
 SRC_DIR		:= 	src/
 
 SRCS 		:= 	$(SRC_DIR)main.c \
@@ -79,9 +83,12 @@ SRCS_BONUS	:= 	$(SRC_DIR_BONUS)main_bonus.c \
 				$(SRC_DIR_BONUS)mrt_push_light_bonus.c \
 				$(SRC_DIR_BONUS)mrt_render_bonus.c \
 				$(SRC_DIR_BONUS)mrt_ray_color_bonus.c \
+				$(SRC_DIR_BONUS)mrt_hit_objects_bonus.c \
 				$(SRC_DIR_BONUS)mrt_hit_scene_render_bonus.c \
 				$(SRC_DIR_BONUS)mrt_hit_cylinder_body_bonus.c \
 				$(SRC_DIR_BONUS)mrt_hit_cylinder_caps_bonus.c \
+				$(SRC_DIR_BONUS)mrt_hit_cone_bonus.c \
+				$(SRC_DIR_BONUS)mrt_utils_bonus.c \
 				$(SRC_DIR_BONUS)mrt_light_render_bonus.c \
 				$(SRC_DIR_BONUS)mrt_intersect_scene_light_bonus.c \
 				$(SRC_DIR_BONUS)mrt_extrac_data_elements_bonus.c \
@@ -110,6 +117,7 @@ endif
 
 all:	$(NAME)
 bonus:	$(NAME_BONUS)
+goal:	all bonus
 
 $(NAME): $(LIBFTA) $(MLX42) $(OBJS)
 	@$(CC) $(CFLAGS) $(OBJS) $(LIBFTA) $(MLX42) $(MLX_FLAGS) -I$(MLX42_INC) -o $(NAME)
@@ -128,13 +136,13 @@ $(MLX42):
 	@cmake --build $(MLX42_DIR)/build
 	@echo "$(GREEN)✅ Compilado MLX42\n$(CLEAR_COLOR)"
 
-$(OBJ_DIR)%.o: $(SRC_DIR)%.c $(INCLUDE)
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c $(HEADERS)
 	@mkdir -p $(OBJ_DIR)
 	@$(CC) $(CFLAGS) $(MATERIAL_FLAGS) -Iinclude -I$(MLX42_INC) -c $< -o $@
 
-$(OBJ_DIR_BONUS)%.o:
+$(OBJ_DIR_BONUS)%.o: $(SRC_DIR_BONUS)%.c $(HEADERS_BONUS)
 	@mkdir -p $(OBJ_DIR_BONUS)
-	@$(CC) $(CFLAGS) $(MATERIAL_FLAGS) -I$(INCLUDE_BONUS) -I$(MLX42_INC) -c src_bonus/$*.c -o $@
+	@$(CC) $(CFLAGS) $(MATERIAL_FLAGS) -I$(INCLUDE_BONUS) -I$(MLX42_INC) -c $< -o $@
 
 
 clean:
@@ -150,6 +158,8 @@ fclean: clean
 	@echo "$(RED)⛔ Limpieza total (ejecutables y librerías).$(CLEAR_COLOR)"
 
 re: fclean all
+
+re_bonus: fclean bonus
 
 valgrind: 
 	valgrind -s \
@@ -189,4 +199,4 @@ anti: clean
 	@$(MAKE) all bonus MATERIAL_FLAGS="-DANTIALIASING=1"
 	@echo "$(CYAN)🎯 Compilado con ANTIALIASING 4x$(CLEAR_COLOR)"
 
-.PHONY: all bonus clean fclean re norminette norminette_all valgrind matte plastic wood shiny anti 
+.PHONY: all bonus goal clean fclean re re_bonus norminette norminette_all valgrind matte plastic wood shiny anti 

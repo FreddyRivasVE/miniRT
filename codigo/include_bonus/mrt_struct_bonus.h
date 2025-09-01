@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mrt_struct_bonus.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/07 13:43:23 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/30 11:52:48 by frivas           ###   ########.fr       */
+/*   Updated: 2025/09/01 16:47:54 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef enum s_type
 	SPHERE,
 	PLANE,
 	CYLINDER,
+	CONE,
 	AMBIENT,
 	LIGHT,
 	CAMERA
@@ -62,6 +63,14 @@ typedef struct s_cylinder
 	float	height;
 }	t_cylinder;
 
+typedef struct s_cone
+{
+	t_vec4	origin;
+	t_vec4	axis;
+	float	radius;
+	float	height;
+}	t_cone;
+
 // ========================================================================
 // CAMERA STRUCTURES
 // ========================================================================
@@ -93,9 +102,10 @@ typedef struct s_ambient
 
 typedef struct s_light
 {
-	t_vec4	position;
-	t_vec4	color;
-	float	brightness_r;
+	t_vec4			position;
+	t_vec4			color;
+	float			brightness_r;
+	struct s_light	*next;
 }	t_light;
 
 typedef struct s_material
@@ -153,6 +163,15 @@ typedef struct s_hit_context
 	t_vec4	*h_color;
 	float	*t_closest;
 }	t_hit_context;
+
+typedef struct s_cone_hit_data
+{
+	t_ray		*ray;
+	t_hit		**hit;
+	float		t_final;
+	bool		is_base_hit;
+	bool		has_intersection;
+}	t_cone_hit_data;
 
 // ========================================================================
 // SCENE STRUCTURES

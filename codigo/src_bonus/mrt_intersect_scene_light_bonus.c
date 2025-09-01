@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mrt_intersect_scene_light_bonus.c                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 14:04:51 by frivas            #+#    #+#             */
-/*   Updated: 2025/08/30 13:15:02 by frivas           ###   ########.fr       */
+/*   Updated: 2025/09/01 16:02:54 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,26 @@ static bool	mrt_hit_sp_light(t_ray *ray, t_scene_node *object, float *t,
 	return (false);
 }
 
+static bool	mrt_hit_cone_light(t_ray *ray, t_scene_node *object, float *t,
+		t_hit *hit)
+{
+	t_hit	*temp_ptr;
+	t_hit	temp_hit;
+
+	if (object->type == CONE)
+	{
+		temp_ptr = &temp_hit;
+		if (mrt_hit_cone(ray, *(t_cone *)object->object, &temp_ptr)
+			&& temp_ptr->t > EPSILON && temp_ptr->t < *t)
+		{
+			*t = temp_ptr->t;
+			*hit = *temp_ptr;
+			return (true);
+		}
+	}
+	return (false);
+}
+
 static bool	mrt_object_hit_light(t_scene_node *current, float *t,
 		t_hit *shadow_hit, t_ray *ray)
 {
@@ -81,8 +101,11 @@ static bool	mrt_object_hit_light(t_scene_node *current, float *t,
 		return (true);
 	if (mrt_hit_cy_light(ray, current, t, shadow_hit))
 		return (true);
+	if (mrt_hit_cone_light(ray, current, t, shadow_hit))
+		return (true);
 	return (false);
 }
+
 
 bool	mrt_intersect_scene(t_data *elements, t_ray *ray, t_hit *shadow_hit)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt_bonus.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:14:15 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/30 17:03:13 by frivas           ###   ########.fr       */
+/*   Updated: 2025/09/01 18:06:36 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,18 @@
 # include <stddef.h>
 
 # include "../libs/libft/libft.h"
-# include "../include/mrt_struct.h"
+# include "../include_bonus/mrt_struct_bonus.h"
 
 // ========================================================================
 // CONSTANTS AND DEFINITIONS
 // ========================================================================
 
-# define WIDTH			1920
+# define WIDTH			800
 # define ASPECT_RATIO	1.7777777778
 # define PI				3.14159265358979323846
 # define EPSILON		1e-6f
-# define E_LIGHT		1e-3f
-# define E_NORMAL		1e-5f
+# define E_LIGHT		1e-2f
+# define E_NORMAL		1e-4f
 # define FOCAL_LENGTH	1.0f
 
 // ========================================================================
@@ -159,8 +159,17 @@ bool			mrt_hit_cylinder_cap(t_ray *ray, t_cylinder cylinder,
 					t_cylinder_hits *hits, bool top);
 bool			mrt_hit_cylinder_body(t_ray *ray, t_cylinder cylinder,
 					float *t_body, t_vec4 *normal_body);
+bool			mrt_hit_cone(t_ray *ray, t_cone cone, t_hit **hit);
 void			mrt_draw_to_window(t_window window, t_data *elements);
 void			mrt_set_ambient(t_data *el, t_hit *hit, t_vec4 *accum);
 void			mrt_setup_lighting_vectors(t_light *l, t_hit *hit,
 					t_vec4 *light_dir, float *light_dist);
+void			mrt_check_object_hit(t_scene_node *node, t_hit_context *ctx);
+
+// ========================================================================
+// UTILITY FUNCTIONS
+// ========================================================================
+
+bool			mrt_get_valid_t(float a, float b, float sqrt_disc,
+					float *t_out);
 #endif

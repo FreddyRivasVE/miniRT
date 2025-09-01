@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mrt_hit_cylinder_body_bonus.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/27 14:28:18 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/30 13:14:50 by frivas           ###   ########.fr       */
+/*   Updated: 2025/09/01 15:10:30 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,27 +26,6 @@ static void	mrt_calculate_cylinder_vectors(t_ray *ray,
 				vec4_dot(delta_p, cylinder.axis)));
 }
 
-static bool	mrt_get_valid_t(float a, float b, float sqrt_disc, float *t_body)
-{
-	float	t[2];
-	float	tmp;
-
-	t[0] = (-b - sqrt_disc) / (2.0f * a);
-	t[1] = (-b + sqrt_disc) / (2.0f * a);
-	if (t[0] > t[1])
-	{
-		tmp = t[0];
-		t[0] = t[1];
-		t[1] = tmp;
-	}
-	if (t[0] > 0)
-		*t_body = t[0];
-	else if (t[1] > 0)
-		*t_body = t[1];
-	else
-		return (false);
-	return (true);
-}
 
 static bool	mrt_solve_quadratic_cylinder(t_vec4 direction, t_vec4 delta_p_perp,
 			float radius, float *t_body)
