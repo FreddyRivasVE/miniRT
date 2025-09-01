@@ -6,7 +6,7 @@
 /*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:14:15 by brivera           #+#    #+#             */
-/*   Updated: 2025/09/01 19:37:12 by brivera          ###   ########.fr       */
+/*   Updated: 2025/09/01 20:23:19 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 // CONSTANTS AND DEFINITIONS
 // ========================================================================
 
-# define WIDTH			800
+# define WIDTH			1280
 # define ASPECT_RATIO	1.7777777778
 # define PI				3.14159265358979323846
 # define EPSILON		1e-6f
