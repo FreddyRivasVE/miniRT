@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 21:16:28 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/30 14:27:54 by frivas           ###   ########.fr       */
+/*   Updated: 2025/09/02 12:31:01 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ int	mrt_validator_row_data(char *content)
 		return (1);
 	else if (content[0] == 'L' && mrt_check_light(content))
 		return (1);
-	else if (content[0] == 'p' && content [1] == 'l' && mrt_check_pl(content))
+	else if (content[0] == 'p' && content[1] == 'l' && mrt_check_pl(content))
 		return (1);
-	else if (content[0] == 's' && content [1] == 'p' && mrt_check_sp(content))
+	else if (content[0] == 's' && content[1] == 'p' && mrt_check_sp(content))
 		return (1);
 	else if (content[0] == 'c' && content [1] == 'y' && mrt_check_cy(content))
 		return (1);
@@ -39,7 +39,7 @@ static bool	mrt_validate_and_count(t_list *lst, int *count)
 	while (current)
 	{
 		if (!mrt_validator_row_data(current->content))
-			return (false);
+			return (ft_print_error("Error\nRevisa argumentos."), false);
 		if (((char *)current->content)[0] == 'A')
 			count[0]++;
 		else if (((char *)current->content)[0] == 'C')

@@ -6,7 +6,7 @@
 /*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 21:16:28 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/30 16:06:52 by frivas           ###   ########.fr       */
+/*   Updated: 2025/09/02 13:26:56 by frivas           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,33 +14,37 @@
 
 int	mrt_validator_row_data(char *content)
 {
-	if (content[0] == 'A' && mrt_check_ambient(content))
-		return (1);
-	else if (content[0] == 'C' && mrt_check_camera(content))
-		return (1);
-	else if (content[0] == 'L' && mrt_check_light(content))
-		return (1);
-	else if (content[0] == 'p' && content [1] == 'l' && mrt_check_pl(content))
-		return (1);
-	else if (content[0] == 's' && content [1] == 'p' && mrt_check_sp(content))
-		return (1);
-	else if (content[0] == 'c' && content [1] == 'y' && mrt_check_cy(content))
-		return (1);
-	else if (content[0] == 'c' && content [1] == 'n' && mrt_check_cn(content))
-		return (1);
-	else
-		return (0);
+	if (content[0] == 'A')
+		return (mrt_check_ambient(content));
+	else if (content[0] == 'C')
+		return (mrt_check_camera(content));
+	else if (content[0] == 'L')
+		return (mrt_check_light(content));
+	else if (content[0] == 'p' && content[1] == 'l')
+		return (mrt_check_pl(content));
+	else if (content[0] == 's' && content[1] == 'p')
+		return (mrt_check_sp(content));
+	else if (content[0] == 'c' && content[1] == 'y')
+		return (mrt_check_cy(content));
+	else if (content[0] == 'c' && content[1] == 'n')
+		return (mrt_check_cn(content));
+	return (3);
 }
 
 static bool	mrt_validate_and_count(t_list *lst, int *count)
 {
 	t_list	*current;
+	int		flag;
 
 	ft_memset(count, 0, 3 * sizeof(int));
 	current = lst;
+	flag = 0;
 	while (current)
 	{
-		if (!mrt_validator_row_data(current->content))
+		flag = mrt_validator_row_data(current->content);
+		if (flag == 3)
+			return (ft_print_error("Error\nRevisa argumentos."), false);
+		if (flag == 0)
 			return (false);
 		if (((char *)current->content)[0] == 'A')
 			count[0]++;
