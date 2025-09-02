@@ -6,22 +6,22 @@
 /*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 16:14:01 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/28 16:14:13 by brivera          ###   ########.fr       */
+/*   Updated: 2025/09/02 16:51:04 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
 /**
- * Calcula el vector reflejado de un vector incidente respecto
- * a una normal.
- * Ambos vectores se normalizan antes de calcular la reflexión
- * para asegurar
- * que el resultado sea correcto.
+ * Computes the reflected vector of an incident vector with respect
+ * to a normal.
+ * Both vectors are normalized before computing the reflection
+ * to ensure
+ * the result is correct.
  *
- * @param v Vector incidente (t_vec4)
- * @param n Vector normal de la superficie (t_vec4)
- * @return Vector reflejado (t_vec4)
+ * @param v Incident vector (t_vec4)
+ * @param n Surface normal vector (t_vec4)
+ * @return Reflected vector (t_vec4)
  */
 
 t_vec4	vec4_reflect(t_vec4 v, t_vec4 n)

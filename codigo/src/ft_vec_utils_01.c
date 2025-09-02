@@ -3,14 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   ft_vec_utils_01.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 11:02:12 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/27 11:58:05 by frivas           ###   ########.fr       */
+/*   Updated: 2025/09/02 16:49:39 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+
+/**
+ * Clamps the components of a 4D vector between a minimum and maximum value.
+ *
+ * Each of the first three components (x, y, z) of the input vector 'v'
+ * is restricted to the range [min, max]. Any values below 'min' are set 
+ * to 'min', and values above 'max' are set to 'max'.
+ *
+ * The w component of the resulting vector is set to 0.0f.
+ *
+ * @param v   Input vector (t_vec4).
+ * @param min Minimum clamp value.
+ * @param max Maximum clamp value.
+ * @return    A new vector (t_vec4) with clamped components.
+ */
 
 t_vec4	vec4_clamp(t_vec4 v, float min, float max)
 {
@@ -43,15 +58,15 @@ float	vect4_length(t_vec4 v)
 }
 
 /* 
- * Normaliza un vector
- * Devuelve un nuevo vector con la misma dirección que 'v' pero de longitud 1.
- * Si el vector tiene longitud cero, se devuelve un vector nulo.
+ * Normalizes a vector
+ * Returns a new vector with the same direction as 'v' but with length 1.
+ * If the vector has zero length, a null vector is returned.
  * 
- * Calcula la longitud (norma euclídea) del vector en 3D: sqrtf(x² + y² + z²)
+ * Computes the length (Euclidean norm) of the 3D vector: sqrtf(x² + y² + z²)
  * len = sqrtf(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
  * 
- * Divide las primeras tres componentes por la longitud
- * para obtener un vector unitario. La componente w queda igual.
+ * Divides the first three components by the length
+ * to obtain a unit vector. The w component remains unchanged.
  * 
 */
 

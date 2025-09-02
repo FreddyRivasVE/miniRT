@@ -6,13 +6,13 @@
 /*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 21:16:28 by brivera           #+#    #+#             */
-/*   Updated: 2025/09/02 15:44:06 by brivera          ###   ########.fr       */
+/*   Updated: 2025/09/02 15:50:32 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-int	mrt_validator_row_data(char *content)
+static int	mrt_validator_row_data(char *content)
 {
 	if (content[0] == 'A')
 		return (mrt_check_ambient(content));

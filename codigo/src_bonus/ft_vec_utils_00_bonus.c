@@ -3,35 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   ft_vec_utils_00_bonus.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 11:02:03 by brivera           #+#    #+#             */
-/*   Updated: 2025/08/30 13:14:11 by frivas           ###   ########.fr       */
+/*   Updated: 2025/09/02 16:52:48 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt_bonus.h"
 
 /**
- * Calcula el producto escalar (dot product) entre dos vectores 3D.
+ * Computes the dot product between two 3D vectors.
  *
- * @param a Primer vector de tipo t_vec4.
- * @param b Segundo vector de tipo t_vec4.
- * @return Un número flotante que representa el producto escalar
- * entre a y b.
+ * @param a First vector of type t_vec4.
+ * @param b Second vector of type t_vec4.
+ * @return A floating-point number representing the dot product
+ * between a and b.
  *
- * Solo se consideran las componentes X, Y y Z
- * de los vectores (a[0], a[1], a[2]),
- * ya que la componente W no se usa en cálculos 
- * geométricos tradicionales.
+ * Only the X, Y, and Z components of the vectors (a[0], a[1], a[2])
+ * are considered, since the W component is not used in traditional
+ * geometric calculations.
  *
- * El producto escalar se usa, por ejemplo, para:
- * - Determinar el ángulo entre dos vectores
- * - Calcular proyecciones
- * - Evaluar intersecciones en ray tracing
+ * The dot product is used, for example, to:
+ * - Determine the angle between two vectors
+ * - Compute projections
+ * - Evaluate intersections in ray tracing
  *
- * Si el resultado es 0, los vectores son ortogonales
- * (perpendiculares).
+ * If the result is 0, the vectors are orthogonal
+ * (perpendicular).
  */
 float	vec4_dot(t_vec4 a, t_vec4 b)
 {
@@ -39,35 +38,28 @@ float	vec4_dot(t_vec4 a, t_vec4 b)
 }
 
 /* 
- * Escala un vector por un escalar: v * s
- * Multiplica cada componente del vector 'v' por el escalar 's'.
- * Devuelve un nuevo vector con los resultados.
- * Se multiplica cada componente del vector por el escalar
+ * Scales a vector by a scalar: v * s
+ * Multiplies each component of the vector 'v' by the scalar 's'.
+ * Returns a new vector with the results.
+ * Each component of the vector is multiplied by the scalar.
  *
-*/
+ */
 
 t_vec4	vec4_scale(t_vec4 v, float s)
 {
 	return ((t_vec4){v[0] * s, v[1] * s, v[2] * s, v[3] * s});
 }
 
-/* 
- * Suma de vectores: a + b
- * Realiza la suma componente a componente de los vectores 'a' y 'b'.
- * Devuelve un nuevo vector con la suma de cada componente.
- * 
- */
-
 t_vec4	vec4_add(t_vec4 a, t_vec4 b)
 {
 	return ((t_vec4){a[0] + b[0], a[1] + b[1], a[2] + b[2], a[3] + b[3]});
 }
 /*
- * Resta dos vectores de 4 componentes.
+ * Subtracts two 4-component vectors.
  * 
- * Primer vector (minuendo)
- * b Segundo vector (sustraendo)
- * Vector resultante de la resta (a - b)
+ * a First vector (minuend)
+ * b Second vector (subtrahend)
+ * Resulting vector from the subtraction (a - b)
  */
 
 t_vec4	vec4_sub(t_vec4 a, t_vec4 b)
@@ -76,27 +68,27 @@ t_vec4	vec4_sub(t_vec4 a, t_vec4 b)
 }
 
 /**
- * Calcula el producto vectorial (cross product) entre dos vectores 3D.
+ * Computes the cross product between two 3D vectors.
  *
- * El producto vectorial de dos vectores a y b da como resultado un nuevo vector 
- * perpendicular a ambos
- * Es útil en gráficos 3D para obtener normales a superficies, calcular 
- * orientaciones y rotaciones.
+ * The cross product of two vectors a and b results in a new vector 
+ * that is perpendicular to both.
+ * It is useful in 3D graphics to obtain surface normals, calculate 
+ * orientations, and perform rotations.
  *
- * Fórmula
- * Para dos vectores a = (a_x, a_y, a_z) y b = (b_x, b_y, b_z),
- * el producto vectorial es:
+ * Formula
+ * For two vectors a = (a_x, a_y, a_z) and b = (b_x, b_y, b_z),
+ * the cross product is:
  * 
  *      a × b = (a_y * b_z - a_z * b_y,
  *               a_z * b_x - a_x * b_z,
  *               a_x * b_y - a_y * b_x)
  *
- * Nota: La componente w se fija en 0, ya que el resultado
- * es un vector direccional.
+ * Note: The w component is set to 0, since the result
+ * is a directional vector.
  *
- * @param a Primer vector (t_vec4) con componentes x, y, z, w
- * @param b Segundo vector (t_vec4) con componentes x, y, z, w
- * @return Vector resultante (t_vec4) perpendicular a a y b
+ * @param a First vector (t_vec4) with components x, y, z, w
+ * @param b Second vector (t_vec4) with components x, y, z, w
+ * @return Resulting vector (t_vec4) perpendicular to both a and b
  */
 
 t_vec4	vec4_cross(t_vec4 a, t_vec4 b)
