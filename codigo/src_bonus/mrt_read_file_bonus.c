@@ -6,7 +6,7 @@
 /*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 14:18:57 by brivera           #+#    #+#             */
-/*   Updated: 2025/09/01 19:38:25 by brivera          ###   ########.fr       */
+/*   Updated: 2025/09/02 15:36:48 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	mrt_upload_row_data(char *line, t_list **row_data)
 
 	if (!ft_strcmp(line, "\n") || line[0] == '#' || ft_isspace(line[0]))
 		return (1);
-	content = ft_strdup(line);
+	content = ft_strtrim_spaces(ft_strdup(line));
 	if (!content)
 		return (0);
 	new_node = ft_lstnew(content);

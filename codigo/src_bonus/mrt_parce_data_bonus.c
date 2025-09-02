@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mrt_parce_data_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: frivas <frivas@student.42.fr>              +#+  +:+       +#+        */
+/*   By: brivera <brivera@student.42madrid.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 21:16:28 by brivera           #+#    #+#             */
-/*   Updated: 2025/09/02 13:26:56 by frivas           ###   ########.fr       */
+/*   Updated: 2025/09/02 15:46:53 by brivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,23 +28,18 @@ int	mrt_validator_row_data(char *content)
 		return (mrt_check_cy(content));
 	else if (content[0] == 'c' && content[1] == 'n')
 		return (mrt_check_cn(content));
-	return (3);
+	return (ft_print_error("Error\nRevisa argumentos."), 0);
 }
 
 static bool	mrt_validate_and_count(t_list *lst, int *count)
 {
 	t_list	*current;
-	int		flag;
 
 	ft_memset(count, 0, 3 * sizeof(int));
 	current = lst;
-	flag = 0;
 	while (current)
 	{
-		flag = mrt_validator_row_data(current->content);
-		if (flag == 3)
-			return (ft_print_error("Error\nRevisa argumentos."), false);
-		if (flag == 0)
+		if (!mrt_validator_row_data(current->content))
 			return (false);
 		if (((char *)current->content)[0] == 'A')
 			count[0]++;

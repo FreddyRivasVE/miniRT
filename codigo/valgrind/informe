@@ -1,26 +1,215 @@
-==301633== Memcheck, a memory error detector
-==301633== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==301633== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==301633== Command: ./miniRT_bonus scenes/ejemplo.rt
-==301633== Parent PID: 301631
-==301633== 
-==301633== 
-==301633== HEAP SUMMARY:
-==301633==     in use at exit: 318,003 bytes in 3,107 blocks
-==301633==   total heap usage: 130,795 allocs, 127,688 frees, 51,075,835 bytes allocated
-==301633== 
-==301633== LEAK SUMMARY:
-==301633==    definitely lost: 0 bytes in 0 blocks
-==301633==    indirectly lost: 0 bytes in 0 blocks
-==301633==      possibly lost: 0 bytes in 0 blocks
-==301633==    still reachable: 0 bytes in 0 blocks
-==301633==         suppressed: 318,003 bytes in 3,107 blocks
-==301633== 
-==301633== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 1 from 1)
---301633-- 
---301633-- used_suppression:    430 <MLX42> valgrind/valgrind.sup:38 suppressed: 145,077 bytes in 518 blocks
---301633-- used_suppression:   1768 <MLX42> valgrind/valgrind.sup:32 suppressed: 121,849 bytes in 1,770 blocks
---301633-- used_suppression:     69 <MLX42> valgrind/valgrind.sup:20 suppressed: 50,469 bytes in 812 blocks
---301633-- used_suppression:      4 <MLX42> valgrind/valgrind.sup:14 suppressed: 608 bytes in 7 blocks
-==301633== 
-==301633== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 1 from 1)
+==1522226== Memcheck, a memory error detector
+==1522226== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==1522226== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==1522226== Command: ./miniRT scenes/ejemplo.rt
+==1522226== Parent PID: 1522224
+==1522226== 
+==1522226== 
+==1522226== Process terminating with default action of signal 2 (SIGINT)
+==1522226==    at 0x4C4088D: syscall (syscall.S:38)
+==1522226==    by 0x66BF445: ??? (in /usr/lib/x86_64-linux-gnu/dri/radeonsi_dri.so)
+==1522226==    by 0x66C557E: ??? (in /usr/lib/x86_64-linux-gnu/dri/radeonsi_dri.so)
+==1522226==    by 0x6EF84B7: ??? (in /usr/lib/x86_64-linux-gnu/dri/radeonsi_dri.so)
+==1522226==    by 0x6EFB5BF: ??? (in /usr/lib/x86_64-linux-gnu/dri/radeonsi_dri.so)
+==1522226==    by 0x6EFBE47: ??? (in /usr/lib/x86_64-linux-gnu/dri/radeonsi_dri.so)
+==1522226==    by 0x6EFC0BA: ??? (in /usr/lib/x86_64-linux-gnu/dri/radeonsi_dri.so)
+==1522226==    by 0x6EFC487: ??? (in /usr/lib/x86_64-linux-gnu/dri/radeonsi_dri.so)
+==1522226==    by 0x6EF5A73: ??? (in /usr/lib/x86_64-linux-gnu/dri/radeonsi_dri.so)
+==1522226==    by 0x6ECA915: ??? (in /usr/lib/x86_64-linux-gnu/dri/radeonsi_dri.so)
+==1522226==    by 0x6ECB4BE: ??? (in /usr/lib/x86_64-linux-gnu/dri/radeonsi_dri.so)
+==1522226==    by 0x66B5C88: ??? (in /usr/lib/x86_64-linux-gnu/dri/radeonsi_dri.so)
+==1522226== 
+==1522226== HEAP SUMMARY:
+==1522226==     in use at exit: 3,384,225 bytes in 10,623 blocks
+==1522226==   total heap usage: 17,659 allocs, 7,036 frees, 17,959,626 bytes allocated
+==1522226== 
+==1522226== 32 bytes in 1 blocks are still reachable in loss record 671 of 5,179
+==1522226==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1522226==    by 0x407724: ft_calloc (in /home/brivera/Documents/42/minirt/repomio/codigo/miniRT)
+==1522226==    by 0x40460A: mrt_setup_ambient (mrt_setup_element.c:19)
+==1522226==    by 0x40424B: mrt_dispatch_token (mrt_init_scene.c:59)
+==1522226==    by 0x404440: mrt_process_line (mrt_init_scene.c:84)
+==1522226==    by 0x4044A5: mrt_init_scene (mrt_init_scene.c:97)
+==1522226==    by 0x4024D2: main (main.c:26)
+==1522226== 
+==1522226== 32 bytes in 1 blocks are still reachable in loss record 672 of 5,179
+==1522226==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1522226==    by 0x407724: ft_calloc (in /home/brivera/Documents/42/minirt/repomio/codigo/miniRT)
+==1522226==    by 0x40416A: mrt_reserve_memory_node (mrt_init_scene.c:17)
+==1522226==    by 0x404091: mrt_push_object (mrt_init_scene.c:36)
+==1522226==    by 0x4043E2: mrt_dispatch_token (mrt_init_scene.c:71)
+==1522226==    by 0x404440: mrt_process_line (mrt_init_scene.c:84)
+==1522226==    by 0x4044A5: mrt_init_scene (mrt_init_scene.c:97)
+==1522226==    by 0x4024D2: main (main.c:26)
+==1522226== 
+==1522226== 32 bytes in 1 blocks are still reachable in loss record 694 of 5,179
+==1522226==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1522226==    by 0x409EB6: mlx_init (in /home/brivera/Documents/42/minirt/repomio/codigo/miniRT)
+==1522226==    by 0x404571: mrt_setup_window (mrt_window_setup.c:23)
+==1522226==    by 0x402508: main (main.c:32)
+==1522226== 
+==1522226== 32 bytes in 1 blocks are still reachable in loss record 698 of 5,179
+==1522226==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1522226==    by 0x4D571B7: ??? (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==1522226==    by 0x4D57A08: ??? (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==1522226==    by 0x4D57EB0: ??? (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==1522226==    by 0x4D58E44: xcb_wait_for_reply (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==1522226==    by 0x4D5E292: xcb_get_extension_data (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==1522226==    by 0x4D5E464: xcb_send_request_with_fds64 (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==1522226==    by 0x4D5EBDC: xcb_send_request (in /usr/lib/x86_64-linux-gnu/libxcb.so.1.1.0)
+==1522226==    by 0x61F51BA: xcb_xfixes_query_version (in /usr/lib/x86_64-linux-gnu/libxcb-xfixes.so.0.0.0)
+==1522226==    by 0x610A922: ??? (in /usr/lib/x86_64-linux-gnu/libGLX_mesa.so.0.0.0)
+==1522226==    by 0x60FC4C9: ??? (in /usr/lib/x86_64-linux-gnu/libGLX_mesa.so.0.0.0)
+==1522226==    by 0x60EDF80: ??? (in /usr/lib/x86_64-linux-gnu/libGLX_mesa.so.0.0.0)
+==1522226== 
+==1522226== 48 bytes in 1 blocks are still reachable in loss record 2,749 of 5,179
+==1522226==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1522226==    by 0x407724: ft_calloc (in /home/brivera/Documents/42/minirt/repomio/codigo/miniRT)
+==1522226==    by 0x40475A: mrt_setup_camera (mrt_setup_element.c:47)
+==1522226==    by 0x404282: mrt_dispatch_token (mrt_init_scene.c:61)
+==1522226==    by 0x404440: mrt_process_line (mrt_init_scene.c:84)
+==1522226==    by 0x4044A5: mrt_init_scene (mrt_init_scene.c:97)
+==1522226==    by 0x4024D2: main (main.c:26)
+==1522226== 
+==1522226== 48 bytes in 1 blocks are still reachable in loss record 2,750 of 5,179
+==1522226==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1522226==    by 0x407724: ft_calloc (in /home/brivera/Documents/42/minirt/repomio/codigo/miniRT)
+==1522226==    by 0x40468A: mrt_setup_light (mrt_setup_element.c:31)
+==1522226==    by 0x4042BA: mrt_dispatch_token (mrt_init_scene.c:63)
+==1522226==    by 0x404440: mrt_process_line (mrt_init_scene.c:84)
+==1522226==    by 0x4044A5: mrt_init_scene (mrt_init_scene.c:97)
+==1522226==    by 0x4024D2: main (main.c:26)
+==1522226== 
+==1522226== 48 bytes in 1 blocks are still reachable in loss record 2,751 of 5,179
+==1522226==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1522226==    by 0x407724: ft_calloc (in /home/brivera/Documents/42/minirt/repomio/codigo/miniRT)
+==1522226==    by 0x40493E: mrt_setup_cylinder (mrt_setup_objects.c:45)
+==1522226==    by 0x4043CD: mrt_dispatch_token (mrt_init_scene.c:72)
+==1522226==    by 0x404440: mrt_process_line (mrt_init_scene.c:84)
+==1522226==    by 0x4044A5: mrt_init_scene (mrt_init_scene.c:97)
+==1522226==    by 0x4024D2: main (main.c:26)
+==1522226== 
+==1522226== 48 bytes in 1 blocks are still reachable in loss record 2,752 of 5,179
+==1522226==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1522226==    by 0x407724: ft_calloc (in /home/brivera/Documents/42/minirt/repomio/codigo/miniRT)
+==1522226==    by 0x40419D: mrt_reserve_memory_node (mrt_init_scene.c:20)
+==1522226==    by 0x404091: mrt_push_object (mrt_init_scene.c:36)
+==1522226==    by 0x4043E2: mrt_dispatch_token (mrt_init_scene.c:71)
+==1522226==    by 0x404440: mrt_process_line (mrt_init_scene.c:84)
+==1522226==    by 0x4044A5: mrt_init_scene (mrt_init_scene.c:97)
+==1522226==    by 0x4024D2: main (main.c:26)
+==1522226== 
+==1522226== 80 bytes in 1 blocks are still reachable in loss record 3,881 of 5,179
+==1522226==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1522226==    by 0x407724: ft_calloc (in /home/brivera/Documents/42/minirt/repomio/codigo/miniRT)
+==1522226==    by 0x4041D8: mrt_reserve_memory_node (mrt_init_scene.c:23)
+==1522226==    by 0x404091: mrt_push_object (mrt_init_scene.c:36)
+==1522226==    by 0x4043E2: mrt_dispatch_token (mrt_init_scene.c:71)
+==1522226==    by 0x404440: mrt_process_line (mrt_init_scene.c:84)
+==1522226==    by 0x4044A5: mrt_init_scene (mrt_init_scene.c:97)
+==1522226==    by 0x4024D2: main (main.c:26)
+==1522226== 
+==1522226== 96 bytes in 3 blocks are still reachable in loss record 4,284 of 5,179
+==1522226==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1522226==    by 0x407724: ft_calloc (in /home/brivera/Documents/42/minirt/repomio/codigo/miniRT)
+==1522226==    by 0x4047FE: mrt_setup_sphere (mrt_setup_objects.c:19)
+==1522226==    by 0x404316: mrt_dispatch_token (mrt_init_scene.c:66)
+==1522226==    by 0x404440: mrt_process_line (mrt_init_scene.c:84)
+==1522226==    by 0x4044A5: mrt_init_scene (mrt_init_scene.c:97)
+==1522226==    by 0x4024D2: main (main.c:26)
+==1522226== 
+==1522226== 96 bytes in 3 blocks are still reachable in loss record 4,285 of 5,179
+==1522226==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1522226==    by 0x407724: ft_calloc (in /home/brivera/Documents/42/minirt/repomio/codigo/miniRT)
+==1522226==    by 0x40416A: mrt_reserve_memory_node (mrt_init_scene.c:17)
+==1522226==    by 0x404091: mrt_push_object (mrt_init_scene.c:36)
+==1522226==    by 0x404328: mrt_dispatch_token (mrt_init_scene.c:65)
+==1522226==    by 0x404440: mrt_process_line (mrt_init_scene.c:84)
+==1522226==    by 0x4044A5: mrt_init_scene (mrt_init_scene.c:97)
+==1522226==    by 0x4024D2: main (main.c:26)
+==1522226== 
+==1522226== 96 bytes in 3 blocks are still reachable in loss record 4,286 of 5,179
+==1522226==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1522226==    by 0x407724: ft_calloc (in /home/brivera/Documents/42/minirt/repomio/codigo/miniRT)
+==1522226==    by 0x40489E: mrt_setup_plane (mrt_setup_objects.c:32)
+==1522226==    by 0x404370: mrt_dispatch_token (mrt_init_scene.c:69)
+==1522226==    by 0x404440: mrt_process_line (mrt_init_scene.c:84)
+==1522226==    by 0x4044A5: mrt_init_scene (mrt_init_scene.c:97)
+==1522226==    by 0x4024D2: main (main.c:26)
+==1522226== 
+==1522226== 96 bytes in 3 blocks are still reachable in loss record 4,287 of 5,179
+==1522226==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1522226==    by 0x407724: ft_calloc (in /home/brivera/Documents/42/minirt/repomio/codigo/miniRT)
+==1522226==    by 0x40416A: mrt_reserve_memory_node (mrt_init_scene.c:17)
+==1522226==    by 0x404091: mrt_push_object (mrt_init_scene.c:36)
+==1522226==    by 0x404385: mrt_dispatch_token (mrt_init_scene.c:68)
+==1522226==    by 0x404440: mrt_process_line (mrt_init_scene.c:84)
+==1522226==    by 0x4044A5: mrt_init_scene (mrt_init_scene.c:97)
+==1522226==    by 0x4024D2: main (main.c:26)
+==1522226== 
+==1522226== 144 bytes in 3 blocks are still reachable in loss record 4,440 of 5,179
+==1522226==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1522226==    by 0x407724: ft_calloc (in /home/brivera/Documents/42/minirt/repomio/codigo/miniRT)
+==1522226==    by 0x40419D: mrt_reserve_memory_node (mrt_init_scene.c:20)
+==1522226==    by 0x404091: mrt_push_object (mrt_init_scene.c:36)
+==1522226==    by 0x404328: mrt_dispatch_token (mrt_init_scene.c:65)
+==1522226==    by 0x404440: mrt_process_line (mrt_init_scene.c:84)
+==1522226==    by 0x4044A5: mrt_init_scene (mrt_init_scene.c:97)
+==1522226==    by 0x4024D2: main (main.c:26)
+==1522226== 
+==1522226== 144 bytes in 3 blocks are still reachable in loss record 4,441 of 5,179
+==1522226==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1522226==    by 0x407724: ft_calloc (in /home/brivera/Documents/42/minirt/repomio/codigo/miniRT)
+==1522226==    by 0x40419D: mrt_reserve_memory_node (mrt_init_scene.c:20)
+==1522226==    by 0x404091: mrt_push_object (mrt_init_scene.c:36)
+==1522226==    by 0x404385: mrt_dispatch_token (mrt_init_scene.c:68)
+==1522226==    by 0x404440: mrt_process_line (mrt_init_scene.c:84)
+==1522226==    by 0x4044A5: mrt_init_scene (mrt_init_scene.c:97)
+==1522226==    by 0x4024D2: main (main.c:26)
+==1522226== 
+==1522226== 240 bytes in 3 blocks are still reachable in loss record 4,588 of 5,179
+==1522226==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1522226==    by 0x407724: ft_calloc (in /home/brivera/Documents/42/minirt/repomio/codigo/miniRT)
+==1522226==    by 0x4041D8: mrt_reserve_memory_node (mrt_init_scene.c:23)
+==1522226==    by 0x404091: mrt_push_object (mrt_init_scene.c:36)
+==1522226==    by 0x404328: mrt_dispatch_token (mrt_init_scene.c:65)
+==1522226==    by 0x404440: mrt_process_line (mrt_init_scene.c:84)
+==1522226==    by 0x4044A5: mrt_init_scene (mrt_init_scene.c:97)
+==1522226==    by 0x4024D2: main (main.c:26)
+==1522226== 
+==1522226== 240 bytes in 3 blocks are still reachable in loss record 4,589 of 5,179
+==1522226==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1522226==    by 0x407724: ft_calloc (in /home/brivera/Documents/42/minirt/repomio/codigo/miniRT)
+==1522226==    by 0x4041D8: mrt_reserve_memory_node (mrt_init_scene.c:23)
+==1522226==    by 0x404091: mrt_push_object (mrt_init_scene.c:36)
+==1522226==    by 0x404385: mrt_dispatch_token (mrt_init_scene.c:68)
+==1522226==    by 0x404440: mrt_process_line (mrt_init_scene.c:84)
+==1522226==    by 0x4044A5: mrt_init_scene (mrt_init_scene.c:97)
+==1522226==    by 0x4024D2: main (main.c:26)
+==1522226== 
+==1522226== 288,216 bytes in 1 blocks are still reachable in loss record 5,179 of 5,179
+==1522226==    at 0x484DA83: calloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1522226==    by 0x409ED1: mlx_init (in /home/brivera/Documents/42/minirt/repomio/codigo/miniRT)
+==1522226==    by 0x404571: mrt_setup_window (mrt_window_setup.c:23)
+==1522226==    by 0x402508: main (main.c:32)
+==1522226== 
+==1522226== LEAK SUMMARY:
+==1522226==    definitely lost: 0 bytes in 0 blocks
+==1522226==    indirectly lost: 0 bytes in 0 blocks
+==1522226==      possibly lost: 0 bytes in 0 blocks
+==1522226==    still reachable: 289,768 bytes in 34 blocks
+==1522226==                       of which reachable via heuristic:
+==1522226==                         multipleinheritance: 1,504 bytes in 4 blocks
+==1522226==         suppressed: 3,094,457 bytes in 10,589 blocks
+==1522226== 
+==1522226== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 697 from 697)
+--1522226-- 
+--1522226-- used_suppression:    427 <MLX42> valgrind/valgrind.sup:14 suppressed: 1,332,441 bytes in 3,451 blocks
+--1522226-- used_suppression:    180 <MLX42> valgrind/valgrind.sup:38 suppressed: 185,736 bytes in 674 blocks
+--1522226-- used_suppression:   1347 <MLX42> valgrind/valgrind.sup:26 suppressed: 1,222,692 bytes in 2,471 blocks
+--1522226-- used_suppression:   3171 <MLX42> valgrind/valgrind.sup:32 suppressed: 327,879 bytes in 3,228 blocks
+--1522226-- used_suppression:     36 <MLX42> valgrind/valgrind.sup:20 suppressed: 25,709 bytes in 765 blocks
+--1522226-- used_suppression:      1 <insert_a_suppression_name_here> valgrind/valgrind.sup:63
+--1522226-- used_suppression:      1 <insert_a_suppression_name_here> valgrind/valgrind.sup:44
+==1522226== 
+==1522226== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 697 from 697)

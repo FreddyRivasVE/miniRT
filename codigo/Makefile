@@ -173,7 +173,7 @@ valgrind:
 		--track-origins=yes \
 		--suppressions=valgrind/valgrind.sup \
 		--log-file=valgrind/informe \
-		./$(NAME_BONUS) scenes/ejemplo.rt
+		./$(NAME) scenes/ejemplo.rt
 
 norminette:
 	@norminette $(SRCS) $(INCLUDE) $(SRCS_BONUS) $(INCLUDE_BONUS)
