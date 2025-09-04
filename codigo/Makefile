@@ -202,4 +202,6 @@ anti: clean
 	@$(MAKE) all bonus MATERIAL_FLAGS="-DANTIALIASING=1"
 	@echo "$(CYAN)🎯 Compilado con ANTIALIASING 4x$(CLEAR_COLOR)"
 
-.PHONY: all bonus goal clean fclean re re_bonus norminette norminette_all valgrind matte plastic wood shiny anti 
+.PHONY: all bonus goal clean fclean re re_bonus norminette norminette_all valgrind matte plastic wood shiny anti
+
+.DEFAULT_GOAL := all
