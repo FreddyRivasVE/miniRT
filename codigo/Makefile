@@ -14,7 +14,7 @@ NAME		:= miniRT
 NAME_BONUS	:= miniRT_bonus
 
 CC 			:= cc
-CFLAGS		:= -Wall -Wextra -Werror -g3 #-fsanitize=address
+CFLAGS		:= -Wall -Wextra -Werror #-g3 -fsanitize=address
 
 MLX42_DIR	:=	libs/MLX42
 MLX42 		:= 	$(MLX42_DIR)/build/libmlx42.a
