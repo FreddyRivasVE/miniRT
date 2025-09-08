@@ -26,7 +26,7 @@ Un **ray tracer minimalista** en C basado en el modelo de iluminación de **Phon
 * Manejo de **errores** en parsing.
 * Renderizado en ventana usando [MLX42](https://github.com/codam-coding-college/MLX42).
 
-### Bonus ⭐
+### Bonus
 * **Múltiples luces** de colores independientes (vs una sola luz).
 * Objeto **cono semi-infinito** con vértice puntiagudo y base circular.
 * **Patrón checkerboard** (tablero de ajedrez) en planos con toggle interactivo.
@@ -113,15 +113,6 @@ El `Makefile` incluye reglas adicionales para habilitar ciertas características
   ```bash
   make shiny
   ```
-
-* **Limpieza**
-
-  ```bash
-  make clean     
-  make fclean   
-  make re    
-  ```
-
 
 ## ▶️ Ejecución
 
@@ -218,7 +209,7 @@ El corazón del ray tracing: encontrar dónde el rayo toca cada objeto.
 
 **Rayo:** `P(t) = O + t*D` (origen + distancia×dirección)
 
-**Proceso universal:**
+**Proceso:**
 1. Ecuación geométrica del objeto
 2. Sustituir rayo en ecuación  
 3. Resolver para encontrar `t`
@@ -235,11 +226,11 @@ c = |O-Centro|² - radio²
 #### 📄 **Plano**
 `Normal·P + distancia = 0` → Ecuación lineal: `t = -(N·O + d) / (N·D)`
 
-#### 🔵 **Cilindro Infinito**
-Distancia perpendicular al eje = radio → Proyección 2D + ecuación cuadrática
+#### 🔵 **Cilindro con Tapas**
+Distancia perpendicular al eje = radio → Proyección 2D + ecuación cuadrática + intersección con tapas circulares
 
-#### 🔶 **Cono Semi-Infinito (Bonus)**
-Ecuación cónica + restricciones de altura y base circular
+#### 🔶 **Cono Semi-Infinito con Base (Bonus)**
+Ecuación cónica + restricciones de altura + intersección con base circular
 
 #### 🎯 **Optimizaciones Implementadas**
 * **Precision epsilons:** Diferentes valores según contexto
