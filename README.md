@@ -37,7 +37,7 @@ miniRT/
 |   ├── mrt_struct_bonus.h  
 |
 ├── src/                    # Código fuente principal (parser, render, objetos, operaciones con vectores, etc.)
-├── src_bonus/              # Implementación del bonus (incorpora multiples luces, nuevo objeto y heckerboard pattern)
+├── src_bonus/              # Bonus (incorpora multiples luces, nuevo objeto y checkerboard pattern)
 ├── scenes/                 # Escenas de ejemplo en formato .rt
 ├── Makefile                # Script de compilación
 └── README.md
