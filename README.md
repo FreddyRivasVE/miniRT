@@ -16,7 +16,7 @@ Un **ray tracer minimalista** en C basado en el modelo de iluminación de **Phon
 ## ✨ Características principales
 
 ### Mandatory
-* Soporte para **objetos básicos**: esfera, plano, cilindro infinito.
+* Soporte para **objetos básicos**: esfera, plano, cilindro.
 * **Cámara** configurable desde archivo `.rt`.
 * **Luz** única con color y componente ambiente.
 * Iluminación con modelo **Phong** (ambiente + difusa + especular).
