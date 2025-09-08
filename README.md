@@ -30,8 +30,6 @@ Un **ray tracer minimalista** en C basado en el modelo de iluminación de **Phon
 * **Múltiples luces** de colores independientes (vs una sola luz).
 * Objeto **cono semi-infinito** con vértice puntiagudo y base circular.
 * **Patrón checkerboard** (tablero de ajedrez) en planos con toggle interactivo.
-* **Control interactivo**: Tecla 'P' para alternar patrón checkerboard.
-
 
 ## 📂 Estructura del proyecto
 
@@ -52,18 +50,6 @@ miniRT/
 ├── Makefile                # Script de compilación
 └── README.md
 ```
-
-
-## ⚙️ Compilación
-
-Compilar el proyecto con:
-
-```bash
-make
-```
-
-Esto generará el ejecutable `miniRT`.
-
 
 ## 📋 Reglas del Makefile
 
@@ -140,13 +126,20 @@ El `Makefile` incluye reglas adicionales para habilitar ciertas características
 ### 📄 Formato de archivos .rt
 
 **Objetos soportados:**
-* `A` - Luz ambiente: `A 0.2 255,255,255`
-* `C` - Cámara: `C -50,0,20 0,0,1 70`
-* `L` - Luz: `L -40,0,30 0.7 255,255,255`
-* `sp` - Esfera: `sp 0,0,20 20 255,0,0`
-* `pl` - Plano: `pl 0,0,0 0,1.0,0 255,0,225`
-* `cy` - Cilindro: `cy 50,0,20.6 0,0,1.0 14.2 21.42 10,0,255`
-* `cn` - Cono (bonus): `cn 0,0,20.6 0,0,1.0 14.2 21.42 255,255,0`
+* `A` - **Luz ambiente**: `A [ratio] [R,G,B]`
+  - `A 0.2 255,255,255` → ratio: 0.2, color: blanco
+* `C` - **Cámara**: `C [x,y,z] [nx,ny,nz] [FOV]`
+  - `C -50,0,20 0,0,1 70` → posición: (-50,0,20), dirección: (0,0,1), FOV: 70°
+* `L` - **Luz puntual**: `L [x,y,z] [brillo] [R,G,B]`
+  - `L -40,0,30 0.7 255,255,255` → posición: (-40,0,30), brillo: 0.7, color: blanco
+* `sp` - **Esfera**: `sp [x,y,z] [diámetro] [R,G,B]`
+  - `sp 0,0,20 20 255,0,0` → centro: (0,0,20), diámetro: 20, color: rojo
+* `pl` - **Plano**: `pl [x,y,z] [nx,ny,nz] [R,G,B]`
+  - `pl 0,0,0 0,1.0,0 255,0,225` → punto: (0,0,0), normal: (0,1,0), color: magenta
+* `cy` - **Cilindro**: `cy [x,y,z] [nx,ny,nz] [diámetro] [altura] [R,G,B]`
+  - `cy 50,0,20.6 0,0,1.0 14.2 21.42 10,0,255` → centro: (50,0,20.6), eje: (0,0,1), ⌀: 14.2, h: 21.42, color: azul
+* `cn` - **Cono (bonus)**: `cn [x,y,z] [nx,ny,nz] [diámetro] [altura] [R,G,B]`
+  - `cn 0,0,20.6 0,0,1.0 14.2 21.42 255,255,0` → vértice: (0,0,20.6), eje: (0,0,1), ⌀base: 14.2, h: 21.42, color: amarillo
 
 **Ejemplo de escena bonus con múltiples luces:**
 ```
@@ -215,7 +208,7 @@ El corazón del ray tracing: encontrar dónde el rayo toca cada objeto.
 3. Resolver para encontrar `t`
 4. Validar `t > 0` (delante de cámara)
 
-#### 🔴 **Esfera** 
+#### **Esfera** 
 `(P - Centro)² = radio²` → Ecuación cuadrática: `at² + bt + c = 0`
 ```
 a = |D|²
@@ -223,16 +216,16 @@ b = 2*D·(O-Centro)
 c = |O-Centro|² - radio²
 ```
 
-#### 📄 **Plano**
+#### **Plano**
 `Normal·P + distancia = 0` → Ecuación lineal: `t = -(N·O + d) / (N·D)`
 
-#### 🔵 **Cilindro con Tapas**
+#### **Cilindro con Tapas**
 Distancia perpendicular al eje = radio → Proyección 2D + ecuación cuadrática + intersección con tapas circulares
 
-#### 🔶 **Cono Semi-Infinito con Base (Bonus)**
+#### **Cono Semi-Infinito con Base (Bonus)**
 Ecuación cónica + restricciones de altura + intersección con base circular
 
-#### 🎯 **Optimizaciones Implementadas**
+#### **Optimizaciones Implementadas**
 * **Precision epsilons:** Diferentes valores según contexto
   - `E_NORMAL = 1e-4f` para intersecciones y normales
   - `E_LIGHT = 1e-3f` para sombras (evita self-shadowing)
@@ -270,10 +263,10 @@ El color final se calcula sumando tres componentes de luz:
 ```
 
 #### **Componentes:**
-1. **🌅 Ambiente**: Iluminación base uniforme (`I_a = ambient × ratio`)
-2. **🌞 Difusa**: Superficie mate según ángulo (`I_d = max(0, N·L) × brightness`)  
-3. **✨ Especular**: Reflexión brillante (`I_s = max(0, R·V)^shininess × brightness`)
-4. **🎭 Sombras**: Test con `shadow_ray` hacia cada luz
+1. **Ambiente**: Iluminación base uniforme (`I_a = ambient × ratio`)
+2. **Difusa**: Superficie mate según ángulo (`I_d = max(0, N·L) × brightness`)  
+3. **Especular**: Reflexión brillante (`I_s = max(0, R·V)^shininess × brightness`)
+4. **Sombras**: Test con `shadow_ray` hacia cada luz
 
 **Resultado visual:**
 - Ambiente: Color constante en zonas sin luz directa
