@@ -208,3 +208,5 @@ Este proyecto es parte del plan de estudios de 42 y no está licenciado para dis
 
 - [Ray Tracing in One Weekend](https://raytracing.github.io/books/RayTracingInOneWeekend.html)
 - [Iluminación y Render](https://www.google.es/books/edition/Iluminaci%C3%B3n_y_Render_Edici%C3%B3n_2007/NpDEPQAACAAJ?hl=es&kptab=overview)
+- [Blinn–Phong reflection model](https://en.wikipedia.org/wiki/Blinn%E2%80%93Phong_reflection_model)
+- [Using Vector Instructions through Built-in Functions](https://gcc.gnu.org/onlinedocs/gcc/Vector-Extensions.html)
