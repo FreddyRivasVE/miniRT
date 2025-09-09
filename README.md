@@ -27,9 +27,9 @@ Un **ray tracer minimalista** en C basado en el modelo de iluminación de **Phon
 * Renderizado en ventana usando [MLX42](https://github.com/codam-coding-college/MLX42).
 
 ### Bonus
-* **Múltiples luces** de colores independientes (vs una sola luz).
-* Objeto **cono semi-infinito** con vértice puntiagudo y base circular.
-* **Patrón checkerboard** (tablero de ajedrez) en planos con toggle interactivo.
+* **Múltiples luces** de colores independientes.
+* Objeto **cono semi-infinito** con vértice y base circular.
+* **Patrón checkerboard** (tablero de ajedrez) en planos.
 
 ## 📂 Estructura del proyecto
 
@@ -70,7 +70,7 @@ El `Makefile` incluye reglas adicionales para habilitar ciertas características
   Genera el ejecutable `miniRT_bonus` con todas las características avanzadas.
 
 * **Compilación con antialiasing**
-  Activa MSAA 4x para suavizado de bordes
+  Activa MSAA 4x para suavizado de bordes. Disponible tanto para mandatory como bonus.
 
   ```bash
   make anti       
@@ -196,7 +196,7 @@ Técnica que elimina el efecto "dientes de sierra" en los bordes, creando transi
 
 **Beneficio:** Bordes suaves especialmente en objetos curvos, con costo 4x en rendimiento
 
-### 📐 Intersecciones Ray-Objeto
+### 📐 Intersecciones Rayo-Objeto
 
 El corazón del ray tracing: encontrar dónde el rayo toca cada objeto.
 
@@ -225,11 +225,56 @@ Distancia perpendicular al eje = radio → Proyección 2D + ecuación cuadrátic
 #### **Cono Semi-Infinito con Base (Bonus)**
 Ecuación cónica + restricciones de altura + intersección con base circular
 
+Tenés razón, Brenda 🙌 — el problema es que GitHub no renderiza bien el bloque de código dentro de tablas cuando son dibujos con espacios.
+
+Te paso otra forma más clara: usar **dos bloques `<pre>` en columnas con HTML**. GitHub permite mezclar Markdown y HTML, así que queda prolijo:
+
+<table>
+<tr>
+<th>∞ Doble infinito</th>
+<th>Cono</th>
+</tr>
+<tr>
+<td>
+
+<pre>
+      /|\     ← Infinito hacia arriba     
+     / | \
+    /  |  \
+   /   |   \
+  -----------  ← Base
+   \   |   /
+    \  |  /
+     \ | /
+      \|/     ← Infinito hacia abajo 
+</pre>
+
+</td>
+<td>
+
+<pre>
+
+      *       ← Vértice (punto)
+     /|\
+    / | \
+   /  |  \
+  /   |   \
+ -----------  ← Base (círculo)
+              ← Se corta aquí (no continúa)
+</pre>
+
+</td>
+</tr>
+</table>
+
+
+
+
 #### **Optimizaciones Implementadas**
 * **Precision epsilons:** Diferentes valores según contexto
-  - `E_NORMAL = 1e-4f` para intersecciones y normales
-  - `E_LIGHT = 1e-3f` para sombras (evita self-shadowing)
-* **Early exit:** Si discriminante < 0, salir inmediatamente  
+  - `E_NORMAL = 1e-4f` para control del parceo, en los valores de las normales
+  - `E_LIGHT = 1e-3f`  para sombras (evita self-shadowing)
+  - `EPSILON = 1e-6f`  para control de hit.
 * **t_closest tracking:** Solo procesar intersección más cercana
 * **Hit context structure:** Optimiza paso de parámetros entre funciones
 
@@ -239,7 +284,7 @@ El color final se calcula sumando tres componentes de luz:
 
 **Fórmula:** `Color_Final = (Ambiente + Difusa + Especular) × Color_Material`
 
-#### **Implementación Principal:**
+#### **Implementación Principal: con multiples luces**
 ```c
   t_vec4	mrt_light_color(t_data *elements, t_hit *hit, t_ray *ray)
   {
