@@ -225,10 +225,6 @@ Distancia perpendicular al eje = radio → Proyección 2D + ecuación cuadrátic
 #### **Cono Semi-Infinito con Base (Bonus)**
 Ecuación cónica + restricciones de altura + intersección con base circular
 
-Tenés razón, Brenda 🙌 — el problema es que GitHub no renderiza bien el bloque de código dentro de tablas cuando son dibujos con espacios.
-
-Te paso otra forma más clara: usar **dos bloques `<pre>` en columnas con HTML**. GitHub permite mezclar Markdown y HTML, así que queda prolijo:
-
 <table>
 <tr>
 <th>∞ Doble infinito</th>
