@@ -264,8 +264,6 @@ Ecuación cónica + restricciones de altura + intersección con base circular
 </table>
 
 
-
-
 #### **Optimizaciones Implementadas**
 * **Precision epsilons:** Diferentes valores según contexto
   - `E_NORMAL = 1e-4f` para control del parceo, en los valores de las normales
@@ -307,7 +305,7 @@ El color final se calcula sumando tres componentes de luz:
 1. **Ambiente**: Iluminación base uniforme (`I_a = ambient × ratio`)
 2. **Difusa**: Superficie mate según ángulo (`I_d = max(0, N·L) × brightness`)  
 3. **Especular**: Reflexión brillante (`I_s = max(0, R·V)^shininess × brightness`)
-4. **Sombras**: Test con `shadow_ray` hacia cada luz
+4. **Sombras**: Verificación de oclusión con `shadow_ray` hacia cada luz.
 
 **Resultado visual:**
 - Ambiente: Color constante en zonas sin luz directa
