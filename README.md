@@ -227,8 +227,8 @@ Ecuación cónica + restricciones de altura + intersección con base circular
 
 <table>
 <tr>
-<th>∞ Doble infinito</th>
-<th>Cono</th>
+<th>Infinito</th>
+<th>Semi infinito</th>
 </tr>
 <tr>
 <td>
